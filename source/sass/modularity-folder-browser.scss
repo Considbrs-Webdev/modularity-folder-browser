@@ -1,0 +1,227 @@
+.mod-file-browser {
+  --file-browser-border: var(--color-border, #d8dee8);
+  --file-browser-background: var(--color-background, #fff);
+  --file-browser-muted: var(--color-text-secondary, #53606f);
+  --file-browser-accent: var(--color-primary, #0059c7);
+  --file-browser-row: color-mix(in srgb, var(--file-browser-accent) 4%, #fff);
+
+  background: var(--file-browser-background);
+  border: 1px solid var(--file-browser-border);
+  border-radius: 8px;
+  color: var(--color-text, #111827);
+  overflow: hidden;
+}
+
+.mod-file-browser__folder-icon {
+  border: 2px solid var(--file-browser-accent);
+  border-radius: 3px;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 1rem;
+  position: relative;
+  width: 1.25rem;
+}
+
+.mod-file-browser__folder-icon::before {
+  background: var(--file-browser-background);
+  border: 2px solid var(--file-browser-accent);
+  border-bottom: 0;
+  border-radius: 2px 2px 0 0;
+  content: "";
+  height: .28rem;
+  left: .12rem;
+  position: absolute;
+  top: -.42rem;
+  width: .55rem;
+}
+
+.mod-file-browser__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mod-file-browser__list--nested {
+  border-left: 2px solid color-mix(in srgb, var(--file-browser-accent) 22%, transparent);
+  margin-left: 1.5rem;
+}
+
+.mod-file-browser__item {
+  border-top: 1px solid var(--file-browser-border);
+}
+
+.mod-file-browser > .mod-file-browser__list > .mod-file-browser__item:first-child {
+  border-top: 0;
+}
+
+.mod-file-browser__folder-button,
+.mod-file-browser__file-link {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  min-height: 56px;
+  padding: .9rem 1.5rem;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+}
+
+.mod-file-browser__folder-button {
+  cursor: pointer;
+  font: inherit;
+}
+
+.mod-file-browser__folder-button:hover,
+.mod-file-browser__file-link:hover {
+  background: var(--file-browser-row);
+}
+
+.mod-file-browser__folder-button:focus-visible,
+.mod-file-browser__file-link:focus-visible {
+  outline: 3px solid var(--file-browser-accent);
+  outline-offset: 2px;
+}
+
+.mod-file-browser__row-main,
+.mod-file-browser__file-main {
+  align-items: center;
+  display: flex;
+  gap: .75rem;
+  min-width: 0;
+}
+
+.mod-file-browser__file-main {
+  align-items: flex-start;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: .15rem;
+}
+
+.mod-file-browser__label,
+.mod-file-browser__file-name {
+  font-weight: 700;
+}
+
+.mod-file-browser__file-name {
+  overflow-wrap: anywhere;
+}
+
+.mod-file-browser__meta,
+.mod-file-browser__file-meta,
+.mod-file-browser__file-description {
+  color: var(--file-browser-muted);
+  font-size: .9rem;
+}
+
+.mod-file-browser__chevron {
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  height: .45rem;
+  transform: rotate(-45deg);
+  transition: transform .16s ease;
+  width: .45rem;
+}
+
+[aria-expanded="true"] > .mod-file-browser__row-main .mod-file-browser__chevron {
+  transform: rotate(45deg);
+}
+
+.mod-file-browser__file-icon {
+  border: 2px solid #d2382a;
+  border-radius: 3px;
+  color: #d2382a;
+  flex: 0 0 auto;
+  height: 1.45rem;
+  position: relative;
+  width: 1.1rem;
+}
+
+.mod-file-browser__file-icon::after {
+  content: "";
+  border-left: .35rem solid transparent;
+  border-top: .35rem solid currentColor;
+  position: absolute;
+  right: -2px;
+  top: -2px;
+}
+
+.mod-file-browser__file-icon--doc,
+.mod-file-browser__file-icon--docx {
+  border-color: #1f5fbf;
+  color: #1f5fbf;
+}
+
+.mod-file-browser__file-icon--xls,
+.mod-file-browser__file-icon--xlsx,
+.mod-file-browser__file-icon--csv {
+  border-color: #128447;
+  color: #128447;
+}
+
+.mod-file-browser__download {
+  color: var(--file-browser-accent);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mod-file-browser__empty,
+.mod-file-browser__loading,
+.mod-file-browser__error {
+  color: var(--file-browser-muted);
+  padding: 1rem 1.5rem;
+}
+
+.mod-file-browser-admin-picker {
+  background: #fff;
+  border: 1px solid #c3c4c7;
+  margin-top: .5rem;
+  max-height: 18rem;
+  overflow: auto;
+  padding: .75rem;
+}
+
+.mod-file-browser-admin-picker__toolbar {
+  align-items: center;
+  display: flex;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+
+.mod-file-browser-admin-picker__path {
+  color: #646970;
+  font-family: monospace;
+}
+
+.mod-file-browser-admin-picker__list {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .mod-file-browser__folder-button,
+  .mod-file-browser__file-link {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .mod-file-browser__folder-button,
+  .mod-file-browser__file-link {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .mod-file-browser__file-link {
+    gap: .55rem;
+  }
+
+  .mod-file-browser__list--nested {
+    margin-left: .75rem;
+  }
+
+  .mod-file-browser__download {
+    white-space: normal;
+  }
+}

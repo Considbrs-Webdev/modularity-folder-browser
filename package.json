@@ -1,0 +1,37 @@
+{
+    "name": "@considbrs-webdev/modularity-folder-browser",
+    "version": "1.0.0",
+    "description": "A Folder Browser module for Modularity.",
+    "main": "",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/considbrs-webdev/modularity-folder-browser"
+    },
+    "author": "Consid Borås AB",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/considbrs-webdev/modularity-folder-browser/issues"
+    },
+    "homepage": "https://github.com/considbrs-webdev/modularity-folder-browser#readme",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite build --watch --mode development",
+        "i18n:pot": "wp i18n make-pot . languages/modularity-folder-browser.pot --domain=modularity-folder-browser --exclude=vendor,node_modules,languages",
+        "i18n:mo": "wp i18n make-mo languages/",
+        "i18n:php": "wp i18n make-php languages/",
+        "i18n": "npm run i18n:pot && npm run i18n:mo && npm run i18n:php"
+    },
+    "browserslist": [
+        "> 1%",
+        "not dead"
+    ],
+    "devDependencies": {
+        "typescript": "^5.9.2",
+        "vite": "^7.1.2",
+        "vite-config-factory": "^1.0.1",
+        "sass-embedded": "^1.93.3"
+    },
+    "browser": {
+        "child_process": false
+    }
+}

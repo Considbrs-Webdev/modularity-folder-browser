@@ -1,0 +1,129 @@
+<?php
+
+namespace ModularityFolderBrowser;
+
+use ModularityFolderBrowser\AcfFields\AcfFieldLoader;
+use ModularityFolderBrowser\Helper\CacheBust;
+use ModularityFolderBrowser\Rest\RestController;
+
+class App
+{
+    public function __construct()
+    {
+        // Register module
+        add_action('init', array($this, 'registerModule'));
+
+        // Enqueue scripts and styles
+        add_action('wp_enqueue_scripts', array($this, 'enqueueStyles'));
+        add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
+        add_action('acf/input/admin_enqueue_scripts', array($this, 'enqueueAdminScripts'));
+
+        // Load ACF field values
+        new AcfFieldLoader();
+        new RestController();
+    }
+
+    /**
+     * Enqueue styles
+     * @return void
+     */
+    public function enqueueStyles()
+    {
+        $styleFile = CacheBust::name('css/modularity-folder-browser.css');
+
+        if ($styleFile) {
+            wp_enqueue_style(
+                'modularity-folder-browser',
+                MODULARITY_FOLDER_BROWSER_URL . '/assets/dist/' . $styleFile,
+                array(),
+                null
+            );
+        }
+    }
+
+    /**
+     * Enqueue scripts
+     * @return void
+     */
+    public function enqueueScripts()
+    {
+        $scriptFile = CacheBust::name('js/modularity-folder-browser.js');
+
+        if ($scriptFile) {
+            wp_enqueue_script(
+                'modularity-folder-browser',
+                MODULARITY_FOLDER_BROWSER_URL . '/assets/dist/' . $scriptFile,
+                array(),
+                null,
+                true
+            );
+
+            wp_localize_script('modularity-folder-browser', 'ModularityFolderBrowser', array(
+                'restUrl' => esc_url_raw(rest_url('modularity-file-browser/v1/')),
+                'i18n' => array(
+                    'loading' => __('Loading folder contents.', 'modularity-folder-browser'),
+                    'error' => __('This folder could not be loaded.', 'modularity-folder-browser'),
+                    'empty' => __('No documents found.', 'modularity-folder-browser'),
+                    'folder' => __('Folder', 'modularity-folder-browser'),
+                    'download' => __('Download', 'modularity-folder-browser'),
+                ),
+            ));
+        }
+    }
+
+    /**
+     * Enqueue admin folder picker script.
+     * @return void
+     */
+    public function enqueueAdminScripts()
+    {
+        $styleFile = CacheBust::name('css/modularity-folder-browser.css');
+        $scriptFile = CacheBust::name('js/modularity-folder-browser-admin.js');
+
+        if ($styleFile) {
+            wp_enqueue_style(
+                'modularity-folder-browser-admin',
+                MODULARITY_FOLDER_BROWSER_URL . '/assets/dist/' . $styleFile,
+                array(),
+                null
+            );
+        }
+
+        if ($scriptFile) {
+            wp_enqueue_script(
+                'modularity-folder-browser-admin',
+                MODULARITY_FOLDER_BROWSER_URL . '/assets/dist/' . $scriptFile,
+                array('acf-input'),
+                null,
+                true
+            );
+
+            wp_localize_script('modularity-folder-browser-admin', 'ModularityFolderBrowserAdmin', array(
+                'restUrl' => esc_url_raw(rest_url('modularity-file-browser/v1/admin/folders')),
+                'nonce' => wp_create_nonce('wp_rest'),
+                'i18n' => array(
+                    'browse' => __('Browse folders', 'modularity-folder-browser'),
+                    'choose' => __('Choose this folder', 'modularity-folder-browser'),
+                    'root' => __('Source root', 'modularity-folder-browser'),
+                    'loading' => __('Loading folders.', 'modularity-folder-browser'),
+                    'empty' => __('No folders found.', 'modularity-folder-browser'),
+                    'error' => __('Folders could not be loaded.', 'modularity-folder-browser'),
+                ),
+            ));
+        }
+    }
+
+    /**
+     * Register the module
+     * @return void
+     */
+    public function registerModule()
+    {
+        if (function_exists('modularity_register_module')) {
+            modularity_register_module(
+                MODULARITY_FOLDER_BROWSER_MODULE_PATH,
+                'FileBrowser'
+            );
+        }
+    }
+}

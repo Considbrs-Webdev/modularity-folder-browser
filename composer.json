@@ -1,0 +1,27 @@
+{
+    "name": "considbrs-webdev/modularity-folder-browser",
+    "description": "An accessible file and folder browser module for Modularity.",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Consid Borås AB",
+            "email": "webdev.boras@consid.se"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "suggest": {
+        "helsingborg-stad/municipio": "^6.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ModularityFolderBrowser\\": "source/php/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
+}

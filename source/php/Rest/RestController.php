@@ -254,27 +254,53 @@ class RestController
             }
 
             $source = sanitize_key((string) ($root['source'] ?? ''));
-            $path = $this->paths->normalizeRelativePath((string) ($root['folder'] ?? ''));
 
-            if ($source === '' || $path === null) {
+            if ($source === '') {
                 continue;
             }
 
-            $displayName = sanitize_text_field((string) ($root['display_name'] ?? ''));
+            foreach ($this->parseFolderPaths($root['folder'] ?? '') as $folderPath) {
+                $path = $this->paths->normalizeRelativePath($folderPath);
 
-            if ($displayName === '') {
-                $displayName = $path !== '' ? basename($path) : ($this->sources->getSource($source)['label'] ?? __('Documents', 'modularity-folder-browser'));
+                if ($path === null) {
+                    continue;
+                }
+
+                $displayName = $path !== ''
+                    ? basename($path)
+                    : ($this->sources->getSource($source)['label'] ?? __('Documents', 'modularity-folder-browser'));
+
+                $normalized[] = [
+                    'source' => $source,
+                    'path' => $path,
+                    'label' => $displayName,
+                    'initially_expanded' => !empty($root['initially_expanded']),
+                ];
             }
-
-            $normalized[] = [
-                'source' => $source,
-                'path' => $path,
-                'label' => $displayName,
-                'initially_expanded' => !empty($root['initially_expanded']),
-            ];
         }
 
         return $normalized;
+    }
+
+    private function parseFolderPaths(mixed $value): array
+    {
+        if (is_array($value)) {
+            return array_values(array_map('strval', $value));
+        }
+
+        $value = trim((string) $value);
+
+        if ($value === '') {
+            return [''];
+        }
+
+        $decoded = json_decode($value, true);
+
+        if (is_array($decoded)) {
+            return array_values(array_map('strval', $decoded));
+        }
+
+        return [$value];
     }
 
     private function normalizeSortOrder(string $sortOrder): string

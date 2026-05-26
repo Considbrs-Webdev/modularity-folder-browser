@@ -6,6 +6,16 @@ if (function_exists('acf_add_local_field_group')) {
         'title' => __('Folder Browser Settings', 'modularity-folder-browser'),
         'fields' => array(
             array(
+                'key' => 'field_modularity_folder_browser_top_folder_name',
+                'label' => __('Top folder name', 'modularity-folder-browser'),
+                'name' => 'top_folder_name',
+                'type' => 'text',
+                'instructions' => __('Optional folder label that wraps the selected folders on the frontend.', 'modularity-folder-browser'),
+                'required' => 0,
+                'default_value' => '',
+                'placeholder' => __('Leave empty to show selected folders directly', 'modularity-folder-browser'),
+            ),
+            array(
                 'key' => 'field_modularity_folder_browser_start_folders',
                 'label' => __('Start folders', 'modularity-folder-browser'),
                 'name' => 'start_folders',
@@ -15,10 +25,13 @@ if (function_exists('acf_add_local_field_group')) {
                 'layout' => 'block',
                 'button_label' => __('Add folder', 'modularity-folder-browser'),
                 'min' => 1,
+                'wrapper' => array(
+                    'class' => 'mod-file-browser-start-folders-field',
+                ),
                 'sub_fields' => array(
                     array(
                         'key' => 'field_modularity_folder_browser_source',
-                        'label' => __('Source', 'modularity-folder-browser'),
+                        'label' => __('Root folder', 'modularity-folder-browser'),
                         'name' => 'source',
                         'type' => 'select',
                         'required' => 1,
@@ -28,33 +41,23 @@ if (function_exists('acf_add_local_field_group')) {
                         'ui' => 1,
                         'ajax' => 0,
                         'wrapper' => array(
-                            'width' => '30',
+                            'width' => '35',
                             'class' => 'mod-file-browser-source-field',
                         ),
                     ),
                     array(
                         'key' => 'field_modularity_folder_browser_folder',
-                        'label' => __('Folder', 'modularity-folder-browser'),
+                        'label' => __('Selected folders', 'modularity-folder-browser'),
                         'name' => 'folder',
-                        'type' => 'text',
-                        'instructions' => __('Relative path inside the selected source. Use the browser button or enter a path manually.', 'modularity-folder-browser'),
+                        'type' => 'textarea',
+                        'instructions' => __('Choose one or more folders from the selected root folder.', 'modularity-folder-browser'),
                         'required' => 0,
                         'default_value' => '',
-                        'placeholder' => __('Leave empty to use the source root', 'modularity-folder-browser'),
+                        'new_lines' => '',
+                        'rows' => 2,
                         'wrapper' => array(
-                            'width' => '40',
-                            'class' => 'mod-file-browser-folder-field',
-                        ),
-                    ),
-                    array(
-                        'key' => 'field_modularity_folder_browser_display_name',
-                        'label' => __('Display name', 'modularity-folder-browser'),
-                        'name' => 'display_name',
-                        'type' => 'text',
-                        'instructions' => __('Optional public name for this selected folder.', 'modularity-folder-browser'),
-                        'required' => 0,
-                        'wrapper' => array(
-                            'width' => '20',
+                            'width' => '50',
+                            'class' => 'mod-file-browser-selected-folders-field',
                         ),
                     ),
                     array(
@@ -65,7 +68,7 @@ if (function_exists('acf_add_local_field_group')) {
                         'required' => 0,
                         'ui' => 1,
                         'wrapper' => array(
-                            'width' => '10',
+                            'width' => '15',
                         ),
                     ),
                 ),

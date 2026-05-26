@@ -44,6 +44,8 @@ class FileBrowser extends \Modularity\Module
             'id' => 'mod-file-browser-' . $moduleId . '-' . wp_unique_id(),
             'moduleId' => $moduleId,
             'roots' => $this->prepareRoots((array) ($fields['start_folders'] ?? []), $moduleId, $sortOrder, $allowedExtensions, $initialState),
+            'topFolderName' => sanitize_text_field((string) ($fields['top_folder_name'] ?? '')),
+            'topFolderExpanded' => $initialState === 'expanded_first_level',
             'showFileSize' => !empty($fields['show_file_size']),
             'showModifiedDate' => !empty($fields['show_modified_date']),
             'showFileType' => !empty($fields['show_file_type']),
@@ -68,43 +70,70 @@ class FileBrowser extends \Modularity\Module
             }
 
             $source = sanitize_key((string) ($root['source'] ?? ''));
-            $path = $this->paths->normalizeRelativePath((string) ($root['folder'] ?? ''));
 
-            if ($source === '' || $path === null) {
+            if ($source === '') {
                 continue;
             }
 
-            $base = $this->paths->resolveSelectedBase($source, $path);
+            foreach ($this->parseFolderPaths($root['folder'] ?? '') as $folderPath) {
+                $path = $this->paths->normalizeRelativePath($folderPath);
 
-            if (is_wp_error($base)) {
-                continue;
+                if ($path === null) {
+                    continue;
+                }
+
+                $base = $this->paths->resolveSelectedBase($source, $path);
+
+                if (is_wp_error($base)) {
+                    continue;
+                }
+
+                $displayName = $path !== ''
+                    ? basename($path)
+                    : ($this->sources->getSource($source)['label'] ?? __('Documents', 'modularity-folder-browser'));
+
+                $rootIndex = count($prepared);
+                $listing = $this->scanner->listDirectory($base, '', $moduleId, $rootIndex, $sortOrder, $allowedExtensions);
+                $isExpanded = !empty($root['initially_expanded']) || $initialState === 'expanded_first_level';
+
+                $prepared[] = [
+                    'index' => $rootIndex,
+                    'source' => $source,
+                    'path' => $path,
+                    'label' => $displayName,
+                    'expanded' => $isExpanded,
+                    'listing' => is_wp_error($listing) ? [
+                        'folders' => [],
+                        'files' => [],
+                        'counts' => ['folders' => 0, 'files' => 0],
+                    ] : $listing,
+                    'error' => is_wp_error($listing) ? $listing->get_error_message() : '',
+                ];
             }
-
-            $displayName = sanitize_text_field((string) ($root['display_name'] ?? ''));
-
-            if ($displayName === '') {
-                $displayName = $path !== '' ? basename($path) : ($this->sources->getSource($source)['label'] ?? __('Documents', 'modularity-folder-browser'));
-            }
-
-            $listing = $this->scanner->listDirectory($base, '', $moduleId, (int) $index, $sortOrder, $allowedExtensions);
-            $isExpanded = !empty($root['initially_expanded']) || $initialState === 'expanded_first_level';
-
-            $prepared[] = [
-                'index' => (int) $index,
-                'source' => $source,
-                'path' => $path,
-                'label' => $displayName,
-                'expanded' => $isExpanded,
-                'listing' => is_wp_error($listing) ? [
-                    'folders' => [],
-                    'files' => [],
-                    'counts' => ['folders' => 0, 'files' => 0],
-                ] : $listing,
-                'error' => is_wp_error($listing) ? $listing->get_error_message() : '',
-            ];
         }
 
         return $prepared;
+    }
+
+    private function parseFolderPaths(mixed $value): array
+    {
+        if (is_array($value)) {
+            return array_values(array_map('strval', $value));
+        }
+
+        $value = trim((string) $value);
+
+        if ($value === '') {
+            return [''];
+        }
+
+        $decoded = json_decode($value, true);
+
+        if (is_array($decoded)) {
+            return array_values(array_map('strval', $decoded));
+        }
+
+        return [$value];
     }
 
     private function normalizeSortOrder(string $sortOrder): string

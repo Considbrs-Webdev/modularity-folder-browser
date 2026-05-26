@@ -5,7 +5,9 @@ An accessible Modularity module for exposing selected server folders as a public
 ## Features
 
 - Select one or more start folders from configured filesystem sources
+- Optional top folder name to group selected folders on the frontend
 - Optional display name per selected folder
+- Modal folder picker with lazy-loaded expandable folder trees and checkbox selection
 - Accessible disclosure/list interface using real buttons and links
 - Lazy-loaded subfolders through WordPress REST endpoints
 - Public download endpoint with server-side path and extension validation
@@ -31,10 +33,10 @@ Each source path must be absolute, readable by the web server user, and resolvab
 
 ## Module Fields
 
+- Top folder name
 - Start folders
 - Source
 - Folder
-- Display name
 - Initially expanded
 - Show file type
 - Show file size

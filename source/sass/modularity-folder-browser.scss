@@ -175,29 +175,201 @@
   padding: 1rem 1.5rem;
 }
 
-.mod-file-browser-admin-picker {
-  background: #fff;
-  border: 1px solid #c3c4c7;
-  margin-top: .5rem;
-  max-height: 18rem;
-  overflow: auto;
-  padding: .75rem;
+.mod-file-browser-select-folders {
+  margin: 0 0 12px;
 }
 
-.mod-file-browser-admin-picker__toolbar {
+.mod-file-browser-selected-folders-field textarea,
+.mod-file-browser-selected-folders-field .acf-input-wrap {
+  display: none !important;
+}
+
+.mod-file-browser-selected-folder {
+  align-items: center;
+  background: #f6f7f7;
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+}
+
+.mod-file-browser-selected-folder__list {
+  display: grid;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mod-file-browser-selected-folder__list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mod-file-browser-selected-folder__list small,
+.mod-file-browser-selected-folder__empty {
+  color: #646970;
+}
+
+.mod-file-browser-modal[hidden] {
+  display: none !important;
+}
+
+.mod-file-browser-modal {
+  inset: 0 !important;
+  position: fixed !important;
+  z-index: 100000 !important;
+}
+
+.mod-file-browser-modal__backdrop {
+  background: rgba(15, 23, 42, .48);
+  inset: 0 !important;
+  position: absolute !important;
+}
+
+.mod-file-browser-modal__dialog {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, .32);
+  display: flex;
+  flex-direction: column;
+  left: 50% !important;
+  max-height: min(720px, calc(100vh - 64px));
+  max-width: min(760px, calc(100vw - 32px));
+  position: absolute !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100%;
+}
+
+.mod-file-browser-modal__header,
+.mod-file-browser-modal__controls,
+.mod-file-browser-modal__footer {
   align-items: center;
   display: flex;
-  gap: .75rem;
-  margin-bottom: .75rem;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 16px 20px;
 }
 
-.mod-file-browser-admin-picker__path {
-  color: #646970;
-  font-family: monospace;
+.mod-file-browser-modal__header {
+  border-bottom: 1px solid #dcdcde;
 }
 
-.mod-file-browser-admin-picker__list {
+.mod-file-browser-modal__header h2 {
+  font-size: 20px;
+  line-height: 1.3;
   margin: 0;
+}
+
+.mod-file-browser-modal__close {
+  font-size: 28px;
+  line-height: 1;
+  min-height: 32px;
+  min-width: 32px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mod-file-browser-modal__controls {
+  background: #f6f7f7;
+  border-bottom: 1px solid #dcdcde;
+}
+
+.mod-file-browser-modal__controls label {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.mod-file-browser-modal__count {
+  color: #50575e;
+}
+
+.mod-file-browser-modal__footer {
+  border-top: 1px solid #dcdcde;
+  justify-content: flex-end;
+}
+
+.mod-file-browser-tree {
+  min-height: 260px;
+  overflow: auto;
+  padding: 16px 20px;
+}
+
+.mod-file-browser-tree__root {
+  align-items: center;
+  border-bottom: 1px solid #f0f0f1;
+  display: flex;
+  font-weight: 600;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 0 0 12px;
+}
+
+.mod-file-browser-tree__list,
+.mod-file-browser-tree__children {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mod-file-browser-tree__row {
+  align-items: center;
+  border-radius: 4px;
+  display: flex;
+  gap: 8px;
+  min-height: 34px;
+  padding: 3px 6px 3px calc(6px + var(--tree-indent, 0px));
+}
+
+.mod-file-browser-tree__row:hover {
+  background: #f6f7f7;
+}
+
+.mod-file-browser-tree__toggle {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  height: 24px;
+  justify-content: center;
+  padding: 0;
+  width: 24px;
+}
+
+.mod-file-browser-tree__toggle::before {
+  border-bottom: 2px solid #1d2327;
+  border-right: 2px solid #1d2327;
+  content: "";
+  height: 6px;
+  transform: rotate(-45deg);
+  width: 6px;
+}
+
+.mod-file-browser-tree__toggle[aria-expanded="true"]::before {
+  transform: rotate(45deg);
+}
+
+.mod-file-browser-tree__toggle:disabled {
+  cursor: default;
+  opacity: .2;
+}
+
+.mod-file-browser-tree__check {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.mod-file-browser-tree__status {
+  color: #646970;
+  padding: 8px 6px;
 }
 
 @media (max-width: 600px) {

@@ -11,6 +11,33 @@
     <p class="mod-file-browser__empty">{{ __('No folders have been selected for this document browser.', 'modularity-folder-browser') }}</p>
   @else
     <ol class="mod-file-browser__list" data-file-browser-list>
+      @if (!empty($topFolderName))
+        @php
+          $topPanelId = $id . '-top-folder';
+          $topFileCount = array_sum(array_map(static fn($root) => $root['listing']['counts']['files'] ?? 0, $roots));
+        @endphp
+        <li class="mod-file-browser__item mod-file-browser__item--folder">
+          <button
+            class="mod-file-browser__folder-button"
+            type="button"
+            aria-expanded="{{ $topFolderExpanded ? 'true' : 'false' }}"
+            aria-controls="{{ $topPanelId }}"
+            data-file-browser-folder
+            data-loaded="true">
+            <span class="mod-file-browser__row-main">
+              <span class="mod-file-browser__chevron" aria-hidden="true"></span>
+              <span class="mod-file-browser__folder-icon" aria-hidden="true"></span>
+              <span class="mod-file-browser__label">{{ $topFolderName }}</span>
+            </span>
+            <span class="mod-file-browser__meta">
+              {{ sprintf(_n('%d folder', '%d folders', count($roots), 'modularity-folder-browser'), count($roots)) }},
+              {{ sprintf(_n('%d file', '%d files', $topFileCount, 'modularity-folder-browser'), $topFileCount) }}
+            </span>
+          </button>
+
+          <ol id="{{ $topPanelId }}" class="mod-file-browser__list mod-file-browser__list--nested" {{ $topFolderExpanded ? '' : 'hidden' }}>
+      @endif
+
       @foreach ($roots as $root)
         @php
           $rootPanelId = $id . '-root-' . $root['index'];
@@ -95,6 +122,11 @@
           </ol>
         </li>
       @endforeach
+
+      @if (!empty($topFolderName))
+          </ol>
+        </li>
+      @endif
     </ol>
   @endif
 </div>

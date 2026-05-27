@@ -45,7 +45,7 @@ class FileBrowser extends \Modularity\Module
             'moduleId' => $moduleId,
             'roots' => $this->prepareRoots((array) ($fields['start_folders'] ?? []), $moduleId, $sortOrder, $allowedExtensions, $initialState),
             'topFolderName' => sanitize_text_field((string) ($fields['top_folder_name'] ?? '')),
-            'topFolderExpanded' => $initialState === 'expanded_first_level',
+            'topFolderExpanded' => true,
             'showFileSize' => !empty($fields['show_file_size']),
             'showModifiedDate' => !empty($fields['show_modified_date']),
             'showFileType' => !empty($fields['show_file_type']),

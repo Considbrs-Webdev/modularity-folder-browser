@@ -67,6 +67,8 @@ class App
                     'empty' => __('No documents found.', 'modularity-folder-browser'),
                     'folder' => __('Folder', 'modularity-folder-browser'),
                     'download' => __('Download', 'modularity-folder-browser'),
+                    /* translators: %s: file name. */
+                    'downloadFile' => __('Download %s', 'modularity-folder-browser'),
                 ),
                 'icons' => IconResolver::getIconMap(),
                 'iconCategories' => IconResolver::getCategoryMap(),

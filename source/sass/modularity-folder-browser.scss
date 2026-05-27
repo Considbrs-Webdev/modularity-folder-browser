@@ -210,6 +210,23 @@
   white-space: nowrap;
 }
 
+.mod-file-browser__download--icon {
+  align-items: center;
+  display: inline-flex;
+  justify-content: flex-end;
+}
+
+.mod-file-browser__download-icon {
+  background-color: currentColor;
+  display: inline-block;
+  height: 1.35rem;
+  mask-image: var(--file-browser-download-icon-url, none);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  width: 1.35rem;
+}
+
 /* ── Chevron ────────────────────────────────────────────────── */
 .mod-file-browser__chevron {
   border-bottom: 2px solid currentColor;
@@ -295,7 +312,7 @@
   white-space: nowrap;
 }
 
-.mod-file-browser-select-folders {
+.mod-file-browser-selected-folders-field .mod-file-browser-select-folders {
   margin: 0 0 12px;
 }
 
@@ -528,6 +545,12 @@
     flex-basis: 100%;
     padding-left: calc(1.1rem + 0.75rem); /* icon width + gap */
     white-space: normal;
+  }
+
+  .mod-file-browser__download--icon {
+    flex-basis: auto;
+    margin-left: auto;
+    padding-left: 0;
   }
 
   .mod-file-browser__folder-button {

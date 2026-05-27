@@ -3,15 +3,15 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_modularity_folder_browser_instance',
-    'title' => __('Inställningar för mappbläddrare', 'modularity-folder-browser'),
+    'title' => __('Folder Browser Settings', 'modularity-folder-browser'),
     'fields' => array(
         0 => array(
             'key' => 'field_modularity_folder_browser_top_folder_name',
-            'label' => __('Namn på toppmapp', 'modularity-folder-browser'),
+            'label' => __('Top folder name', 'modularity-folder-browser'),
             'name' => 'top_folder_name',
             'aria-label' => '',
             'type' => 'text',
-            'instructions' => __('Valfri mappetikett som omsluter de valda mapparna på webbplatsen.', 'modularity-folder-browser'),
+            'instructions' => __('Optional folder label that wraps the selected folders on the frontend.', 'modularity-folder-browser'),
             'required' => 0,
             'conditional_logic' => false,
             'wrapper' => array(
@@ -20,18 +20,18 @@
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => __('Lämna tomt för att visa valda mappar direkt', 'modularity-folder-browser'),
+            'placeholder' => __('Leave empty to show selected folders directly', 'modularity-folder-browser'),
             'maxlength' => '',
             'prepend' => '',
             'append' => '',
         ),
         1 => array(
             'key' => 'field_modularity_folder_browser_start_folders',
-            'label' => __('Startmappar', 'modularity-folder-browser'),
+            'label' => __('Start folders', 'modularity-folder-browser'),
             'name' => 'start_folders',
             'aria-label' => '',
             'type' => 'repeater',
-            'instructions' => __('Välj en eller flera mappar i konfigurerade filsystemskällor. Absoluta sökvägar sparas aldrig.', 'modularity-folder-browser'),
+            'instructions' => __('Select one or more folders inside configured filesystem sources. Absolute paths are never stored.', 'modularity-folder-browser'),
             'required' => 1,
             'conditional_logic' => false,
             'wrapper' => array(
@@ -40,7 +40,7 @@
                 'id' => '',
             ),
             'layout' => 'block',
-            'button_label' => __('Lägg till mapp', 'modularity-folder-browser'),
+            'button_label' => __('Add folder', 'modularity-folder-browser'),
             'min' => 1,
             'max' => 0,
             'rows_per_page' => 20,
@@ -49,7 +49,7 @@
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_modularity_folder_browser_source',
-                    'label' => __('Rotmapp', 'modularity-folder-browser'),
+                    'label' => __('Root folder', 'modularity-folder-browser'),
                     'name' => 'source',
                     'aria-label' => '',
                     'type' => 'select',
@@ -79,11 +79,11 @@
                 ),
                 1 => array(
                     'key' => 'field_modularity_folder_browser_folder',
-                    'label' => __('Valda mappar', 'modularity-folder-browser'),
+                    'label' => __('Selected folders', 'modularity-folder-browser'),
                     'name' => 'folder',
                     'aria-label' => '',
                     'type' => 'textarea',
-                    'instructions' => __('Välj en eller flera mappar från den valda rotmappen.', 'modularity-folder-browser'),
+                    'instructions' => __('Choose one or more folders from the selected root folder.', 'modularity-folder-browser'),
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array(
@@ -102,7 +102,7 @@
                 ),
                 2 => array(
                     'key' => 'field_modularity_folder_browser_initially_expanded',
-                    'label' => __('Utfälld från början', 'modularity-folder-browser'),
+                    'label' => __('Initially expanded', 'modularity-folder-browser'),
                     'name' => 'initially_expanded',
                     'aria-label' => '',
                     'type' => 'true_false',
@@ -126,7 +126,7 @@
         ),
         2 => array(
             'key' => 'field_modularity_folder_browser_show_file_type',
-            'label' => __('Visa filtyp', 'modularity-folder-browser'),
+            'label' => __('Show file type', 'modularity-folder-browser'),
             'name' => 'show_file_type',
             'aria-label' => '',
             'type' => 'true_false',
@@ -146,7 +146,7 @@
         ),
         3 => array(
             'key' => 'field_modularity_folder_browser_show_file_description',
-            'label' => __('Visa filbeskrivning', 'modularity-folder-browser'),
+            'label' => __('Show file description', 'modularity-folder-browser'),
             'name' => 'show_file_description',
             'aria-label' => '',
             'type' => 'true_false',
@@ -166,7 +166,7 @@
         ),
         4 => array(
             'key' => 'field_modularity_folder_browser_show_file_size',
-            'label' => __('Visa filstorlek', 'modularity-folder-browser'),
+            'label' => __('Show file size', 'modularity-folder-browser'),
             'name' => 'show_file_size',
             'aria-label' => '',
             'type' => 'true_false',
@@ -186,7 +186,7 @@
         ),
         5 => array(
             'key' => 'field_modularity_folder_browser_show_modified_date',
-            'label' => __('Visa ändringsdatum', 'modularity-folder-browser'),
+            'label' => __('Show modified date', 'modularity-folder-browser'),
             'name' => 'show_modified_date',
             'aria-label' => '',
             'type' => 'true_false',
@@ -205,8 +205,32 @@
             'ui_off_text' => '',
         ),
         6 => array(
+            'key' => 'field_modularity_folder_browser_download_display',
+            'label' => __('Download display', 'modularity-folder-browser'),
+            'name' => 'download_display',
+            'aria-label' => '',
+            'type' => 'button_group',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array(
+                'text' => __('Text', 'modularity-folder-browser'),
+                'icon' => __('Icon', 'modularity-folder-browser'),
+            ),
+            'default_value' => 'text',
+            'return_format' => 'value',
+            'allow_null' => 0,
+            'allow_in_bindings' => 0,
+            'layout' => 'horizontal',
+        ),
+        7 => array(
             'key' => 'field_modularity_folder_browser_sort_order',
-            'label' => __('Sorteringsordning', 'modularity-folder-browser'),
+            'label' => __('Sort order', 'modularity-folder-browser'),
             'name' => 'sort_order',
             'aria-label' => '',
             'type' => 'select',
@@ -219,11 +243,11 @@
                 'id' => '',
             ),
             'choices' => array(
-                'name_asc' => __('Namn A-Ö', 'modularity-folder-browser'),
-                'name_desc' => __('Namn Ö-A', 'modularity-folder-browser'),
-                'date_desc' => __('Nyast först', 'modularity-folder-browser'),
-                'date_asc' => __('Äldst först', 'modularity-folder-browser'),
-                'type_asc' => __('Filtyp', 'modularity-folder-browser'),
+                'name_asc' => __('Name A-Z', 'modularity-folder-browser'),
+                'name_desc' => __('Name Z-A', 'modularity-folder-browser'),
+                'date_desc' => __('Newest first', 'modularity-folder-browser'),
+                'date_asc' => __('Oldest first', 'modularity-folder-browser'),
+                'type_asc' => __('File type', 'modularity-folder-browser'),
             ),
             'default_value' => __('name_asc', 'modularity-folder-browser'),
             'return_format' => 'value',
@@ -237,13 +261,13 @@
             'allow_custom' => 0,
             'search_placeholder' => '',
         ),
-        7 => array(
+        8 => array(
             'key' => 'field_modularity_folder_browser_allowed_file_types',
-            'label' => __('Åsidosätt tillåtna filtyper', 'modularity-folder-browser'),
+            'label' => __('Allowed file types override', 'modularity-folder-browser'),
             'name' => 'allowed_file_types_override',
             'aria-label' => '',
             'type' => 'checkbox',
-            'instructions' => __('Valfri begränsning per modul. Om fältet lämnas tomt tillåts alla globalt konfigurerade filtyper.', 'modularity-folder-browser'),
+            'instructions' => __('Optional per-module restriction. Leaving this empty allows all globally configured file types.', 'modularity-folder-browser'),
             'required' => 0,
             'conditional_logic' => false,
             'wrapper' => array(
@@ -260,7 +284,7 @@
             ),
             'allow_custom' => 0,
             'save_custom' => 0,
-            'custom_choice_button_text' => 'Lägg till nytt val',
+            'custom_choice_button_text' => 'Add new choice',
         ),
     ),
     'location' => array(

@@ -35,6 +35,7 @@
     const showFileSize = browser.dataset.showFileSize === '1';
     const showModifiedDate = browser.dataset.showModifiedDate === '1';
     const showFileDescription = browser.dataset.showFileDescription === '1';
+    const useDownloadIcon = browser.dataset.downloadDisplay === 'icon';
     const meta = [];
 
     if (showFileType && file.extension) {
@@ -55,17 +56,19 @@
     const iconCategories = config.iconCategories || {};
     const iconUrl = icons[ext] || icons[''] || '';
     const iconCategory = iconCategories[ext] || 'file';
+    const downloadLabel = i18n.download || 'Download';
+    const downloadFileLabel = (i18n.downloadFile || 'Download %s').replace('%s', file.label || file.name || '');
 
     return `
       <li class="mod-file-browser__item mod-file-browser__item--file">
-        <a class="mod-file-browser__file-link" href="${escapeHtml(file.download_url)}">
+        <a class="mod-file-browser__file-link" href="${escapeHtml(file.download_url)}"${useDownloadIcon ? ` aria-label="${escapeHtml(downloadFileLabel)}"` : ''}>
           <span class="mod-file-browser__file-icon" data-icon="${iconCategory}" style="--_icon-url: url(${escapeHtml(iconUrl)})" aria-hidden="true"></span>
           <span class="mod-file-browser__file-main">
             <span class="mod-file-browser__file-name">${label}</span>
             ${showFileDescription && file.type_label ? `<span class="mod-file-browser__file-description">${escapeHtml(file.type_label)}</span>` : ''}
           </span>
           ${meta.length ? `<span class="mod-file-browser__file-meta">${escapeHtml(meta.join(' · '))}</span>` : ''}
-          <span class="mod-file-browser__download">${escapeHtml(i18n.download || 'Download')}</span>
+          ${useDownloadIcon ? '<span class="mod-file-browser__download mod-file-browser__download--icon" aria-hidden="true"><span class="mod-file-browser__download-icon" aria-hidden="true"></span></span>' : `<span class="mod-file-browser__download">${escapeHtml(downloadLabel)}</span>`}
         </a>
       </li>
     `;

@@ -1,14 +1,14 @@
 [{
     "key": "group_modularity_folder_browser_instance",
-    "title": "Inst\u00e4llningar f\u00f6r mappbl\u00e4ddrare",
+    "title": "Folder Browser Settings",
     "fields": [
         {
             "key": "field_modularity_folder_browser_top_folder_name",
-            "label": "Namn p\u00e5 toppmapp",
+            "label": "Top folder name",
             "name": "top_folder_name",
             "aria-label": "",
             "type": "text",
-            "instructions": "Valfri mappetikett som omsluter de valda mapparna p\u00e5 webbplatsen.",
+            "instructions": "Optional folder label that wraps the selected folders on the frontend.",
             "required": 0,
             "conditional_logic": false,
             "wrapper": {
@@ -17,18 +17,18 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "L\u00e4mna tomt f\u00f6r att visa valda mappar direkt",
+            "placeholder": "Leave empty to show selected folders directly",
             "maxlength": "",
             "prepend": "",
             "append": ""
         },
         {
             "key": "field_modularity_folder_browser_start_folders",
-            "label": "Startmappar",
+            "label": "Start folders",
             "name": "start_folders",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "V\u00e4lj en eller flera mappar i konfigurerade filsystemsk\u00e4llor. Absoluta s\u00f6kv\u00e4gar sparas aldrig.",
+            "instructions": "Select one or more folders inside configured filesystem sources. Absolute paths are never stored.",
             "required": 1,
             "conditional_logic": false,
             "wrapper": {
@@ -37,7 +37,7 @@
                 "id": ""
             },
             "layout": "block",
-            "button_label": "L\u00e4gg till mapp",
+            "button_label": "Add folder",
             "min": 1,
             "max": 0,
             "rows_per_page": 20,
@@ -46,7 +46,7 @@
             "sub_fields": [
                 {
                     "key": "field_modularity_folder_browser_source",
-                    "label": "Rotmapp",
+                    "label": "Root folder",
                     "name": "source",
                     "aria-label": "",
                     "type": "select",
@@ -75,11 +75,11 @@
                 },
                 {
                     "key": "field_modularity_folder_browser_folder",
-                    "label": "Valda mappar",
+                    "label": "Selected folders",
                     "name": "folder",
                     "aria-label": "",
                     "type": "textarea",
-                    "instructions": "V\u00e4lj en eller flera mappar fr\u00e5n den valda rotmappen.",
+                    "instructions": "Choose one or more folders from the selected root folder.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -98,7 +98,7 @@
                 },
                 {
                     "key": "field_modularity_folder_browser_initially_expanded",
-                    "label": "Utf\u00e4lld fr\u00e5n b\u00f6rjan",
+                    "label": "Initially expanded",
                     "name": "initially_expanded",
                     "aria-label": "",
                     "type": "true_false",
@@ -122,7 +122,7 @@
         },
         {
             "key": "field_modularity_folder_browser_show_file_type",
-            "label": "Visa filtyp",
+            "label": "Show file type",
             "name": "show_file_type",
             "aria-label": "",
             "type": "true_false",
@@ -142,7 +142,7 @@
         },
         {
             "key": "field_modularity_folder_browser_show_file_description",
-            "label": "Visa filbeskrivning",
+            "label": "Show file description",
             "name": "show_file_description",
             "aria-label": "",
             "type": "true_false",
@@ -162,7 +162,7 @@
         },
         {
             "key": "field_modularity_folder_browser_show_file_size",
-            "label": "Visa filstorlek",
+            "label": "Show file size",
             "name": "show_file_size",
             "aria-label": "",
             "type": "true_false",
@@ -182,7 +182,7 @@
         },
         {
             "key": "field_modularity_folder_browser_show_modified_date",
-            "label": "Visa \u00e4ndringsdatum",
+            "label": "Show modified date",
             "name": "show_modified_date",
             "aria-label": "",
             "type": "true_false",
@@ -201,8 +201,32 @@
             "ui_off_text": ""
         },
         {
+            "key": "field_modularity_folder_browser_download_display",
+            "label": "Download display",
+            "name": "download_display",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "text": "Text",
+                "icon": "Icon"
+            },
+            "default_value": "text",
+            "return_format": "value",
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "layout": "horizontal"
+        },
+        {
             "key": "field_modularity_folder_browser_sort_order",
-            "label": "Sorteringsordning",
+            "label": "Sort order",
             "name": "sort_order",
             "aria-label": "",
             "type": "select",
@@ -215,11 +239,11 @@
                 "id": ""
             },
             "choices": {
-                "name_asc": "Namn A-\u00d6",
-                "name_desc": "Namn \u00d6-A",
-                "date_desc": "Nyast f\u00f6rst",
-                "date_asc": "\u00c4ldst f\u00f6rst",
-                "type_asc": "Filtyp"
+                "name_asc": "Name A-Z",
+                "name_desc": "Name Z-A",
+                "date_desc": "Newest first",
+                "date_asc": "Oldest first",
+                "type_asc": "File type"
             },
             "default_value": "name_asc",
             "return_format": "value",
@@ -235,11 +259,11 @@
         },
         {
             "key": "field_modularity_folder_browser_allowed_file_types",
-            "label": "\u00c5sidos\u00e4tt till\u00e5tna filtyper",
+            "label": "Allowed file types override",
             "name": "allowed_file_types_override",
             "aria-label": "",
             "type": "checkbox",
-            "instructions": "Valfri begr\u00e4nsning per modul. Om f\u00e4ltet l\u00e4mnas tomt till\u00e5ts alla globalt konfigurerade filtyper.",
+            "instructions": "Optional per-module restriction. Leaving this empty allows all globally configured file types.",
             "required": 0,
             "conditional_logic": false,
             "wrapper": {
@@ -254,7 +278,7 @@
             "default_value": [],
             "allow_custom": 0,
             "save_custom": 0,
-            "custom_choice_button_text": "L\u00e4gg till nytt val"
+            "custom_choice_button_text": "Add new choice"
         }
     ],
     "location": [
@@ -290,4 +314,4 @@
     "acfe_meta": "",
     "acfe_note": ""
 }]
-
+

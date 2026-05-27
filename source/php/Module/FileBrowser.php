@@ -50,9 +50,11 @@ class FileBrowser extends \Modularity\Module
             'showModifiedDate' => !empty($fields['show_modified_date']),
             'showFileType' => !empty($fields['show_file_type']),
             'showFileDescription' => !array_key_exists('show_file_description', $fields) || !empty($fields['show_file_description']),
+            'downloadDisplay' => $this->normalizeDownloadDisplay((string) ($fields['download_display'] ?? 'text')),
             'sortOrder' => $sortOrder,
             'restBaseUrl' => esc_url_raw(rest_url('modularity-file-browser/v1/')),
             'folderIconUrl' => \ModularityFolderBrowser\Helper\IconResolver::getFolderUrl(),
+            'downloadIconUrl' => \ModularityFolderBrowser\Helper\IconResolver::getDownloadUrl(),
         ];
     }
 
@@ -145,5 +147,10 @@ class FileBrowser extends \Modularity\Module
         $allowed = ['name_asc', 'name_desc', 'date_desc', 'date_asc', 'type_asc'];
 
         return in_array($sortOrder, $allowed, true) ? $sortOrder : 'name_asc';
+    }
+
+    private function normalizeDownloadDisplay(string $downloadDisplay): string
+    {
+        return in_array($downloadDisplay, ['text', 'icon'], true) ? $downloadDisplay : 'text';
     }
 }

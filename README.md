@@ -42,6 +42,7 @@ Each source path must be absolute, readable by the web server user, and resolvab
 - Show file description
 - Show file size
 - Show modified date
+- Download display
 - Sort order
 - Allowed file types override
 

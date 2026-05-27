@@ -104,6 +104,18 @@ class IconResolver
     }
 
     /**
+     * Returns the absolute URL for the download icon.
+     *
+     * @return string Absolute URL to an SVG icon file.
+     */
+    public static function getDownloadUrl(): string
+    {
+        $url = MODULARITY_FOLDER_BROWSER_URL . '/source/icons/download.svg';
+
+        return (string) apply_filters('modularity_file_browser_download_icon', $url);
+    }
+
+    /**
      * Returns the icon category for $extension (the icon filename without .svg).
      *
      * @param string $extension  File extension without leading dot (e.g. 'pdf').

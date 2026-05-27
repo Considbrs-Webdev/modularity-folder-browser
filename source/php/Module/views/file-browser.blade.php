@@ -1,8 +1,10 @@
 <div id="{{ $id }}" class="mod-file-browser"
-  style="--file-browser-folder-icon-url: url('{{ esc_url($folderIconUrl) }}')" data-file-browser
+  style="--file-browser-folder-icon-url: url('{{ esc_url($folderIconUrl) }}'); --file-browser-download-icon-url: url('{{ esc_url($downloadIconUrl) }}')"
+  data-file-browser
   data-module-id="{{ $moduleId }}" data-rest-base-url="{{ $restBaseUrl }}"
   data-show-file-size="{{ $showFileSize ? '1' : '0' }}" data-show-modified-date="{{ $showModifiedDate ? '1' : '0' }}"
-  data-show-file-type="{{ $showFileType ? '1' : '0' }}" data-show-file-description="{{ $showFileDescription ? '1' : '0' }}">
+  data-show-file-type="{{ $showFileType ? '1' : '0' }}" data-show-file-description="{{ $showFileDescription ? '1' : '0' }}"
+  data-download-display="{{ esc_attr($downloadDisplay) }}">
   @if (empty($roots))
     <p class="mod-file-browser__empty">
       {{ __('No folders have been selected for this document browser.', 'modularity-folder-browser') }}</p>
@@ -87,9 +89,15 @@
                 if ($showModifiedDate && !empty($file['modified_human'])) {
                     $meta[] = sprintf(__('Updated %s', 'modularity-folder-browser'), $file['modified_human']);
                 }
+                $downloadAriaLabel = sprintf(
+                    /* translators: %s: file name. */
+                    __('Download %s', 'modularity-folder-browser'),
+                    $file['label']
+                );
               @endphp
               <li class="mod-file-browser__item mod-file-browser__item--file">
-                <a class="mod-file-browser__file-link" href="{!! esc_url($file['download_url']) !!}">
+                <a class="mod-file-browser__file-link" href="{!! esc_url($file['download_url']) !!}"
+                  @if ($downloadDisplay === 'icon') aria-label="{{ esc_attr($downloadAriaLabel) }}" @endif>
                   <span class="mod-file-browser__file-icon"
                     data-icon="{{ \ModularityFolderBrowser\Helper\IconResolver::getCategory($file['extension'] ?? '') }}"
                     style="--_icon-url: url('{{ esc_url(\ModularityFolderBrowser\Helper\IconResolver::getUrl($file['extension'] ?? '')) }}')"
@@ -103,7 +111,13 @@
                   @if (!empty($meta))
                     <span class="mod-file-browser__file-meta">{{ implode(' · ', $meta) }}</span>
                   @endif
-                  <span class="mod-file-browser__download">{{ __('Download', 'modularity-folder-browser') }}</span>
+                  @if ($downloadDisplay === 'icon')
+                    <span class="mod-file-browser__download mod-file-browser__download--icon" aria-hidden="true">
+                      <span class="mod-file-browser__download-icon" aria-hidden="true"></span>
+                    </span>
+                  @else
+                    <span class="mod-file-browser__download">{{ __('Download', 'modularity-folder-browser') }}</span>
+                  @endif
                 </a>
               </li>
             @endforeach

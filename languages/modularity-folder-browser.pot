@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-27T08:10:22+00:00\n"
+"POT-Creation-Date: 2026-05-27T09:18:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: modularity-folder-browser\n"
@@ -71,67 +71,79 @@ msgstr ""
 msgid "Root folder"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:83
+#: source/php/AcfFields/php/instance-settings.php:84
 msgid "Selected folders"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:87
+#: source/php/AcfFields/php/instance-settings.php:88
 msgid "Choose one or more folders from the selected root folder."
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:105
+#: source/php/AcfFields/php/instance-settings.php:107
 msgid "Initially expanded"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:128
+#: source/php/AcfFields/php/instance-settings.php:131
 msgid "Show file type"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:148
+#: source/php/AcfFields/php/instance-settings.php:151
 msgid "Show file description"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:168
+#: source/php/AcfFields/php/instance-settings.php:171
 msgid "Show file size"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:188
+#: source/php/AcfFields/php/instance-settings.php:191
 msgid "Show modified date"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:208
-msgid "Sort order"
-msgstr ""
-
-#: source/php/AcfFields/php/instance-settings.php:221
-msgid "Name A-Z"
-msgstr ""
-
-#: source/php/AcfFields/php/instance-settings.php:222
-msgid "Name Z-A"
-msgstr ""
-
-#: source/php/AcfFields/php/instance-settings.php:223
-msgid "Newest first"
+#: source/php/AcfFields/php/instance-settings.php:211
+msgid "Download display"
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:224
-msgid "Oldest first"
+msgid "Text"
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:225
+msgid "Icon"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:235
+msgid "Sort order"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:248
+msgid "Name A-Z"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:249
+msgid "Name Z-A"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:250
+msgid "Newest first"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:251
+msgid "Oldest first"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:252
 msgid "File type"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:227
+#: source/php/AcfFields/php/instance-settings.php:254
 msgid "name_asc"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:241
+#: source/php/AcfFields/php/instance-settings.php:268
 msgid "Allowed file types override"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:245
+#: source/php/AcfFields/php/instance-settings.php:272
 msgid "Optional per-module restriction. Leaving this empty allows all globally configured file types."
 msgstr ""
 
@@ -153,59 +165,65 @@ msgid "Folder"
 msgstr ""
 
 #: source/php/App.php:69
-#: source/php/Module/views/file-browser.blade.php:111
+#: source/php/Module/views/file-browser.blade.php:124
 msgid "Download"
 msgstr ""
 
-#: source/php/App.php:108
-msgid "Select folders"
-msgstr ""
-
-#: source/php/App.php:109
-msgid "Select folders to expose"
+#. translators: %s: file name.
+#: source/php/App.php:71
+#: source/php/Module/views/file-browser.blade.php:99
+msgid "Download %s"
 msgstr ""
 
 #: source/php/App.php:110
-msgid "Source"
+msgid "Select folders"
 msgstr ""
 
 #: source/php/App.php:111
-msgid "selected"
+msgid "Select folders to expose"
 msgstr ""
 
 #: source/php/App.php:112
-msgid "OK"
+msgid "Source"
 msgstr ""
 
 #: source/php/App.php:113
-msgid "Cancel"
+msgid "selected"
 msgstr ""
 
 #: source/php/App.php:114
-msgid "Expand folder"
+msgid "OK"
 msgstr ""
 
 #: source/php/App.php:115
-msgid "Collapse folder"
+msgid "Cancel"
 msgstr ""
 
 #: source/php/App.php:116
-msgid "Source root"
+msgid "Expand folder"
 msgstr ""
 
 #: source/php/App.php:117
-msgid "Selected folder"
+msgid "Collapse folder"
 msgstr ""
 
 #: source/php/App.php:118
-msgid "Loading folders."
+msgid "Source root"
 msgstr ""
 
 #: source/php/App.php:119
-msgid "No folders found."
+msgid "Selected folder"
 msgstr ""
 
 #: source/php/App.php:120
+msgid "Loading folders."
+msgstr ""
+
+#: source/php/App.php:121
+msgid "No folders found."
+msgstr ""
+
+#: source/php/App.php:122
 msgid "Folders could not be loaded."
 msgstr ""
 
@@ -221,7 +239,7 @@ msgstr ""
 msgid "Expose selected server folders as an accessible downloadable document browser."
 msgstr ""
 
-#: source/php/Module/FileBrowser.php:94
+#: source/php/Module/FileBrowser.php:96
 #: source/php/Rest/RestController.php:271
 msgid "Documents"
 msgstr ""
@@ -257,7 +275,7 @@ msgid "Selected document browser is not available."
 msgstr ""
 
 #: source/php/Rest/RestController.php:232
-#: source/php/Module/views/file-browser.blade.php:8
+#: source/php/Module/views/file-browser.blade.php:10
 msgid "No folders have been selected for this document browser."
 msgstr ""
 
@@ -369,24 +387,24 @@ msgstr ""
 msgid "The selected item is not readable."
 msgstr ""
 
-#: source/php/Module/views/file-browser.blade.php:26
-#: source/php/Module/views/file-browser.blade.php:52
+#: source/php/Module/views/file-browser.blade.php:28
+#: source/php/Module/views/file-browser.blade.php:54
 msgid "%d folder"
 msgid_plural "%d folders"
 msgstr[0] ""
 msgstr[1] ""
 
-#: source/php/Module/views/file-browser.blade.php:27
-#: source/php/Module/views/file-browser.blade.php:53
+#: source/php/Module/views/file-browser.blade.php:29
+#: source/php/Module/views/file-browser.blade.php:55
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: source/php/Module/views/file-browser.blade.php:74
+#: source/php/Module/views/file-browser.blade.php:76
 msgid "Contains documents"
 msgstr ""
 
-#: source/php/Module/views/file-browser.blade.php:93
+#: source/php/Module/views/file-browser.blade.php:95
 msgid "Updated %s"
 msgstr ""

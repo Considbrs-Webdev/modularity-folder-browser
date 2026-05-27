@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-27T01:56:07+00:00\n"
+"POT-Creation-Date: 2026-05-27T08:10:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: modularity-folder-browser\n"
@@ -88,62 +88,50 @@ msgid "Show file type"
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:148
-msgid "Show file size"
+msgid "Show file description"
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:168
-msgid "Show modified date"
+msgid "Show file size"
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:188
+msgid "Show modified date"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:208
 msgid "Sort order"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:201
+#: source/php/AcfFields/php/instance-settings.php:221
 msgid "Name A-Z"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:202
+#: source/php/AcfFields/php/instance-settings.php:222
 msgid "Name Z-A"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:203
+#: source/php/AcfFields/php/instance-settings.php:223
 msgid "Newest first"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:204
+#: source/php/AcfFields/php/instance-settings.php:224
 msgid "Oldest first"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:205
+#: source/php/AcfFields/php/instance-settings.php:225
 msgid "File type"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:207
+#: source/php/AcfFields/php/instance-settings.php:227
 msgid "name_asc"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:221
-msgid "Initial state"
-msgstr ""
-
-#: source/php/AcfFields/php/instance-settings.php:234
-msgid "Collapsed"
-msgstr ""
-
-#: source/php/AcfFields/php/instance-settings.php:235
-msgid "Expanded first level"
-msgstr ""
-
-#: source/php/AcfFields/php/instance-settings.php:237
-msgid "collapsed"
-msgstr ""
-
-#: source/php/AcfFields/php/instance-settings.php:251
+#: source/php/AcfFields/php/instance-settings.php:241
 msgid "Allowed file types override"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:255
+#: source/php/AcfFields/php/instance-settings.php:245
 msgid "Optional per-module restriction. Leaving this empty allows all globally configured file types."
 msgstr ""
 

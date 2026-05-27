@@ -38,19 +38,19 @@ class FileBrowser extends \Modularity\Module
             ? $fields['allowed_file_types_override']
             : [];
         $allowedExtensions = $this->scanner->getAllowedExtensions($moduleId, $override);
-        $initialState = (string) ($fields['initial_state'] ?? 'collapsed');
+        $topFolderName = sanitize_text_field((string) ($fields['top_folder_name'] ?? ''));
 
         return [
             'id' => 'mod-file-browser-' . $moduleId . '-' . wp_unique_id(),
             'moduleId' => $moduleId,
-            'roots' => $this->prepareRoots((array) ($fields['start_folders'] ?? []), $moduleId, $sortOrder, $allowedExtensions, $initialState),
-            'topFolderName' => sanitize_text_field((string) ($fields['top_folder_name'] ?? '')),
-            'topFolderExpanded' => true,
+            'roots' => $this->prepareRoots((array) ($fields['start_folders'] ?? []), $moduleId, $sortOrder, $allowedExtensions),
+            'topFolderName' => $topFolderName,
+            'topFolderExpanded' => $topFolderName !== '',
             'showFileSize' => !empty($fields['show_file_size']),
             'showModifiedDate' => !empty($fields['show_modified_date']),
             'showFileType' => !empty($fields['show_file_type']),
+            'showFileDescription' => !array_key_exists('show_file_description', $fields) || !empty($fields['show_file_description']),
             'sortOrder' => $sortOrder,
-            'initialState' => $initialState,
             'restBaseUrl' => esc_url_raw(rest_url('modularity-file-browser/v1/')),
             'folderIconUrl' => \ModularityFolderBrowser\Helper\IconResolver::getFolderUrl(),
         ];
@@ -61,7 +61,7 @@ class FileBrowser extends \Modularity\Module
         return 'file-browser.blade.php';
     }
 
-    private function prepareRoots(array $roots, int $moduleId, string $sortOrder, array $allowedExtensions, string $initialState): array
+    private function prepareRoots(array $roots, int $moduleId, string $sortOrder, array $allowedExtensions): array
     {
         $prepared = [];
 
@@ -95,14 +95,13 @@ class FileBrowser extends \Modularity\Module
 
                 $rootIndex = count($prepared);
                 $listing = $this->scanner->listDirectory($base, '', $moduleId, $rootIndex, $sortOrder, $allowedExtensions);
-                $isExpanded = !empty($root['initially_expanded']) || $initialState === 'expanded_first_level';
 
                 $prepared[] = [
                     'index' => $rootIndex,
                     'source' => $source,
                     'path' => $path,
                     'label' => $displayName,
-                    'expanded' => $isExpanded,
+                    'expanded' => !empty($root['initially_expanded']),
                     'listing' => is_wp_error($listing) ? [
                         'folders' => [],
                         'files' => [],
@@ -111,6 +110,10 @@ class FileBrowser extends \Modularity\Module
                     'error' => is_wp_error($listing) ? $listing->get_error_message() : '',
                 ];
             }
+        }
+
+        if (count($prepared) === 1) {
+            $prepared[0]['expanded'] = true;
         }
 
         return $prepared;

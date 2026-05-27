@@ -10,7 +10,7 @@ An accessible Modularity module for exposing selected server folders as a public
 - Accessible disclosure/list interface using real buttons and links
 - Lazy-loaded subfolders through WordPress REST endpoints
 - Public download endpoint with server-side path and extension validation
-- Optional file type, file size, and modified date display
+- Optional file type, file description, file size, and modified date display
 - Natural sorting by name, date, or file type
 - Hidden files, traversal attempts, and unsafe file extensions are blocked
 - Source paths stay in code and are never rendered in HTML or JSON
@@ -39,10 +39,10 @@ Each source path must be absolute, readable by the web server user, and resolvab
 - Selected folders
 - Initially expanded
 - Show file type
+- Show file description
 - Show file size
 - Show modified date
 - Sort order
-- Initial state
 - Allowed file types override
 
 Selected folders are stored only as relative paths inside the selected source. The admin folder picker uses an authenticated REST endpoint and never shows absolute paths.

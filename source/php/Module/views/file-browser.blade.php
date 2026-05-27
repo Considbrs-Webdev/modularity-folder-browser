@@ -2,7 +2,7 @@
   style="--file-browser-folder-icon-url: url('{{ esc_url($folderIconUrl) }}')" data-file-browser
   data-module-id="{{ $moduleId }}" data-rest-base-url="{{ $restBaseUrl }}"
   data-show-file-size="{{ $showFileSize ? '1' : '0' }}" data-show-modified-date="{{ $showModifiedDate ? '1' : '0' }}"
-  data-show-file-type="{{ $showFileType ? '1' : '0' }}">
+  data-show-file-type="{{ $showFileType ? '1' : '0' }}" data-show-file-description="{{ $showFileDescription ? '1' : '0' }}">
   @if (empty($roots))
     <p class="mod-file-browser__empty">
       {{ __('No folders have been selected for this document browser.', 'modularity-folder-browser') }}</p>
@@ -96,7 +96,7 @@
                     aria-hidden="true"></span>
                   <span class="mod-file-browser__file-main">
                     <span class="mod-file-browser__file-name">{{ $file['label'] }}</span>
-                    @if (!empty($file['type_label']))
+                    @if ($showFileDescription && !empty($file['type_label']))
                       <span class="mod-file-browser__file-description">{{ $file['type_label'] }}</span>
                     @endif
                   </span>

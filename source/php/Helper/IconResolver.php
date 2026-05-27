@@ -61,16 +61,28 @@ class IconResolver
         'webp' => 'image',
         // Video
         'mp4'  => 'video',
+        'm4v'  => 'video',
         'mov'  => 'video',
         'avi'  => 'video',
         'webm' => 'video',
         'mkv'  => 'video',
+        'wmv'  => 'video',
+        'mpeg' => 'video',
+        'mpg'  => 'video',
+        '3gp'  => 'video',
+        'ogv'  => 'video',
         // Audio
         'mp3'  => 'audio',
         'wav'  => 'audio',
         'ogg'  => 'audio',
+        'oga'  => 'audio',
         'm4a'  => 'audio',
+        'aac'  => 'audio',
         'flac' => 'audio',
+        'wma'  => 'audio',
+        'aiff' => 'audio',
+        'aif'  => 'audio',
+        'opus' => 'audio',
     ];
 
     /**

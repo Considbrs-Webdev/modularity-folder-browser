@@ -6,7 +6,6 @@ An accessible Modularity module for exposing selected server folders as a public
 
 - Select one or more start folders from configured filesystem sources
 - Optional top folder name to group selected folders on the frontend
-- Optional display name per selected folder
 - Modal folder picker with lazy-loaded expandable folder trees and checkbox selection
 - Accessible disclosure/list interface using real buttons and links
 - Lazy-loaded subfolders through WordPress REST endpoints
@@ -15,6 +14,7 @@ An accessible Modularity module for exposing selected server folders as a public
 - Natural sorting by name, date, or file type
 - Hidden files, traversal attempts, and unsafe file extensions are blocked
 - Source paths stay in code and are never rendered in HTML or JSON
+- Default file support includes common office documents, text files, images, archives, video, and audio
 
 ## Configuration
 
@@ -36,7 +36,7 @@ Each source path must be absolute, readable by the web server user, and resolvab
 - Top folder name
 - Start folders
 - Source
-- Folder
+- Selected folders
 - Initially expanded
 - Show file type
 - Show file size
@@ -45,7 +45,9 @@ Each source path must be absolute, readable by the web server user, and resolvab
 - Initial state
 - Allowed file types override
 
-The folder field stores only a relative path inside the selected source. The admin folder picker uses an authenticated REST endpoint and never shows absolute paths.
+Selected folders are stored only as relative paths inside the selected source. The admin folder picker uses an authenticated REST endpoint and never shows absolute paths.
+
+The allowed file types override field can only narrow the globally allowed extensions. Use the `modularity_file_browser_allowed_extensions` filter to change the global list.
 
 ## REST Endpoints
 
@@ -74,11 +76,63 @@ add_filter('modularity_file_browser_sources', function (array $sources): array {
 
 ### `modularity_file_browser_allowed_extensions`
 
-Restrict or extend the global file extension allowlist. Server-side executable extensions remain blocked.
+Restrict or extend the global file extension allowlist. The filter receives the plugin defaults and the current module ID, so it can be used to add file types, remove file types, or replace the whole list. Server-side executable extensions remain blocked even if they are added here.
 
 ```php
 add_filter('modularity_file_browser_allowed_extensions', function (array $extensions): array {
-    return ['pdf', 'docx', 'xlsx'];
+    $extensions[] = 'heic';
+
+    return array_values(array_unique($extensions));
+});
+```
+
+```php
+add_filter('modularity_file_browser_allowed_extensions', function (array $extensions): array {
+    return array_values(array_diff($extensions, ['zip', 'rar', '7z', 'tar', 'gz']));
+});
+```
+
+```php
+add_filter('modularity_file_browser_allowed_extensions', function (array $extensions, ?int $moduleId): array {
+    if ($moduleId === 123) {
+        return ['pdf', 'docx', 'xlsx'];
+    }
+
+    return $extensions;
+}, 10, 2);
+```
+
+Default allowed extensions:
+
+```txt
+pdf, doc, docx, odt, rtf, xls, xlsx, ods, ppt, pptx, odp, txt, md, csv,
+jpg, jpeg, png, gif, webp,
+zip, rar, gz, 7z, tar,
+mp4, m4v, mov, avi, webm, mkv, wmv, mpeg, mpg, 3gp, ogv,
+mp3, wav, ogg, oga, m4a, aac, flac, wma, aiff, aif, opus
+```
+
+### `modularity_file_browser_file_icon`
+
+Override the icon URL for a file extension or icon category.
+
+```php
+add_filter('modularity_file_browser_file_icon', function (string $url, string $extension, string $category): string {
+    if ($category === 'archive') {
+        return get_stylesheet_directory_uri() . '/assets/icons/archive.svg';
+    }
+
+    return $url;
+}, 10, 3);
+```
+
+### `modularity_file_browser_folder_icon`
+
+Override the folder icon URL.
+
+```php
+add_filter('modularity_file_browser_folder_icon', function (string $url): string {
+    return get_stylesheet_directory_uri() . '/assets/icons/folder.svg';
 });
 ```
 

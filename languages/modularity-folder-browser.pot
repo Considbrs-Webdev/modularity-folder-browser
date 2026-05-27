@@ -1,0 +1,404 @@
+# Copyright (C) 2026 Consid Borås AB
+# This file is distributed under the MIT.
+msgid ""
+msgstr ""
+"Project-Id-Version: Modularity Folder Browser 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/modularity-folder-browser\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-05-27T01:56:07+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: modularity-folder-browser\n"
+
+#. Plugin Name of the plugin
+#: modularity-folder-browser.php
+msgid "Modularity Folder Browser"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: modularity-folder-browser.php
+msgid "https://github.com/considbrs-webdev/modularity-folder-browser"
+msgstr ""
+
+#. Description of the plugin
+#: modularity-folder-browser.php
+msgid "A Folder Browser module for Modularity."
+msgstr ""
+
+#. Author of the plugin
+#: modularity-folder-browser.php
+msgid "Consid Borås AB"
+msgstr ""
+
+#. Author URI of the plugin
+#: modularity-folder-browser.php
+msgid "https://github.com/considbrs-webdev"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:8
+msgid "Folder Browser Settings"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:12
+msgid "Top folder name"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:16
+msgid "Optional folder label that wraps the selected folders on the frontend."
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:25
+msgid "Leave empty to show selected folders directly"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:32
+msgid "Start folders"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:36
+msgid "Select one or more folders inside configured filesystem sources. Absolute paths are never stored."
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:45
+msgid "Add folder"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:54
+msgid "Root folder"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:83
+msgid "Selected folders"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:87
+msgid "Choose one or more folders from the selected root folder."
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:105
+msgid "Initially expanded"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:128
+msgid "Show file type"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:148
+msgid "Show file size"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:168
+msgid "Show modified date"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:188
+msgid "Sort order"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:201
+msgid "Name A-Z"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:202
+msgid "Name Z-A"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:203
+msgid "Newest first"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:204
+msgid "Oldest first"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:205
+msgid "File type"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:207
+msgid "name_asc"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:221
+msgid "Initial state"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:234
+msgid "Collapsed"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:235
+msgid "Expanded first level"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:237
+msgid "collapsed"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:251
+msgid "Allowed file types override"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:255
+msgid "Optional per-module restriction. Leaving this empty allows all globally configured file types."
+msgstr ""
+
+#: source/php/App.php:65
+msgid "Loading folder contents."
+msgstr ""
+
+#: source/php/App.php:66
+#: source/php/Service/DirectoryScanner.php:192
+msgid "This folder could not be loaded."
+msgstr ""
+
+#: source/php/App.php:67
+msgid "No documents found."
+msgstr ""
+
+#: source/php/App.php:68
+msgid "Folder"
+msgstr ""
+
+#: source/php/App.php:69
+#: source/php/Module/views/file-browser.blade.php:111
+msgid "Download"
+msgstr ""
+
+#: source/php/App.php:108
+msgid "Select folders"
+msgstr ""
+
+#: source/php/App.php:109
+msgid "Select folders to expose"
+msgstr ""
+
+#: source/php/App.php:110
+msgid "Source"
+msgstr ""
+
+#: source/php/App.php:111
+msgid "selected"
+msgstr ""
+
+#: source/php/App.php:112
+msgid "OK"
+msgstr ""
+
+#: source/php/App.php:113
+msgid "Cancel"
+msgstr ""
+
+#: source/php/App.php:114
+msgid "Expand folder"
+msgstr ""
+
+#: source/php/App.php:115
+msgid "Collapse folder"
+msgstr ""
+
+#: source/php/App.php:116
+msgid "Source root"
+msgstr ""
+
+#: source/php/App.php:117
+msgid "Selected folder"
+msgstr ""
+
+#: source/php/App.php:118
+msgid "Loading folders."
+msgstr ""
+
+#: source/php/App.php:119
+msgid "No folders found."
+msgstr ""
+
+#: source/php/App.php:120
+msgid "Folders could not be loaded."
+msgstr ""
+
+#: source/php/Module/FileBrowser.php:23
+msgid "Folder Browser"
+msgstr ""
+
+#: source/php/Module/FileBrowser.php:24
+msgid "Folder Browsers"
+msgstr ""
+
+#: source/php/Module/FileBrowser.php:25
+msgid "Expose selected server folders as an accessible downloadable document browser."
+msgstr ""
+
+#: source/php/Module/FileBrowser.php:94
+#: source/php/Rest/RestController.php:271
+msgid "Documents"
+msgstr ""
+
+#: source/php/Rest/RestController.php:92
+#: source/php/Service/PathResolver.php:21
+msgid "Selected source is not available."
+msgstr ""
+
+#: source/php/Rest/RestController.php:98
+#: source/php/Service/PathResolver.php:27
+msgid "Invalid folder path."
+msgstr ""
+
+#: source/php/Rest/RestController.php:130
+#: source/php/Rest/RestController.php:175
+msgid "Selected folder is not available."
+msgstr ""
+
+#: source/php/Rest/RestController.php:143
+#: source/php/Rest/RestController.php:188
+#: source/php/Service/PathResolver.php:41
+#: source/php/Service/PathResolver.php:57
+msgid "Invalid path."
+msgstr ""
+
+#: source/php/Rest/RestController.php:200
+msgid "This file type is not available for download."
+msgstr ""
+
+#: source/php/Rest/RestController.php:225
+msgid "Selected document browser is not available."
+msgstr ""
+
+#: source/php/Rest/RestController.php:232
+#: source/php/Module/views/file-browser.blade.php:8
+msgid "No folders have been selected for this document browser."
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:38
+msgid "PDF document"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:39
+#: source/php/Service/FileMetadataFormatter.php:40
+msgid "Word document"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:41
+msgid "OpenDocument text document"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:42
+msgid "Rich text document"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:43
+#: source/php/Service/FileMetadataFormatter.php:44
+msgid "Excel spreadsheet"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:45
+msgid "OpenDocument spreadsheet"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:46
+#: source/php/Service/FileMetadataFormatter.php:47
+msgid "PowerPoint presentation"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:48
+msgid "OpenDocument presentation"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:49
+msgid "CSV file"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:50
+msgid "Text file"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:51
+msgid "Markdown file"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:52
+#: source/php/Service/FileMetadataFormatter.php:53
+#: source/php/Service/FileMetadataFormatter.php:54
+#: source/php/Service/FileMetadataFormatter.php:55
+#: source/php/Service/FileMetadataFormatter.php:56
+msgid "Image"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:57
+#: source/php/Service/FileMetadataFormatter.php:58
+#: source/php/Service/FileMetadataFormatter.php:59
+#: source/php/Service/FileMetadataFormatter.php:60
+#: source/php/Service/FileMetadataFormatter.php:61
+msgid "Archive file"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:62
+#: source/php/Service/FileMetadataFormatter.php:63
+#: source/php/Service/FileMetadataFormatter.php:64
+#: source/php/Service/FileMetadataFormatter.php:65
+#: source/php/Service/FileMetadataFormatter.php:66
+#: source/php/Service/FileMetadataFormatter.php:67
+#: source/php/Service/FileMetadataFormatter.php:68
+#: source/php/Service/FileMetadataFormatter.php:69
+#: source/php/Service/FileMetadataFormatter.php:70
+#: source/php/Service/FileMetadataFormatter.php:71
+#: source/php/Service/FileMetadataFormatter.php:72
+msgid "Video file"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:73
+#: source/php/Service/FileMetadataFormatter.php:74
+#: source/php/Service/FileMetadataFormatter.php:75
+#: source/php/Service/FileMetadataFormatter.php:76
+#: source/php/Service/FileMetadataFormatter.php:77
+#: source/php/Service/FileMetadataFormatter.php:78
+#: source/php/Service/FileMetadataFormatter.php:79
+#: source/php/Service/FileMetadataFormatter.php:80
+#: source/php/Service/FileMetadataFormatter.php:81
+#: source/php/Service/FileMetadataFormatter.php:82
+#: source/php/Service/FileMetadataFormatter.php:83
+msgid "Audio file"
+msgstr ""
+
+#: source/php/Service/FileMetadataFormatter.php:86
+msgid "%s file"
+msgstr ""
+
+#: source/php/Service/PathResolver.php:49
+#: source/php/Service/PathResolver.php:65
+msgid "The selected document is no longer available."
+msgstr ""
+
+#: source/php/Service/PathResolver.php:61
+msgid "The selected folder is no longer available."
+msgstr ""
+
+#: source/php/Service/PathResolver.php:69
+msgid "The selected item is not readable."
+msgstr ""
+
+#: source/php/Module/views/file-browser.blade.php:26
+#: source/php/Module/views/file-browser.blade.php:52
+msgid "%d folder"
+msgid_plural "%d folders"
+msgstr[0] ""
+msgstr[1] ""
+
+#: source/php/Module/views/file-browser.blade.php:27
+#: source/php/Module/views/file-browser.blade.php:53
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: source/php/Module/views/file-browser.blade.php:74
+msgid "Contains documents"
+msgstr ""
+
+#: source/php/Module/views/file-browser.blade.php:93
+msgid "Updated %s"
+msgstr ""

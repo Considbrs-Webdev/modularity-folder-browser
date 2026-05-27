@@ -25,7 +25,7 @@
           </span>
           ${folder.has_children ? `<span class="mod-file-browser__meta">${escapeHtml(i18n.folder || 'Folder')}</span>` : ''}
         </button>
-        <ol id="${id}" class="mod-file-browser__list mod-file-browser__list--nested" hidden></ol>
+        <ol id="${id}" class="mod-file-browser__list mod-file-browser__list--nested" aria-live="polite" hidden></ol>
       </li>
     `;
   };
@@ -67,7 +67,7 @@
             <span class="mod-file-browser__file-name">${label}</span>
             ${showFileDescription && file.type_label ? `<span class="mod-file-browser__file-description">${escapeHtml(file.type_label)}</span>` : ''}
           </span>
-          ${meta.length ? `<span class="mod-file-browser__file-meta">${escapeHtml(meta.join(' · '))}</span>` : ''}
+          ${meta.length ? `<span class="mod-file-browser__file-meta" aria-hidden="true">${escapeHtml(meta.join(' · '))}</span><span class="screen-reader-text">${escapeHtml(meta.join(', '))}</span>` : ''}
           ${useDownloadIcon ? '<span class="mod-file-browser__download mod-file-browser__download--icon" aria-hidden="true"><span class="mod-file-browser__download-icon" aria-hidden="true"></span></span>' : `<span class="mod-file-browser__download">${escapeHtml(downloadLabel)}</span>`}
         </a>
       </li>

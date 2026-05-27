@@ -1,9 +1,9 @@
 <div id="{{ $id }}" class="mod-file-browser"
   style="--file-browser-folder-icon-url: url('{{ esc_url($folderIconUrl) }}'); --file-browser-download-icon-url: url('{{ esc_url($downloadIconUrl) }}')"
-  data-file-browser
-  data-module-id="{{ $moduleId }}" data-rest-base-url="{{ $restBaseUrl }}"
+  data-file-browser data-module-id="{{ $moduleId }}" data-rest-base-url="{{ $restBaseUrl }}"
   data-show-file-size="{{ $showFileSize ? '1' : '0' }}" data-show-modified-date="{{ $showModifiedDate ? '1' : '0' }}"
-  data-show-file-type="{{ $showFileType ? '1' : '0' }}" data-show-file-description="{{ $showFileDescription ? '1' : '0' }}"
+  data-show-file-type="{{ $showFileType ? '1' : '0' }}"
+  data-show-file-description="{{ $showFileDescription ? '1' : '0' }}"
   data-download-display="{{ esc_attr($downloadDisplay) }}">
   @if (empty($roots))
     <p class="mod-file-browser__empty">
@@ -30,7 +30,7 @@
             </span>
           </button>
 
-          <ol id="{{ $topPanelId }}" class="mod-file-browser__list mod-file-browser__list--nested"
+          <ol id="{{ $topPanelId }}" class="mod-file-browser__list mod-file-browser__list--nested" aria-live="polite"
             {{ $topFolderExpanded ? '' : 'hidden' }}>
       @endif
 
@@ -54,7 +54,7 @@
             </span>
           </button>
 
-          <ol id="{{ $rootPanelId }}" class="mod-file-browser__list mod-file-browser__list--nested"
+          <ol id="{{ $rootPanelId }}" class="mod-file-browser__list mod-file-browser__list--nested" aria-live="polite"
             {{ $root['expanded'] ? '' : 'hidden' }}>
             @foreach ($root['listing']['folders'] ?? [] as $folder)
               @php $folderPanelId = $id . '-folder-' . $root['index'] . '-' . md5($folder['path']); @endphp
@@ -72,7 +72,8 @@
                       class="mod-file-browser__meta">{{ __('Contains documents', 'modularity-folder-browser') }}</span>
                   @endif
                 </button>
-                <ol id="{{ $folderPanelId }}" class="mod-file-browser__list mod-file-browser__list--nested" hidden>
+                <ol id="{{ $folderPanelId }}" class="mod-file-browser__list mod-file-browser__list--nested"
+                  aria-live="polite" hidden>
                 </ol>
               </li>
             @endforeach
@@ -92,7 +93,7 @@
                 $downloadAriaLabel = sprintf(
                     /* translators: %s: file name. */
                     __('Download %s', 'modularity-folder-browser'),
-                    $file['label']
+                    $file['label'],
                 );
               @endphp
               <li class="mod-file-browser__item mod-file-browser__item--file">
@@ -109,7 +110,8 @@
                     @endif
                   </span>
                   @if (!empty($meta))
-                    <span class="mod-file-browser__file-meta">{{ implode(' · ', $meta) }}</span>
+                    <span class="mod-file-browser__file-meta" aria-hidden="true">{{ implode(' · ', $meta) }}</span>
+                    <span class="screen-reader-text">{{ implode(', ', $meta) }}</span>
                   @endif
                   @if ($downloadDisplay === 'icon')
                     <span class="mod-file-browser__download mod-file-browser__download--icon" aria-hidden="true">

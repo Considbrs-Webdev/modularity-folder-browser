@@ -1,0 +1,300 @@
+[{
+    "key": "group_modularity_folder_browser_instance",
+    "title": "Folder Browser Settings",
+    "fields": [
+        {
+            "key": "field_modularity_folder_browser_top_folder_name",
+            "label": "Top folder name",
+            "name": "top_folder_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional folder label that wraps the selected folders on the frontend.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Leave empty to show selected folders directly",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_modularity_folder_browser_start_folders",
+            "label": "Start folders",
+            "name": "start_folders",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Select one or more folders inside configured filesystem sources. Absolute paths are never stored.",
+            "required": 1,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "mod-file-browser-start-folders-field",
+                "id": ""
+            },
+            "layout": "block",
+            "button_label": "Add folder",
+            "min": 1,
+            "max": 0,
+            "rows_per_page": 20,
+            "collapsed": "",
+            "acfe_repeater_stylised_button": 0,
+            "sub_fields": [
+                {
+                    "key": "field_modularity_folder_browser_source",
+                    "label": "Root folder",
+                    "name": "source",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "35",
+                        "class": "mod-file-browser-source-field",
+                        "id": ""
+                    },
+                    "choices": [],
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "ui": 1,
+                    "ajax": 0,
+                    "multiple": 0,
+                    "default_value": false,
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "allow_custom": 0,
+                    "search_placeholder": "",
+                    "parent_repeater": "field_modularity_folder_browser_start_folders"
+                },
+                {
+                    "key": "field_modularity_folder_browser_folder",
+                    "label": "Selected folders",
+                    "name": "folder",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Choose one or more folders from the selected root folder.",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "mod-file-browser-selected-folders-field",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "new_lines": "",
+                    "rows": 2,
+                    "maxlength": "",
+                    "placeholder": "",
+                    "acfe_textarea_code": 0,
+                    "parent_repeater": "field_modularity_folder_browser_start_folders"
+                },
+                {
+                    "key": "field_modularity_folder_browser_initially_expanded",
+                    "label": "Initially expanded",
+                    "name": "initially_expanded",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "15",
+                        "class": "",
+                        "id": ""
+                    },
+                    "ui": 1,
+                    "default_value": 0,
+                    "message": "",
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "parent_repeater": "field_modularity_folder_browser_start_folders"
+                }
+            ]
+        },
+        {
+            "key": "field_modularity_folder_browser_show_file_type",
+            "label": "Show file type",
+            "name": "show_file_type",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "ui": 1,
+            "message": "",
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_modularity_folder_browser_show_file_size",
+            "label": "Show file size",
+            "name": "show_file_size",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "ui": 1,
+            "message": "",
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_modularity_folder_browser_show_modified_date",
+            "label": "Show modified date",
+            "name": "show_modified_date",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "ui": 1,
+            "message": "",
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_modularity_folder_browser_sort_order",
+            "label": "Sort order",
+            "name": "sort_order",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "name_asc": "Name A-Z",
+                "name_desc": "Name Z-A",
+                "date_desc": "Newest first",
+                "date_asc": "Oldest first",
+                "type_asc": "File type"
+            },
+            "default_value": "name_asc",
+            "return_format": "value",
+            "ui": 1,
+            "multiple": 0,
+            "allow_null": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0,
+            "allow_custom": 0,
+            "search_placeholder": ""
+        },
+        {
+            "key": "field_modularity_folder_browser_initial_state",
+            "label": "Initial state",
+            "name": "initial_state",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "collapsed": "Collapsed",
+                "expanded_first_level": "Expanded first level"
+            },
+            "default_value": "collapsed",
+            "return_format": "value",
+            "ui": 1,
+            "multiple": 0,
+            "allow_null": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0,
+            "allow_custom": 0,
+            "search_placeholder": ""
+        },
+        {
+            "key": "field_modularity_folder_browser_allowed_file_types",
+            "label": "Allowed file types override",
+            "name": "allowed_file_types_override",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "Optional per-module restriction. Leaving this empty allows all globally configured file types.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": [],
+            "return_format": "value",
+            "layout": "horizontal",
+            "toggle": 1,
+            "default_value": [],
+            "allow_custom": 0,
+            "save_custom": 0,
+            "custom_choice_button_text": "L\u00e4gg till nytt val"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "mod-folder-browser"
+            }
+        ],
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/folder-browser"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "left",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
+}]
+

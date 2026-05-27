@@ -89,7 +89,7 @@
                 }
               @endphp
               <li class="mod-file-browser__item mod-file-browser__item--file">
-                <a class="mod-file-browser__file-link" href="{{ esc_url($file['download_url']) }}">
+                <a class="mod-file-browser__file-link" href="{!! esc_url($file['download_url']) !!}">
                   <span class="mod-file-browser__file-icon"
                     data-icon="{{ \ModularityFolderBrowser\Helper\IconResolver::getCategory($file['extension'] ?? '') }}"
                     style="--_icon-url: url('{{ esc_url(\ModularityFolderBrowser\Helper\IconResolver::getUrl($file['extension'] ?? '')) }}')"

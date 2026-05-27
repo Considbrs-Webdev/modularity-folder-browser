@@ -24,13 +24,16 @@
   );
 
   /* File-type icon colours (all individually overridable) */
-  --file-browser-icon-default: #c0392b;
+  --file-browser-icon-default: #53606f;
   --file-browser-icon-pdf: #c0392b;
   --file-browser-icon-doc: #1f5fbf;
   --file-browser-icon-xls: #128447;
   --file-browser-icon-ppt: #c95b00;
   --file-browser-icon-txt: #53606f;
   --file-browser-icon-zip: #6b21a8;
+  --file-browser-icon-image: #0e7490;
+  --file-browser-icon-video: #be185d;
+  --file-browser-icon-audio: #7c3aed;
 
   /* Layout */
   --file-browser-radius: 8px;
@@ -51,28 +54,16 @@
   overflow: hidden;
 }
 
-/* ── Folder icon (CSS-drawn) ────────────────────────────────── */
+/* ── Folder icon (SVG mask) ─────────────────────────────────── */
 .mod-file-browser__folder-icon {
-  border: 2px solid var(--file-browser-accent);
-  border-radius: 3px;
-  display: inline-block;
+  background-color: var(--file-browser-accent);
   flex-shrink: 0;
-  height: 1rem;
-  position: relative;
-  width: 1.25rem;
-}
-
-.mod-file-browser__folder-icon::before {
-  background: var(--file-browser-background);
-  border: 2px solid var(--file-browser-accent);
-  border-bottom: 0;
-  border-radius: 2px 2px 0 0;
-  content: "";
-  height: 0.28rem;
-  left: 0.12rem;
-  position: absolute;
-  top: -0.42rem;
-  width: 0.55rem;
+  height: 1.5rem;
+  mask-image: var(--file-browser-folder-icon-url, none);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  width: 1.75rem;
 }
 
 /* ── Lists ──────────────────────────────────────────────────── */
@@ -236,57 +227,63 @@
   transform: rotate(45deg);
 }
 
-/* ── File icon (CSS-drawn document, column 1) ───────────────── */
+/* ── File icon (SVG mask, column 1) ─────────────────────────── */
+/* The icon shape comes from the SVG file set via --_icon-url.
+ * background-color provides the tint, controlled per file type
+ * via --_icon-color. Both are overridable with CSS custom properties. */
 .mod-file-browser__file-icon {
   --_icon-color: var(--file-browser-icon-default);
 
-  border: 2px solid var(--_icon-color);
-  border-radius: 3px;
-  color: var(--_icon-color);
-  height: 1.45rem;
+  background-color: var(--_icon-color);
+  flex-shrink: 0;
+  height: 1.5rem;
   justify-self: center;
-  position: relative;
-  width: 1.1rem;
+  mask-image: var(--_icon-url, none);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  width: 1.5rem;
 }
 
-.mod-file-browser__file-icon::after {
-  border-left: 0.35rem solid transparent;
-  border-top: 0.35rem solid currentColor;
-  content: "";
-  position: absolute;
-  right: -2px;
-  top: -2px;
-}
-
-/* File-type colour overrides */
-.mod-file-browser__file-icon--pdf {
+/* File-type colour overrides — grouped by icon category */
+/* PDF */
+.mod-file-browser__file-icon[data-icon="pdf"] {
   --_icon-color: var(--file-browser-icon-pdf);
 }
 
-.mod-file-browser__file-icon--doc,
-.mod-file-browser__file-icon--docx {
+/* Word / text documents */
+.mod-file-browser__file-icon[data-icon="text"] {
   --_icon-color: var(--file-browser-icon-doc);
 }
 
-.mod-file-browser__file-icon--xls,
-.mod-file-browser__file-icon--xlsx,
-.mod-file-browser__file-icon--csv {
+/* Spreadsheets */
+.mod-file-browser__file-icon[data-icon="spreadsheet"] {
   --_icon-color: var(--file-browser-icon-xls);
 }
 
-.mod-file-browser__file-icon--ppt,
-.mod-file-browser__file-icon--pptx {
+/* Presentations */
+.mod-file-browser__file-icon[data-icon="presentation"] {
   --_icon-color: var(--file-browser-icon-ppt);
 }
 
-.mod-file-browser__file-icon--txt {
-  --_icon-color: var(--file-browser-icon-txt);
+/* Archives */
+.mod-file-browser__file-icon[data-icon="archive"] {
+  --_icon-color: var(--file-browser-icon-zip);
 }
 
-.mod-file-browser__file-icon--zip,
-.mod-file-browser__file-icon--rar,
-.mod-file-browser__file-icon--gz {
-  --_icon-color: var(--file-browser-icon-zip);
+/* Images */
+.mod-file-browser__file-icon[data-icon="image"] {
+  --_icon-color: var(--file-browser-icon-image);
+}
+
+/* Video */
+.mod-file-browser__file-icon[data-icon="video"] {
+  --_icon-color: var(--file-browser-icon-video);
+}
+
+/* Audio */
+.mod-file-browser__file-icon[data-icon="audio"] {
+  --_icon-color: var(--file-browser-icon-audio);
 }
 
 /* ── Empty / loading / error states ────────────────────────── */
@@ -295,6 +292,7 @@
 .mod-file-browser__error {
   color: var(--file-browser-muted);
   padding: 1rem var(--file-browser-px);
+  white-space: nowrap;
 }
 
 .mod-file-browser-select-folders {

@@ -4,6 +4,7 @@ namespace ModularityFolderBrowser;
 
 use ModularityFolderBrowser\AcfFields\AcfFieldLoader;
 use ModularityFolderBrowser\Helper\CacheBust;
+use ModularityFolderBrowser\Helper\IconResolver;
 use ModularityFolderBrowser\Rest\RestController;
 
 class App
@@ -67,6 +68,8 @@ class App
                     'folder' => __('Folder', 'modularity-folder-browser'),
                     'download' => __('Download', 'modularity-folder-browser'),
                 ),
+                'icons' => IconResolver::getIconMap(),
+                'iconCategories' => IconResolver::getCategoryMap(),
             ));
         }
     }

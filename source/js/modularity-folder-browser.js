@@ -49,11 +49,16 @@
     }
 
     const label = escapeHtml(file.label || file.name);
+    const ext = (file.extension || '').toLowerCase();
+    const icons = config.icons || {};
+    const iconCategories = config.iconCategories || {};
+    const iconUrl = icons[ext] || icons[''] || '';
+    const iconCategory = iconCategories[ext] || 'file';
 
     return `
       <li class="mod-file-browser__item mod-file-browser__item--file">
         <a class="mod-file-browser__file-link" href="${escapeHtml(file.download_url)}">
-          <span class="mod-file-browser__file-icon mod-file-browser__file-icon--${escapeHtml(file.extension || '')}" aria-hidden="true"></span>
+          <span class="mod-file-browser__file-icon" data-icon="${iconCategory}" style="--_icon-url: url(${escapeHtml(iconUrl)})" aria-hidden="true"></span>
           <span class="mod-file-browser__file-main">
             <span class="mod-file-browser__file-name">${label}</span>
             ${file.type_label ? `<span class="mod-file-browser__file-description">${escapeHtml(file.type_label)}</span>` : ''}

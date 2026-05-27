@@ -52,6 +52,7 @@ class FileBrowser extends \Modularity\Module
             'sortOrder' => $sortOrder,
             'initialState' => $initialState,
             'restBaseUrl' => esc_url_raw(rest_url('modularity-file-browser/v1/')),
+            'folderIconUrl' => \ModularityFolderBrowser\Helper\IconResolver::getFolderUrl(),
         ];
     }
 

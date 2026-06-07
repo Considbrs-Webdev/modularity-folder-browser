@@ -48,7 +48,7 @@ Each source path must be absolute, readable by the web server user, and resolvab
 
 Selected folders are stored only as relative paths inside the selected source. The admin folder picker uses an authenticated REST endpoint and never shows absolute paths.
 
-The allowed file types override field can only narrow the globally allowed extensions. Use the `modularity_file_browser_allowed_extensions` filter to change the global list.
+The allowed file types override field can only narrow the globally allowed extensions. Use the `Modularity/Module/FolderBrowser/AllowedFileTypes` filter to change the global list.
 
 ## REST Endpoints
 
@@ -75,12 +75,12 @@ add_filter('modularity_file_browser_sources', function (array $sources): array {
 });
 ```
 
-### `modularity_file_browser_allowed_extensions`
+### `Modularity/Module/FolderBrowser/AllowedFileTypes`
 
 Restrict or extend the global file extension allowlist. The filter receives the plugin defaults and the current module ID, so it can be used to add file types, remove file types, or replace the whole list. Server-side executable extensions remain blocked even if they are added here.
 
 ```php
-add_filter('modularity_file_browser_allowed_extensions', function (array $extensions): array {
+add_filter('Modularity/Module/FolderBrowser/AllowedFileTypes', function (array $extensions): array {
     $extensions[] = 'heic';
 
     return array_values(array_unique($extensions));
@@ -88,13 +88,13 @@ add_filter('modularity_file_browser_allowed_extensions', function (array $extens
 ```
 
 ```php
-add_filter('modularity_file_browser_allowed_extensions', function (array $extensions): array {
+add_filter('Modularity/Module/FolderBrowser/AllowedFileTypes', function (array $extensions): array {
     return array_values(array_diff($extensions, ['zip', 'rar', '7z', 'tar', 'gz']));
 });
 ```
 
 ```php
-add_filter('modularity_file_browser_allowed_extensions', function (array $extensions, ?int $moduleId): array {
+add_filter('Modularity/Module/FolderBrowser/AllowedFileTypes', function (array $extensions, ?int $moduleId): array {
     if ($moduleId === 123) {
         return ['pdf', 'docx', 'xlsx'];
     }

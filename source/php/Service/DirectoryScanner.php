@@ -82,7 +82,7 @@ class DirectoryScanner
 
     public function getAllowedExtensions(?int $moduleId = null, array $override = []): array
     {
-        $global = apply_filters('modularity_file_browser_allowed_extensions', self::DEFAULT_ALLOWED_EXTENSIONS, $moduleId);
+        $global = apply_filters('Modularity/Module/FolderBrowser/AllowedFileTypes', self::DEFAULT_ALLOWED_EXTENSIONS, $moduleId);
         $global = $this->sanitizeExtensions(is_array($global) ? $global : self::DEFAULT_ALLOWED_EXTENSIONS);
 
         if ($override === []) {
@@ -208,6 +208,59 @@ class DirectoryScanner
         return $result;
     }
 
+    /**
+     * @return array{folders: array<int, array>, files: array<int, array>, counts: array{folders: int, files: int}}|WP_Error
+     */
+    public function searchDirectory(
+        string $basePath,
+        int $moduleId,
+        int $rootIndex,
+        string $query,
+        string $sortOrder = 'name_asc',
+        array $allowedExtensions = []
+    ) {
+        $directory = $this->paths->resolveInside($basePath, '', true);
+
+        if (is_wp_error($directory)) {
+            return $directory;
+        }
+
+        $query = $this->normalizeSearchString($query);
+
+        if ($query === '') {
+            return [
+                'folders' => [],
+                'files' => [],
+                'counts' => ['folders' => 0, 'files' => 0],
+            ];
+        }
+
+        $folders = [];
+        $files = [];
+        $allowedExtensions = $allowedExtensions ?: $this->getAllowedExtensions($moduleId);
+
+        try {
+            $this->searchDirectoryRecursive($directory, $basePath, '', $moduleId, $rootIndex, $query, $allowedExtensions, $folders, $files);
+        } catch (\Throwable $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Modularity Folder Browser search failed: ' . $e->getMessage());
+            }
+
+            return new WP_Error('directory_unavailable', __('This folder could not be searched.', 'modularity-folder-browser'), ['status' => 404]);
+        }
+
+        $this->sortItems($folders, $files, $sortOrder);
+
+        return [
+            'folders' => $folders,
+            'files' => $files,
+            'counts' => [
+                'folders' => count($folders),
+                'files' => count($files),
+            ],
+        ];
+    }
+
     public function listFoldersOnly(string $basePath, string $relativePath): array
     {
         $directory = $this->paths->resolveInside($basePath, $relativePath, true);
@@ -303,6 +356,123 @@ class DirectoryScanner
         }
 
         return false;
+    }
+
+    private function searchDirectoryRecursive(
+        string $directory,
+        string $basePath,
+        string $relativePath,
+        int $moduleId,
+        int $rootIndex,
+        string $query,
+        array $allowedExtensions,
+        array &$folders,
+        array &$files
+    ): void {
+        foreach (new DirectoryIterator($directory) as $item) {
+            if ($item->isDot()) {
+                continue;
+            }
+
+            $name = $item->getFilename();
+
+            if ($this->isHidden($name)) {
+                continue;
+            }
+
+            $childRelativePath = trim($relativePath . '/' . $name, '/');
+
+            if ($item->isDir()) {
+                $resolved = $this->paths->resolveInside($basePath, $childRelativePath, true);
+
+                if (is_wp_error($resolved)) {
+                    continue;
+                }
+
+                if ($this->matchesSearch($query, $name)) {
+                    $folders[] = [
+                        'name' => $name,
+                        'label' => $name,
+                        'path' => $childRelativePath,
+                        'root_index' => $rootIndex,
+                        'has_children' => $this->hasVisibleChildren($resolved, $basePath, $childRelativePath, $moduleId, $allowedExtensions),
+                        'modified' => $item->getMTime(),
+                    ];
+                }
+
+                $this->searchDirectoryRecursive($resolved, $basePath, $childRelativePath, $moduleId, $rootIndex, $query, $allowedExtensions, $folders, $files);
+                continue;
+            }
+
+            if (!$item->isFile()) {
+                continue;
+            }
+
+            $extension = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+
+            if (!$this->isAllowedExtension($extension, $allowedExtensions)) {
+                continue;
+            }
+
+            $resolved = $this->paths->resolveInside($basePath, $childRelativePath, false);
+
+            if (is_wp_error($resolved)) {
+                continue;
+            }
+
+            $label = $this->metadata->fileLabel($name);
+
+            if (!$this->matchesSearch($query, $name, $label)) {
+                continue;
+            }
+
+            $size = (int) $item->getSize();
+            $modified = (int) $item->getMTime();
+
+            $files[] = [
+                'name' => $name,
+                'label' => $label,
+                'extension' => $extension,
+                'mime_type' => wp_check_filetype($name)['type'] ?: 'application/octet-stream',
+                'type_label' => $this->metadata->fileTypeLabel($extension),
+                'size' => $size,
+                'size_human' => $this->metadata->formatBytes($size),
+                'modified' => wp_date(DATE_W3C, $modified),
+                'modified_human' => $this->metadata->formatDate($modified),
+                'download_url' => $this->downloadUrl($moduleId, $rootIndex, $childRelativePath),
+                'root_index' => $rootIndex,
+            ];
+        }
+    }
+
+    private function matchesSearch(string $query, string ...$values): bool
+    {
+        foreach ($values as $value) {
+            if (str_contains($this->normalizeSearchString($value), $query)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function normalizeSearchString(string $value): string
+    {
+        $value = trim($value);
+
+        if (class_exists('\Normalizer')) {
+            $normalized = \Normalizer::normalize($value, \Normalizer::FORM_C);
+
+            if (is_string($normalized)) {
+                $value = $normalized;
+            }
+        }
+
+        if (function_exists('remove_accents')) {
+            $value = remove_accents($value);
+        }
+
+        return function_exists('mb_strtolower') ? mb_strtolower($value) : strtolower($value);
     }
 
     private function sortItems(array &$folders, array &$files, string $sortOrder): void

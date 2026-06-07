@@ -11,6 +11,8 @@
   })[char]);
 
   const createFolderMarkup = (browser, folder, rootIndex) => {
+    rootIndex = folder.root_index ?? rootIndex;
+
     const id = `${browser.id}-folder-${rootIndex}-${Math.random().toString(36).slice(2)}`;
     const label = escapeHtml(folder.label || folder.name);
     const path = escapeHtml(folder.path || '');
@@ -74,12 +76,12 @@
     `;
   };
 
-  const renderListing = (browser, data, target) => {
+  const renderListing = (browser, data, target, emptyMessage) => {
     const folders = Array.isArray(data.folders) ? data.folders : [];
     const files = Array.isArray(data.files) ? data.files : [];
 
     if (!folders.length && !files.length) {
-      target.innerHTML = `<li class="mod-file-browser__empty">${escapeHtml(i18n.empty || 'No documents found.')}</li>`;
+      target.innerHTML = `<li class="mod-file-browser__empty">${escapeHtml(emptyMessage || i18n.empty || 'No documents found.')}</li>`;
       return;
     }
 
@@ -107,6 +109,136 @@
     renderListing(browser, await response.json(), target);
     button.dataset.loaded = 'true';
   };
+
+  const searchTimers = new WeakMap();
+  const searchRequests = new WeakMap();
+  const originalListings = new WeakMap();
+
+  const getRestBaseUrl = (browser) => browser.dataset.restBaseUrl || config.restUrl || '/wp-json/modularity-file-browser/v1/';
+
+  const setSearchStatus = (browser, message) => {
+    const status = browser.querySelector('[data-file-browser-search-status]');
+
+    if (status) {
+      status.textContent = message ? ` - ${message}` : '';
+    }
+  };
+
+  const setSearchBusy = (target, busy) => {
+    if (busy) {
+      target.setAttribute('aria-busy', 'true');
+      return;
+    }
+
+    target.removeAttribute('aria-busy');
+  };
+
+  const restoreOriginalListing = (browser, target) => {
+    const original = originalListings.get(browser);
+
+    if (typeof original === 'string') {
+      target.innerHTML = original;
+    }
+
+    setSearchBusy(target, false);
+    setSearchStatus(browser, '');
+  };
+
+  const performSearch = async (input) => {
+    const browser = input.closest('[data-file-browser]');
+    const target = browser ? browser.querySelector('[data-file-browser-list]') : null;
+
+    if (!browser || !target) {
+      return;
+    }
+
+    if (!originalListings.has(browser)) {
+      originalListings.set(browser, target.innerHTML);
+    }
+
+    const previousRequest = searchRequests.get(browser);
+
+    if (previousRequest) {
+      previousRequest.abort();
+    }
+
+    const query = input.value.trim();
+
+    if (query === '') {
+      restoreOriginalListing(browser, target);
+      return;
+    }
+
+    const request = new AbortController();
+    searchRequests.set(browser, request);
+    setSearchBusy(target, true);
+    setSearchStatus(browser, i18n.searching || 'Searching documents.');
+    target.innerHTML = `<li class="mod-file-browser__loading">${escapeHtml(i18n.searching || 'Searching documents.')}</li>`;
+
+    try {
+      const moduleId = browser.dataset.moduleId;
+      const restBaseUrl = getRestBaseUrl(browser);
+      const url = `${restBaseUrl.replace(/\/$/, '')}/modules/${moduleId}/search?query=${encodeURIComponent(query)}`;
+      const response = await fetch(url, {
+        credentials: 'same-origin',
+        signal: request.signal,
+      });
+
+      if (!response.ok) {
+        throw new Error('Search request failed');
+      }
+
+      const data = await response.json();
+      const resultCount = (data.counts?.folders || 0) + (data.counts?.files || 0);
+      const resultMessage = (i18n.searchResults || '%d matching files or folders found.').replace('%d', resultCount);
+
+      renderListing(browser, data, target, i18n.searchEmpty || 'No matching files or folders found.');
+      setSearchStatus(browser, resultCount > 0 ? resultMessage : (i18n.searchEmpty || 'No matching files or folders found.'));
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        return;
+      }
+
+      target.innerHTML = `<li class="mod-file-browser__error">${escapeHtml(i18n.searchError || 'The search could not be completed.')}</li>`;
+      setSearchStatus(browser, i18n.searchError || 'The search could not be completed.');
+    } finally {
+      if (searchRequests.get(browser) === request) {
+        searchRequests.delete(browser);
+        setSearchBusy(target, false);
+      }
+    }
+  };
+
+  document.addEventListener('input', (event) => {
+    const input = event.target.closest('[data-file-browser-search]');
+
+    if (!input) {
+      return;
+    }
+
+    const browser = input.closest('[data-file-browser]');
+
+    if (!browser) {
+      return;
+    }
+
+    const previousTimer = searchTimers.get(browser);
+
+    if (previousTimer) {
+      window.clearTimeout(previousTimer);
+    }
+
+    if (input.value.trim() === '') {
+      performSearch(input);
+      return;
+    }
+
+    const debounce = Number.parseInt(browser.dataset.searchDebounce || '500', 10);
+
+    searchTimers.set(browser, window.setTimeout(() => {
+      performSearch(input);
+    }, Number.isNaN(debounce) ? 500 : Math.max(0, debounce)));
+  });
 
   document.addEventListener('click', async (event) => {
     const button = event.target.closest('[data-file-browser-folder]');

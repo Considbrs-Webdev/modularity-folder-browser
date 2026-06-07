@@ -12,6 +12,14 @@
   --file-browser-text: var(--color-text, #111827);
   --file-browser-muted: var(--color-text-secondary, #53606f);
   --file-browser-accent: var(--color-primary, #0059c7);
+  --file-browser-header-background: var(
+    --c-button-primary-color,
+    var(--file-browser-accent)
+  );
+  --file-browser-header-color: var(
+    --c-button-primary-color-contrasting,
+    #fff
+  );
   --file-browser-hover-bg: color-mix(
     in srgb,
     var(--file-browser-accent) 5%,
@@ -52,6 +60,52 @@
   border-radius: var(--file-browser-radius);
   color: var(--file-browser-text);
   overflow: hidden;
+}
+
+/* ── Search header ─────────────────────────────────────────── */
+.mod-file-browser__header {
+  background: var(--file-browser-header-background);
+  color: var(--file-browser-header-color);
+  padding: 1rem var(--file-browser-px);
+}
+
+.mod-file-browser__search {
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.mod-file-browser__search-label {
+  color: inherit;
+  font-weight: 700;
+}
+
+.mod-file-browser__search-input {
+  background: var(--file-browser-search-input-background, #fff);
+  border: 2px solid transparent;
+  border-radius: 4px;
+  color: var(--file-browser-search-input-color, #111827);
+  font: inherit;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+}
+
+.mod-file-browser__search-input::placeholder {
+  color: var(--file-browser-search-input-placeholder-color, #53606f);
+  opacity: 1;
+}
+
+.mod-file-browser__search-input:focus-visible {
+  border-color: currentColor;
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+.mod-file-browser__search-status {
+  color: inherit;
+  font-size: var(--file-browser-search-status-font-size, 0.875em);
+  font-weight: var(--file-browser-search-status-font-weight, 400);
 }
 
 /* ── Folder icon (SVG mask) ─────────────────────────────────── */
@@ -558,4 +612,5 @@
     flex-direction: column;
     gap: 0.25rem;
   }
+
 }

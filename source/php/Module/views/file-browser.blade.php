@@ -4,7 +4,7 @@
   data-show-file-size="{{ $showFileSize ? '1' : '0' }}" data-show-modified-date="{{ $showModifiedDate ? '1' : '0' }}"
   data-show-file-type="{{ $showFileType ? '1' : '0' }}"
   data-show-file-description="{{ $showFileDescription ? '1' : '0' }}"
-  data-download-display="{{ esc_attr($downloadDisplay) }}">
+  data-download-display="{{ esc_attr($downloadDisplay) }}" data-search-debounce="{{ (int) $searchDebounce }}">
   @if (empty($roots))
     <p class="mod-file-browser__empty">
       {{ __('No folders have been selected for this document browser.', 'modularity-folder-browser') }}</p>
@@ -12,8 +12,26 @@
     @php
       $attachSingleRootToTopFolder = !empty($topFolderName) && count($roots) === 1 && !empty($roots[0]['attachListingToTopFolder']);
       $rootsToRender = $attachSingleRootToTopFolder ? [] : $roots;
+      $listId = $id . '-list';
+      $searchId = $id . '-search';
+      $searchStatusId = $id . '-search-status';
     @endphp
-    <ol class="mod-file-browser__list" data-file-browser-list>
+    @if (!empty($enableSearch))
+      <div class="mod-file-browser__header">
+        <div class="mod-file-browser__search">
+          <label class="mod-file-browser__search-label" for="{{ $searchId }}">
+            <span data-file-browser-search-label>{{ __('Search files', 'modularity-folder-browser') }}</span>
+            <span id="{{ $searchStatusId }}" class="mod-file-browser__search-status" aria-live="polite"
+              aria-atomic="true" data-file-browser-search-status></span>
+          </label>
+          <input id="{{ $searchId }}" class="mod-file-browser__search-input" type="search"
+            placeholder="{{ esc_attr__('Search files by name', 'modularity-folder-browser') }}"
+            aria-controls="{{ $listId }}" aria-describedby="{{ $searchStatusId }}" autocomplete="off"
+            data-file-browser-search>
+        </div>
+      </div>
+    @endif
+    <ol id="{{ $listId }}" class="mod-file-browser__list" data-file-browser-list>
       @if (!empty($topFolderName))
         @php
           $topPanelId = $id . '-top-folder';

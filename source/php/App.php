@@ -67,6 +67,11 @@ class App
                     'empty' => __('No documents found.', 'modularity-folder-browser'),
                     'folder' => __('Folder', 'modularity-folder-browser'),
                     'download' => __('Download', 'modularity-folder-browser'),
+                    'searching' => __('Searching documents.', 'modularity-folder-browser'),
+                    'searchError' => __('The search could not be completed.', 'modularity-folder-browser'),
+                    'searchEmpty' => __('No matching files or folders found.', 'modularity-folder-browser'),
+                    /* translators: %d: result count. */
+                    'searchResults' => __('%d matching files or folders found.', 'modularity-folder-browser'),
                     /* translators: %s: file name. */
                     'downloadFile' => __('Download %s', 'modularity-folder-browser'),
                 ),

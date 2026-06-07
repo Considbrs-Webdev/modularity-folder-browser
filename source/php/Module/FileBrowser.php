@@ -53,6 +53,8 @@ class FileBrowser extends \Modularity\Module
             'roots' => $roots,
             'topFolderName' => $topFolderName,
             'topFolderExpanded' => $topFolderName !== '',
+            'enableSearch' => !empty($fields['enable_search']),
+            'searchDebounce' => $this->getSearchDebounce($moduleId),
             'showFileSize' => !empty($fields['show_file_size']),
             'showModifiedDate' => !empty($fields['show_modified_date']),
             'showFileType' => !empty($fields['show_file_type']),
@@ -126,6 +128,13 @@ class FileBrowser extends \Modularity\Module
         }
 
         return $prepared;
+    }
+
+    private function getSearchDebounce(int $moduleId): int
+    {
+        $debounce = apply_filters('Modularity/Module/FolderBrowser/Frontend/FilterDebounce', 500, $moduleId);
+
+        return max(0, (int) $debounce);
     }
 
     private function hasExactlyOneConfiguredSourceFolder(array $roots): bool

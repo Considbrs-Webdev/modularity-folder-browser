@@ -61,6 +61,21 @@ class RestController
             ],
         ]);
 
+        register_rest_route('modularity-file-browser/v1', '/modules/(?P<module_id>\d+)/search', [
+            'methods' => 'GET',
+            'callback' => [$this, 'search'],
+            'permission_callback' => '__return_true',
+            'args' => [
+                'module_id' => [
+                    'sanitize_callback' => 'absint',
+                ],
+                'query' => [
+                    'required' => true,
+                    'sanitize_callback' => 'sanitize_text_field',
+                ],
+            ],
+        ]);
+
         register_rest_route('modularity-file-browser/v1', '/download', [
             'methods' => 'GET',
             'callback' => [$this, 'download'],
@@ -157,6 +172,58 @@ class RestController
             'folders' => $listing['folders'],
             'files' => $listing['files'],
             'counts' => $listing['counts'],
+        ]);
+    }
+
+    public function search(WP_REST_Request $request)
+    {
+        $moduleId = absint($request->get_param('module_id'));
+        $query = trim((string) ($request->get_param('query') ?? ''));
+        $config = $this->getModuleConfig($moduleId);
+
+        if (is_wp_error($config)) {
+            return $config;
+        }
+
+        if ($query === '') {
+            return new WP_REST_Response([
+                'module_id' => $moduleId,
+                'query' => '',
+                'folders' => [],
+                'files' => [],
+                'counts' => ['folders' => 0, 'files' => 0],
+            ]);
+        }
+
+        $folders = [];
+        $files = [];
+
+        foreach ($config['roots'] as $rootIndex => $root) {
+            $base = $this->paths->resolveSelectedBase($root['source'], $root['path']);
+
+            if (is_wp_error($base)) {
+                continue;
+            }
+
+            $listing = $this->scanner->searchDirectory($base, $moduleId, (int) $rootIndex, $query, $config['sort_order'], $config['allowed_extensions']);
+
+            if (is_wp_error($listing)) {
+                continue;
+            }
+
+            $folders = array_merge($folders, $listing['folders']);
+            $files = array_merge($files, $listing['files']);
+        }
+
+        return new WP_REST_Response([
+            'module_id' => $moduleId,
+            'query' => $query,
+            'folders' => $folders,
+            'files' => $files,
+            'counts' => [
+                'folders' => count($folders),
+                'files' => count($files),
+            ],
         ]);
     }
 

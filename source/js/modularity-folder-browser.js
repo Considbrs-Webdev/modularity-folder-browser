@@ -91,8 +91,10 @@
     ].join('');
   };
 
+  const getModuleId = (browser) => browser.dataset.moduleId || '0';
+
   const loadFolder = async (browser, button, target) => {
-    const moduleId = browser.dataset.moduleId;
+    const moduleId = getModuleId(browser);
     const rootIndex = button.dataset.rootIndex;
     const path = button.dataset.path || '';
     const instanceToken = browser.dataset.instanceToken || '';
@@ -183,7 +185,7 @@
     target.innerHTML = `<li class="mod-file-browser__loading">${escapeHtml(i18n.searching || 'Searching documents.')}</li>`;
 
     try {
-      const moduleId = browser.dataset.moduleId;
+      const moduleId = getModuleId(browser);
       const restBaseUrl = getRestBaseUrl(browser);
       const params = new URLSearchParams({ query });
       const instanceToken = browser.dataset.instanceToken || '';

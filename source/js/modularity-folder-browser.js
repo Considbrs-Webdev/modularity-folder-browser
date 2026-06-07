@@ -95,8 +95,15 @@
     const moduleId = browser.dataset.moduleId;
     const rootIndex = button.dataset.rootIndex;
     const path = button.dataset.path || '';
+    const instanceToken = browser.dataset.instanceToken || '';
     const restBaseUrl = browser.dataset.restBaseUrl || config.restUrl || '/wp-json/modularity-file-browser/v1/';
-    const url = `${restBaseUrl.replace(/\/$/, '')}/modules/${moduleId}/roots/${rootIndex}/tree?path=${encodeURIComponent(path)}`;
+    const params = new URLSearchParams({ path });
+
+    if (instanceToken) {
+      params.set('instance_token', instanceToken);
+    }
+
+    const url = `${restBaseUrl.replace(/\/$/, '')}/modules/${moduleId}/roots/${rootIndex}/tree?${params.toString()}`;
 
     target.innerHTML = `<li class="mod-file-browser__loading">${escapeHtml(i18n.loading || 'Loading folder contents.')}</li>`;
 
@@ -178,7 +185,14 @@
     try {
       const moduleId = browser.dataset.moduleId;
       const restBaseUrl = getRestBaseUrl(browser);
-      const url = `${restBaseUrl.replace(/\/$/, '')}/modules/${moduleId}/search?query=${encodeURIComponent(query)}`;
+      const params = new URLSearchParams({ query });
+      const instanceToken = browser.dataset.instanceToken || '';
+
+      if (instanceToken) {
+        params.set('instance_token', instanceToken);
+      }
+
+      const url = `${restBaseUrl.replace(/\/$/, '')}/modules/${moduleId}/search?${params.toString()}`;
       const response = await fetch(url, {
         credentials: 'same-origin',
         signal: request.signal,

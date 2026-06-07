@@ -4,6 +4,7 @@ namespace ModularityFolderBrowser\Module;
 
 use ModularityFolderBrowser\Service\DirectoryScanner;
 use ModularityFolderBrowser\Service\FileMetadataFormatter;
+use ModularityFolderBrowser\Service\InstanceTokenStore;
 use ModularityFolderBrowser\Service\PathResolver;
 use ModularityFolderBrowser\Service\SourceRepository;
 
@@ -17,6 +18,7 @@ class FileBrowser extends \Modularity\Module
     private SourceRepository $sources;
     private PathResolver $paths;
     private DirectoryScanner $scanner;
+    private InstanceTokenStore $instanceTokens;
 
     public function init(): void
     {
@@ -27,20 +29,23 @@ class FileBrowser extends \Modularity\Module
         $this->sources = new SourceRepository();
         $this->paths = new PathResolver($this->sources);
         $this->scanner = new DirectoryScanner($this->paths, new FileMetadataFormatter());
+        $this->instanceTokens = new InstanceTokenStore();
     }
 
     public function data(): array
     {
         $fields = $this->getFields();
         $startFolders = (array) ($fields['start_folders'] ?? []);
-        $moduleId = (int) $this->ID;
+        $moduleId = $this->getPersistedModuleId((int) $this->ID);
         $sortOrder = $this->normalizeSortOrder((string) ($fields['sort_order'] ?? 'name_asc'));
         $override = isset($fields['allowed_file_types_override']) && is_array($fields['allowed_file_types_override'])
             ? $fields['allowed_file_types_override']
             : [];
         $allowedExtensions = $this->scanner->getAllowedExtensions($moduleId, $override);
         $topFolderName = sanitize_text_field((string) ($fields['top_folder_name'] ?? ''));
-        $roots = $this->prepareRoots($startFolders, $moduleId, $sortOrder, $allowedExtensions);
+        $normalizedRoots = $this->normalizeRoots($startFolders);
+        $instanceToken = $this->createInstanceToken($moduleId, $normalizedRoots, $sortOrder, $allowedExtensions);
+        $roots = $this->prepareRoots($normalizedRoots, $moduleId, $sortOrder, $allowedExtensions, $instanceToken);
 
         if ($topFolderName !== '' && count($roots) === 1 && $this->hasExactlyOneConfiguredSourceFolder($startFolders)) {
             $roots[0]['attachListingToTopFolder'] = true;
@@ -50,6 +55,7 @@ class FileBrowser extends \Modularity\Module
         return [
             'id' => 'mod-file-browser-' . $moduleId . '-' . wp_unique_id(),
             'moduleId' => $moduleId,
+            'instanceToken' => $instanceToken,
             'roots' => $roots,
             'topFolderName' => $topFolderName,
             'topFolderExpanded' => $topFolderName !== '',
@@ -72,11 +78,69 @@ class FileBrowser extends \Modularity\Module
         return 'file-browser.blade.php';
     }
 
-    private function prepareRoots(array $roots, int $moduleId, string $sortOrder, array $allowedExtensions): array
+    private function prepareRoots(array $roots, int $moduleId, string $sortOrder, array $allowedExtensions, string $instanceToken): array
     {
         $prepared = [];
 
-        foreach ($roots as $index => $root) {
+        foreach ($roots as $root) {
+            if (!is_array($root)) {
+                continue;
+            }
+
+            $source = sanitize_key((string) ($root['source'] ?? ''));
+
+            if ($source === '') {
+                continue;
+            }
+
+            $path = $this->paths->normalizeRelativePath((string) ($root['path'] ?? ''));
+
+            if ($path === null) {
+                continue;
+            }
+
+            $base = $this->paths->resolveSelectedBase($source, $path);
+
+            if (is_wp_error($base)) {
+                continue;
+            }
+
+            $displayName = $root['label'] !== ''
+                ? $root['label']
+                : ($path !== ''
+                    ? basename($path)
+                    : ($this->sources->getSource($source)['label'] ?? __('Documents', 'modularity-folder-browser')));
+
+            $rootIndex = count($prepared);
+            $listing = $this->scanner->listDirectory($base, '', $moduleId, $rootIndex, $sortOrder, $allowedExtensions, $instanceToken);
+
+            $prepared[] = [
+                'index' => $rootIndex,
+                'source' => $source,
+                'path' => $path,
+                'label' => $displayName,
+                'expanded' => !empty($root['initially_expanded']),
+                'listing' => is_wp_error($listing) ? [
+                    'folders' => [],
+                    'files' => [],
+                    'counts' => ['folders' => 0, 'files' => 0],
+                ] : $listing,
+                'error' => is_wp_error($listing) ? $listing->get_error_message() : '',
+            ];
+        }
+
+        if (count($prepared) === 1) {
+            $prepared[0]['expanded'] = true;
+        }
+
+        return $prepared;
+    }
+
+    private function normalizeRoots(array $roots): array
+    {
+        $normalized = [];
+
+        foreach ($roots as $root) {
             if (!is_array($root)) {
                 continue;
             }
@@ -94,40 +158,41 @@ class FileBrowser extends \Modularity\Module
                     continue;
                 }
 
-                $base = $this->paths->resolveSelectedBase($source, $path);
-
-                if (is_wp_error($base)) {
-                    continue;
-                }
-
-                $displayName = $path !== ''
-                    ? basename($path)
-                    : ($this->sources->getSource($source)['label'] ?? __('Documents', 'modularity-folder-browser'));
-
-                $rootIndex = count($prepared);
-                $listing = $this->scanner->listDirectory($base, '', $moduleId, $rootIndex, $sortOrder, $allowedExtensions);
-
-                $prepared[] = [
-                    'index' => $rootIndex,
+                $normalized[] = [
                     'source' => $source,
                     'path' => $path,
-                    'label' => $displayName,
-                    'expanded' => !empty($root['initially_expanded']),
-                    'listing' => is_wp_error($listing) ? [
-                        'folders' => [],
-                        'files' => [],
-                        'counts' => ['folders' => 0, 'files' => 0],
-                    ] : $listing,
-                    'error' => is_wp_error($listing) ? $listing->get_error_message() : '',
+                    'label' => $path !== ''
+                        ? basename($path)
+                        : ($this->sources->getSource($source)['label'] ?? __('Documents', 'modularity-folder-browser')),
+                    'initially_expanded' => !empty($root['initially_expanded']),
                 ];
             }
         }
 
-        if (count($prepared) === 1) {
-            $prepared[0]['expanded'] = true;
+        return $normalized;
+    }
+
+    private function createInstanceToken(int $moduleId, array $roots, string $sortOrder, array $allowedExtensions): string
+    {
+        if ($moduleId > 0 || $roots === []) {
+            return '';
         }
 
-        return $prepared;
+        return $this->instanceTokens->create([
+            'module_id' => 0,
+            'roots' => $roots,
+            'sort_order' => $sortOrder,
+            'allowed_extensions' => $allowedExtensions,
+        ], 0);
+    }
+
+    private function getPersistedModuleId(int $moduleId): int
+    {
+        if ($moduleId <= 0 || get_post_type($moduleId) !== 'mod-folder-browser') {
+            return 0;
+        }
+
+        return $moduleId;
     }
 
     private function getSearchDebounce(int $moduleId): int

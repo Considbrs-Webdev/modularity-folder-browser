@@ -7,91 +7,17 @@ use WP_Error;
 
 class DirectoryScanner
 {
-    private const DEFAULT_ALLOWED_EXTENSIONS = [
-        'pdf',
-        'doc',
-        'docx',
-        'odt',
-        'rtf',
-        'xls',
-        'xlsx',
-        'ods',
-        'ppt',
-        'pptx',
-        'odp',
-        'txt',
-        'md',
-        'csv',
-        'jpg',
-        'jpeg',
-        'png',
-        'gif',
-        'webp',
-        'zip',
-        'rar',
-        'gz',
-        '7z',
-        'tar',
-        'mp4',
-        'm4v',
-        'mov',
-        'avi',
-        'webm',
-        'mkv',
-        'wmv',
-        'mpeg',
-        'mpg',
-        '3gp',
-        'ogv',
-        'mp3',
-        'wav',
-        'ogg',
-        'oga',
-        'm4a',
-        'aac',
-        'flac',
-        'wma',
-        'aiff',
-        'aif',
-        'opus',
-    ];
-
-    private const BLOCKED_EXTENSIONS = [
-        'php',
-        'phtml',
-        'phar',
-        'cgi',
-        'pl',
-        'py',
-        'rb',
-        'sh',
-        'bash',
-        'zsh',
-        'exe',
-        'dll',
-        'so',
-        'dylib',
-        'htaccess',
-    ];
-
     public function __construct(
         private PathResolver $paths,
-        private FileMetadataFormatter $metadata
+        private FileMetadataFormatter $metadata,
+        private ?FileExtensionPolicy $extensions = null
     ) {
+        $this->extensions = $this->extensions ?? new FileExtensionPolicy();
     }
 
     public function getAllowedExtensions(?int $moduleId = null, array $override = []): array
     {
-        $global = apply_filters('Modularity/Module/FolderBrowser/AllowedFileTypes', self::DEFAULT_ALLOWED_EXTENSIONS, $moduleId);
-        $global = $this->sanitizeExtensions(is_array($global) ? $global : self::DEFAULT_ALLOWED_EXTENSIONS);
-
-        if ($override === []) {
-            return $global;
-        }
-
-        $override = $this->sanitizeExtensions($override);
-
-        return array_values(array_intersect($global, $override));
+        return $this->extensions->getAllowedExtensions($moduleId, $override);
     }
 
     /**
@@ -103,7 +29,8 @@ class DirectoryScanner
         int $moduleId,
         int $rootIndex,
         string $sortOrder = 'name_asc',
-        array $allowedExtensions = []
+        array $allowedExtensions = [],
+        string $instanceToken = ''
     ) {
         $directory = $this->paths->resolveInside($basePath, $relativePath, true);
 
@@ -113,8 +40,8 @@ class DirectoryScanner
 
         $folders = [];
         $files = [];
-        $allowedExtensions = $allowedExtensions ?: $this->getAllowedExtensions($moduleId);
-        $cacheKey = $this->cacheKey($directory, $moduleId, $rootIndex, $sortOrder, $allowedExtensions);
+        $allowedExtensions = $this->extensions->sanitizeExtensions($allowedExtensions ?: $this->getAllowedExtensions($moduleId));
+        $cacheKey = $this->cacheKey($directory, $moduleId, $rootIndex, $sortOrder, $allowedExtensions, $instanceToken);
         $cached = get_transient($cacheKey);
 
         if (is_array($cached)) {
@@ -181,7 +108,7 @@ class DirectoryScanner
                     'size_human' => $this->metadata->formatBytes($size),
                     'modified' => wp_date(DATE_W3C, $modified),
                     'modified_human' => $this->metadata->formatDate($modified),
-                    'download_url' => $this->downloadUrl($moduleId, $rootIndex, $childRelativePath),
+                    'download_url' => $this->downloadUrl($moduleId, $rootIndex, $childRelativePath, $instanceToken),
                 ];
             }
         } catch (\Throwable $e) {
@@ -217,7 +144,8 @@ class DirectoryScanner
         int $rootIndex,
         string $query,
         string $sortOrder = 'name_asc',
-        array $allowedExtensions = []
+        array $allowedExtensions = [],
+        string $instanceToken = ''
     ) {
         $directory = $this->paths->resolveInside($basePath, '', true);
 
@@ -237,10 +165,10 @@ class DirectoryScanner
 
         $folders = [];
         $files = [];
-        $allowedExtensions = $allowedExtensions ?: $this->getAllowedExtensions($moduleId);
+        $allowedExtensions = $this->extensions->sanitizeExtensions($allowedExtensions ?: $this->getAllowedExtensions($moduleId));
 
         try {
-            $this->searchDirectoryRecursive($directory, $basePath, '', $moduleId, $rootIndex, $query, $allowedExtensions, $folders, $files);
+            $this->searchDirectoryRecursive($directory, $basePath, '', $moduleId, $rootIndex, $query, $allowedExtensions, $folders, $files, $instanceToken);
         } catch (\Throwable $e) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('Modularity Folder Browser search failed: ' . $e->getMessage());
@@ -300,19 +228,9 @@ class DirectoryScanner
         return $folders;
     }
 
-    private function sanitizeExtensions(array $extensions): array
-    {
-        $extensions = array_map(static fn($extension) => strtolower(ltrim((string) $extension, '.')), $extensions);
-        $extensions = array_filter($extensions, static fn($extension) => $extension !== '' && !in_array($extension, self::BLOCKED_EXTENSIONS, true));
-
-        return array_values(array_unique($extensions));
-    }
-
     private function isAllowedExtension(string $extension, array $allowedExtensions): bool
     {
-        return $extension !== ''
-            && !in_array($extension, self::BLOCKED_EXTENSIONS, true)
-            && in_array($extension, $allowedExtensions, true);
+        return $this->extensions->isAllowedExtension($extension, $allowedExtensions);
     }
 
     private function isHidden(string $name): bool
@@ -367,7 +285,8 @@ class DirectoryScanner
         string $query,
         array $allowedExtensions,
         array &$folders,
-        array &$files
+        array &$files,
+        string $instanceToken = ''
     ): void {
         foreach (new DirectoryIterator($directory) as $item) {
             if ($item->isDot()) {
@@ -400,7 +319,7 @@ class DirectoryScanner
                     ];
                 }
 
-                $this->searchDirectoryRecursive($resolved, $basePath, $childRelativePath, $moduleId, $rootIndex, $query, $allowedExtensions, $folders, $files);
+                $this->searchDirectoryRecursive($resolved, $basePath, $childRelativePath, $moduleId, $rootIndex, $query, $allowedExtensions, $folders, $files, $instanceToken);
                 continue;
             }
 
@@ -439,7 +358,7 @@ class DirectoryScanner
                 'size_human' => $this->metadata->formatBytes($size),
                 'modified' => wp_date(DATE_W3C, $modified),
                 'modified_human' => $this->metadata->formatDate($modified),
-                'download_url' => $this->downloadUrl($moduleId, $rootIndex, $childRelativePath),
+                'download_url' => $this->downloadUrl($moduleId, $rootIndex, $childRelativePath, $instanceToken),
                 'root_index' => $rootIndex,
             ];
         }
@@ -503,20 +422,23 @@ class DirectoryScanner
         };
     }
 
-    private function cacheKey(string $directory, int $moduleId, int $rootIndex, string $sortOrder, array $allowedExtensions): string
+    private function cacheKey(string $directory, int $moduleId, int $rootIndex, string $sortOrder, array $allowedExtensions, string $instanceToken): string
     {
-        return 'mod_fb_' . md5(implode('|', [$directory, $moduleId, $rootIndex, $sortOrder, implode(',', $allowedExtensions)]));
+        return 'mod_fb_' . md5(implode('|', [$directory, $moduleId, $rootIndex, $sortOrder, implode(',', $allowedExtensions), $instanceToken]));
     }
 
-    private function downloadUrl(int $moduleId, int $rootIndex, string $path): string
+    private function downloadUrl(int $moduleId, int $rootIndex, string $path, string $instanceToken = ''): string
     {
-        return add_query_arg(
-            [
-                'module_id' => $moduleId,
-                'root' => $rootIndex,
-                'path' => $path,
-            ],
-            rest_url('modularity-file-browser/v1/download')
-        );
+        $args = [
+            'module_id' => $moduleId,
+            'root' => $rootIndex,
+            'path' => $path,
+        ];
+
+        if ($instanceToken !== '') {
+            $args['instance_token'] = $instanceToken;
+        }
+
+        return add_query_arg($args, rest_url('modularity-file-browser/v1/download'));
     }
 }

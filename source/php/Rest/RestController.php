@@ -4,6 +4,7 @@ namespace ModularityFolderBrowser\Rest;
 
 use ModularityFolderBrowser\Service\DirectoryScanner;
 use ModularityFolderBrowser\Service\FileMetadataFormatter;
+use ModularityFolderBrowser\Service\InstanceTokenStore;
 use ModularityFolderBrowser\Service\PathResolver;
 use ModularityFolderBrowser\Service\SourceRepository;
 use WP_Error;
@@ -15,12 +16,14 @@ class RestController
     private SourceRepository $sources;
     private PathResolver $paths;
     private DirectoryScanner $scanner;
+    private InstanceTokenStore $instanceTokens;
 
     public function __construct()
     {
         $this->sources = new SourceRepository();
         $this->paths = new PathResolver($this->sources);
         $this->scanner = new DirectoryScanner($this->paths, new FileMetadataFormatter());
+        $this->instanceTokens = new InstanceTokenStore();
 
         add_action('rest_api_init', [$this, 'registerRoutes']);
     }
@@ -58,6 +61,10 @@ class RestController
                     'required' => false,
                     'sanitize_callback' => 'sanitize_text_field',
                 ],
+                'instance_token' => [
+                    'required' => false,
+                    'sanitize_callback' => 'sanitize_text_field',
+                ],
             ],
         ]);
 
@@ -71,6 +78,10 @@ class RestController
                 ],
                 'query' => [
                     'required' => true,
+                    'sanitize_callback' => 'sanitize_text_field',
+                ],
+                'instance_token' => [
+                    'required' => false,
                     'sanitize_callback' => 'sanitize_text_field',
                 ],
             ],
@@ -91,6 +102,10 @@ class RestController
                 ],
                 'path' => [
                     'required' => true,
+                    'sanitize_callback' => 'sanitize_text_field',
+                ],
+                'instance_token' => [
+                    'required' => false,
                     'sanitize_callback' => 'sanitize_text_field',
                 ],
             ],
@@ -135,7 +150,8 @@ class RestController
         $moduleId = absint($request->get_param('module_id'));
         $rootIndex = absint($request->get_param('root_index'));
         $path = (string) ($request->get_param('path') ?? '');
-        $config = $this->getModuleConfig($moduleId);
+        $instanceToken = (string) ($request->get_param('instance_token') ?? '');
+        $config = $this->getModuleConfig($moduleId, $instanceToken);
 
         if (is_wp_error($config)) {
             return $config;
@@ -158,14 +174,14 @@ class RestController
             return new WP_Error('invalid_path', __('Invalid path.', 'modularity-folder-browser'), ['status' => 403]);
         }
 
-        $listing = $this->scanner->listDirectory($base, $path, $moduleId, $rootIndex, $config['sort_order'], $config['allowed_extensions']);
+        $listing = $this->scanner->listDirectory($base, $path, $config['module_id'], $rootIndex, $config['sort_order'], $config['allowed_extensions'], $instanceToken);
 
         if (is_wp_error($listing)) {
             return $listing;
         }
 
         return new WP_REST_Response([
-            'module_id' => $moduleId,
+            'module_id' => $config['module_id'],
             'root_index' => $rootIndex,
             'root_label' => $root['label'],
             'path' => $path,
@@ -179,7 +195,8 @@ class RestController
     {
         $moduleId = absint($request->get_param('module_id'));
         $query = trim((string) ($request->get_param('query') ?? ''));
-        $config = $this->getModuleConfig($moduleId);
+        $instanceToken = (string) ($request->get_param('instance_token') ?? '');
+        $config = $this->getModuleConfig($moduleId, $instanceToken);
 
         if (is_wp_error($config)) {
             return $config;
@@ -187,7 +204,7 @@ class RestController
 
         if ($query === '') {
             return new WP_REST_Response([
-                'module_id' => $moduleId,
+                'module_id' => $config['module_id'],
                 'query' => '',
                 'folders' => [],
                 'files' => [],
@@ -205,7 +222,7 @@ class RestController
                 continue;
             }
 
-            $listing = $this->scanner->searchDirectory($base, $moduleId, (int) $rootIndex, $query, $config['sort_order'], $config['allowed_extensions']);
+            $listing = $this->scanner->searchDirectory($base, $config['module_id'], (int) $rootIndex, $query, $config['sort_order'], $config['allowed_extensions'], $instanceToken);
 
             if (is_wp_error($listing)) {
                 continue;
@@ -216,7 +233,7 @@ class RestController
         }
 
         return new WP_REST_Response([
-            'module_id' => $moduleId,
+            'module_id' => $config['module_id'],
             'query' => $query,
             'folders' => $folders,
             'files' => $files,
@@ -232,7 +249,8 @@ class RestController
         $moduleId = absint($request->get_param('module_id'));
         $rootIndex = absint($request->get_param('root'));
         $requestedPath = (string) $request->get_param('path');
-        $config = $this->getModuleConfig($moduleId);
+        $instanceToken = (string) ($request->get_param('instance_token') ?? '');
+        $config = $this->getModuleConfig($moduleId, $instanceToken);
 
         if (is_wp_error($config)) {
             return $config;
@@ -286,8 +304,18 @@ class RestController
     /**
      * @return array|WP_Error
      */
-    private function getModuleConfig(int $moduleId)
+    private function getModuleConfig(int $moduleId, string $instanceToken = '')
     {
+        if ($instanceToken !== '') {
+            $config = $this->instanceTokens->get($instanceToken);
+
+            if ($config === null) {
+                return new WP_Error('invalid_instance', __('Selected document browser is not available.', 'modularity-folder-browser'), ['status' => 404]);
+            }
+
+            return $config;
+        }
+
         if ($moduleId <= 0 || get_post_status($moduleId) === false) {
             return new WP_Error('invalid_module', __('Selected document browser is not available.', 'modularity-folder-browser'), ['status' => 404]);
         }
@@ -305,6 +333,7 @@ class RestController
             : [];
 
         return [
+            'module_id' => $moduleId,
             'roots' => $roots,
             'sort_order' => $sortOrder,
             'allowed_extensions' => $this->scanner->getAllowedExtensions($moduleId, $override),

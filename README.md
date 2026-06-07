@@ -58,6 +58,8 @@ The allowed file types override field can only narrow the globally allowed exten
 
 The admin endpoint requires `edit_posts`. Public tree and download endpoints revalidate the stored module configuration, selected root, requested relative path, and file extension on every request.
 
+Inline Gutenberg module instances do not have a persisted module ID. Those rendered instances use `module_id=0` with an opaque `instance_token` query parameter. The token resolves to server-side transient configuration and does not expose absolute source paths in the DOM or REST payload.
+
 ## Filters
 
 ### `modularity_file_browser_sources`
@@ -144,6 +146,16 @@ Change directory listing cache duration.
 ```php
 add_filter('Modularity/Module/FolderBrowser/CacheTTL', function (): int {
     return 5 * MINUTE_IN_SECONDS;
+});
+```
+
+### `Modularity/Module/FolderBrowser/InstanceToken/CacheTTL`
+
+Change how long inline Gutenberg instance tokens remain valid. Defaults to one day.
+
+```php
+add_filter('Modularity/Module/FolderBrowser/InstanceToken/CacheTTL', function (): int {
+    return DAY_IN_SECONDS;
 });
 ```
 

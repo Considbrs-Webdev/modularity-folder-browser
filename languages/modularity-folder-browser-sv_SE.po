@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Modularity Folder Browser 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/modularity-folder-"
 "browser\n"
-"POT-Creation-Date: 2026-06-07T17:30:13+00:00\n"
+"POT-Creation-Date: 2026-06-07T17:49:09+00:00\n"
 "PO-Revision-Date: 2026-06-07 19:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -168,7 +168,7 @@ msgstr ""
 msgid "Loading folder contents."
 msgstr "Laddar mappinnehåll."
 
-#: source/php/App.php:66 source/php/Service/DirectoryScanner.php:192
+#: source/php/App.php:66 source/php/Service/DirectoryScanner.php:119
 msgid "This folder could not be loaded."
 msgstr "Den här mappen kunde inte laddas."
 
@@ -180,8 +180,8 @@ msgstr "Inga dokument hittades."
 msgid "Folder"
 msgstr "Mapp"
 
-#: source/php/App.php:69 source/php/Module/views/file-browser.blade.php:129
-#: source/php/Module/views/file-browser.blade.php:225
+#: source/php/App.php:69 source/php/Module/views/file-browser.blade.php:130
+#: source/php/Module/views/file-browser.blade.php:226
 msgid "Download"
 msgstr "Ladda ner"
 
@@ -203,8 +203,8 @@ msgid "%d matching files or folders found."
 msgstr "%d matchande filer eller mappar hittades."
 
 #. translators: %s: file name.
-#: source/php/App.php:76 source/php/Module/views/file-browser.blade.php:103
-#: source/php/Module/views/file-browser.blade.php:199
+#: source/php/App.php:76 source/php/Module/views/file-browser.blade.php:104
+#: source/php/Module/views/file-browser.blade.php:200
 msgid "Download %s"
 msgstr "Ladda ner %s"
 
@@ -260,61 +260,63 @@ msgstr "Inga mappar hittades."
 msgid "Folders could not be loaded."
 msgstr "Mappar kunde inte laddas."
 
-#: source/php/Module/FileBrowser.php:23
+#: source/php/Module/FileBrowser.php:25
 msgid "Folder Browser"
 msgstr "Mappbläddrare"
 
-#: source/php/Module/FileBrowser.php:24
+#: source/php/Module/FileBrowser.php:26
 msgid "Folder Browsers"
 msgstr "Mappbläddrare"
 
-#: source/php/Module/FileBrowser.php:25
+#: source/php/Module/FileBrowser.php:27
 msgid ""
 "Expose selected server folders as an accessible downloadable document "
 "browser."
 msgstr ""
 "Visa valda servermappar som en tillgänglig dokumentbläddrare med nedladdning."
 
-#: source/php/Module/FileBrowser.php:105 source/php/Rest/RestController.php:338
+#: source/php/Module/FileBrowser.php:112 source/php/Module/FileBrowser.php:166
+#: source/php/Rest/RestController.php:367
 msgid "Documents"
 msgstr "Dokument"
 
-#: source/php/Rest/RestController.php:107
+#: source/php/Rest/RestController.php:122
 #: source/php/Service/PathResolver.php:21
 msgid "Selected source is not available."
 msgstr "Den valda källan är inte tillgänglig."
 
-#: source/php/Rest/RestController.php:113
+#: source/php/Rest/RestController.php:128
 #: source/php/Service/PathResolver.php:27
 msgid "Invalid folder path."
 msgstr "Ogiltig mappsökväg."
 
-#: source/php/Rest/RestController.php:145
-#: source/php/Rest/RestController.php:242
+#: source/php/Rest/RestController.php:161
+#: source/php/Rest/RestController.php:260
 msgid "Selected folder is not available."
 msgstr "Den valda mappen är inte tillgänglig."
 
-#: source/php/Rest/RestController.php:158
-#: source/php/Rest/RestController.php:255
+#: source/php/Rest/RestController.php:174
+#: source/php/Rest/RestController.php:273
 #: source/php/Service/PathResolver.php:41
 #: source/php/Service/PathResolver.php:57
 msgid "Invalid path."
 msgstr "Ogiltig sökväg."
 
-#: source/php/Rest/RestController.php:267
+#: source/php/Rest/RestController.php:285
 msgid "This file type is not available for download."
 msgstr "Den här filtypen är inte tillgänglig för nedladdning."
 
-#: source/php/Rest/RestController.php:292
+#: source/php/Rest/RestController.php:313
+#: source/php/Rest/RestController.php:320
 msgid "Selected document browser is not available."
 msgstr "Den valda dokumentbläddraren är inte tillgänglig."
 
-#: source/php/Rest/RestController.php:299
-#: source/php/Module/views/file-browser.blade.php:10
+#: source/php/Rest/RestController.php:327
+#: source/php/Module/views/file-browser.blade.php:11
 msgid "No folders have been selected for this document browser."
 msgstr "Inga mappar har valts för den här dokumentbläddraren."
 
-#: source/php/Service/DirectoryScanner.php:249
+#: source/php/Service/DirectoryScanner.php:177
 msgid "This folder could not be searched."
 msgstr "Den här mappen kunde inte sökas igenom."
 
@@ -426,34 +428,34 @@ msgstr "Den valda mappen är inte längre tillgänglig."
 msgid "The selected item is not readable."
 msgstr "Det valda objektet är inte läsbart."
 
-#: source/php/Module/views/file-browser.blade.php:23
+#: source/php/Module/views/file-browser.blade.php:24
 msgid "Search files"
 msgstr "Sök filer"
 
-#: source/php/Module/views/file-browser.blade.php:28
+#: source/php/Module/views/file-browser.blade.php:29
 msgid "Search files by name"
 msgstr "Sök filer efter namn"
 
-#: source/php/Module/views/file-browser.blade.php:56
-#: source/php/Module/views/file-browser.blade.php:153
+#: source/php/Module/views/file-browser.blade.php:57
+#: source/php/Module/views/file-browser.blade.php:154
 msgid "%d folder"
 msgid_plural "%d folders"
 msgstr[0] "%d mapp"
 msgstr[1] "%d mappar"
 
-#: source/php/Module/views/file-browser.blade.php:57
-#: source/php/Module/views/file-browser.blade.php:154
+#: source/php/Module/views/file-browser.blade.php:58
+#: source/php/Module/views/file-browser.blade.php:155
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d fil"
 msgstr[1] "%d filer"
 
-#: source/php/Module/views/file-browser.blade.php:79
-#: source/php/Module/views/file-browser.blade.php:175
+#: source/php/Module/views/file-browser.blade.php:80
+#: source/php/Module/views/file-browser.blade.php:176
 msgid "Contains documents"
 msgstr "Innehåller dokument"
 
-#: source/php/Module/views/file-browser.blade.php:99
-#: source/php/Module/views/file-browser.blade.php:195
+#: source/php/Module/views/file-browser.blade.php:100
+#: source/php/Module/views/file-browser.blade.php:196
 msgid "Updated %s"
 msgstr "Uppdaterad %s"

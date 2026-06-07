@@ -1,6 +1,7 @@
 <div id="{{ $id }}" class="mod-file-browser"
   style="--file-browser-folder-icon-url: url('{{ esc_url($folderIconUrl) }}'); --file-browser-download-icon-url: url('{{ esc_url($downloadIconUrl) }}')"
   data-file-browser data-module-id="{{ $moduleId }}" data-rest-base-url="{{ $restBaseUrl }}"
+  data-instance-token="{{ esc_attr($instanceToken ?? '') }}"
   data-show-file-size="{{ $showFileSize ? '1' : '0' }}" data-show-modified-date="{{ $showModifiedDate ? '1' : '0' }}"
   data-show-file-type="{{ $showFileType ? '1' : '0' }}"
   data-show-file-description="{{ $showFileDescription ? '1' : '0' }}"

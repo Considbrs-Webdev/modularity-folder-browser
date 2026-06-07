@@ -258,6 +258,27 @@
             "search_placeholder": ""
         },
         {
+            "key": "field_6a2597fa6a072",
+            "label": "Enable search",
+            "name": "enable_search",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
             "key": "field_modularity_folder_browser_allowed_file_types",
             "label": "Allowed file types override",
             "name": "allowed_file_types_override",
@@ -314,4 +335,4 @@
     "acfe_meta": "",
     "acfe_note": ""
 }]
-
+

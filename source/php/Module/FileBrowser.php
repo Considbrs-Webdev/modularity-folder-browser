@@ -32,6 +32,7 @@ class FileBrowser extends \Modularity\Module
     public function data(): array
     {
         $fields = $this->getFields();
+        $startFolders = (array) ($fields['start_folders'] ?? []);
         $moduleId = (int) $this->ID;
         $sortOrder = $this->normalizeSortOrder((string) ($fields['sort_order'] ?? 'name_asc'));
         $override = isset($fields['allowed_file_types_override']) && is_array($fields['allowed_file_types_override'])
@@ -39,11 +40,17 @@ class FileBrowser extends \Modularity\Module
             : [];
         $allowedExtensions = $this->scanner->getAllowedExtensions($moduleId, $override);
         $topFolderName = sanitize_text_field((string) ($fields['top_folder_name'] ?? ''));
+        $roots = $this->prepareRoots($startFolders, $moduleId, $sortOrder, $allowedExtensions);
+
+        if ($topFolderName !== '' && count($roots) === 1 && $this->hasExactlyOneConfiguredSourceFolder($startFolders)) {
+            $roots[0]['attachListingToTopFolder'] = true;
+            $roots[0]['expanded'] = true;
+        }
 
         return [
             'id' => 'mod-file-browser-' . $moduleId . '-' . wp_unique_id(),
             'moduleId' => $moduleId,
-            'roots' => $this->prepareRoots((array) ($fields['start_folders'] ?? []), $moduleId, $sortOrder, $allowedExtensions),
+            'roots' => $roots,
             'topFolderName' => $topFolderName,
             'topFolderExpanded' => $topFolderName !== '',
             'showFileSize' => !empty($fields['show_file_size']),
@@ -119,6 +126,36 @@ class FileBrowser extends \Modularity\Module
         }
 
         return $prepared;
+    }
+
+    private function hasExactlyOneConfiguredSourceFolder(array $roots): bool
+    {
+        $sourceCount = 0;
+        $folderCount = 0;
+
+        foreach ($roots as $root) {
+            if (!is_array($root)) {
+                continue;
+            }
+
+            $source = sanitize_key((string) ($root['source'] ?? ''));
+
+            if ($source === '') {
+                continue;
+            }
+
+            $sourceCount++;
+
+            foreach ($this->parseFolderPaths($root['folder'] ?? '') as $folderPath) {
+                if ($this->paths->normalizeRelativePath($folderPath) === null) {
+                    continue;
+                }
+
+                $folderCount++;
+            }
+        }
+
+        return $sourceCount === 1 && $folderCount === 1;
     }
 
     private function parseFolderPaths(mixed $value): array

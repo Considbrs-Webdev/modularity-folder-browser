@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-27T09:18:58+00:00\n"
+"POT-Creation-Date: 2026-06-07T17:31:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: modularity-folder-browser\n"
@@ -111,6 +111,10 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
+#: source/php/AcfFields/php/instance-settings.php:227
+msgid "text"
+msgstr ""
+
 #: source/php/AcfFields/php/instance-settings.php:235
 msgid "Sort order"
 msgstr ""
@@ -140,10 +144,14 @@ msgid "name_asc"
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:268
+msgid "Enable search"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:289
 msgid "Allowed file types override"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:272
+#: source/php/AcfFields/php/instance-settings.php:293
 msgid "Optional per-module restriction. Leaving this empty allows all globally configured file types."
 msgstr ""
 
@@ -165,65 +173,84 @@ msgid "Folder"
 msgstr ""
 
 #: source/php/App.php:69
-#: source/php/Module/views/file-browser.blade.php:124
+#: source/php/Module/views/file-browser.blade.php:129
+#: source/php/Module/views/file-browser.blade.php:225
 msgid "Download"
 msgstr ""
 
-#. translators: %s: file name.
+#: source/php/App.php:70
+msgid "Searching documents."
+msgstr ""
+
 #: source/php/App.php:71
-#: source/php/Module/views/file-browser.blade.php:99
+msgid "The search could not be completed."
+msgstr ""
+
+#: source/php/App.php:72
+msgid "No matching files or folders found."
+msgstr ""
+
+#. translators: %d: result count.
+#: source/php/App.php:74
+msgid "%d matching files or folders found."
+msgstr ""
+
+#. translators: %s: file name.
+#: source/php/App.php:76
+#: source/php/Module/views/file-browser.blade.php:103
+#: source/php/Module/views/file-browser.blade.php:199
 msgid "Download %s"
 msgstr ""
 
-#: source/php/App.php:110
+#: source/php/App.php:115
 msgid "Select folders"
 msgstr ""
 
-#: source/php/App.php:111
+#: source/php/App.php:116
 msgid "Select folders to expose"
 msgstr ""
 
-#: source/php/App.php:112
+#: source/php/App.php:117
 msgid "Source"
 msgstr ""
 
-#: source/php/App.php:113
+#: source/php/App.php:118
 msgid "selected"
 msgstr ""
 
-#: source/php/App.php:114
+#: source/php/App.php:119
 msgid "OK"
 msgstr ""
 
-#: source/php/App.php:115
+#: source/php/App.php:120
 msgid "Cancel"
 msgstr ""
 
-#: source/php/App.php:116
+#: source/php/App.php:121
 msgid "Expand folder"
 msgstr ""
 
-#: source/php/App.php:117
+#: source/php/App.php:122
 msgid "Collapse folder"
 msgstr ""
 
-#: source/php/App.php:118
+#: source/php/App.php:123
 msgid "Source root"
 msgstr ""
 
-#: source/php/App.php:119
+#: source/php/App.php:124
 msgid "Selected folder"
 msgstr ""
 
-#: source/php/App.php:120
+#: source/php/App.php:125
 msgid "Loading folders."
 msgstr ""
 
-#: source/php/App.php:121
+#: source/php/App.php:126
 msgid "No folders found."
 msgstr ""
 
-#: source/php/App.php:122
+#: source/php/App.php:127
 msgid "Folders could not be loaded."
 msgstr ""
 
@@ -239,44 +266,48 @@ msgstr ""
 msgid "Expose selected server folders as an accessible downloadable document browser."
 msgstr ""
 
-#: source/php/Module/FileBrowser.php:96
-#: source/php/Rest/RestController.php:271
+#: source/php/Module/FileBrowser.php:105
+#: source/php/Rest/RestController.php:338
 msgid "Documents"
 msgstr ""
 
-#: source/php/Rest/RestController.php:92
+#: source/php/Rest/RestController.php:107
 #: source/php/Service/PathResolver.php:21
 msgid "Selected source is not available."
 msgstr ""
 
-#: source/php/Rest/RestController.php:98
+#: source/php/Rest/RestController.php:113
 #: source/php/Service/PathResolver.php:27
 msgid "Invalid folder path."
 msgstr ""
 
-#: source/php/Rest/RestController.php:130
-#: source/php/Rest/RestController.php:175
+#: source/php/Rest/RestController.php:145
+#: source/php/Rest/RestController.php:242
 msgid "Selected folder is not available."
 msgstr ""
 
-#: source/php/Rest/RestController.php:143
-#: source/php/Rest/RestController.php:188
+#: source/php/Rest/RestController.php:158
+#: source/php/Rest/RestController.php:255
 #: source/php/Service/PathResolver.php:41
 #: source/php/Service/PathResolver.php:57
 msgid "Invalid path."
 msgstr ""
 
-#: source/php/Rest/RestController.php:200
+#: source/php/Rest/RestController.php:267
 msgid "This file type is not available for download."
 msgstr ""
 
-#: source/php/Rest/RestController.php:225
+#: source/php/Rest/RestController.php:292
 msgid "Selected document browser is not available."
 msgstr ""
 
-#: source/php/Rest/RestController.php:232
+#: source/php/Rest/RestController.php:299
 #: source/php/Module/views/file-browser.blade.php:10
 msgid "No folders have been selected for this document browser."
+msgstr ""
+
+#: source/php/Service/DirectoryScanner.php:249
+msgid "This folder could not be searched."
 msgstr ""
 
 #: source/php/Service/FileMetadataFormatter.php:38
@@ -387,24 +418,34 @@ msgstr ""
 msgid "The selected item is not readable."
 msgstr ""
 
+#: source/php/Module/views/file-browser.blade.php:23
+msgid "Search files"
+msgstr ""
+
 #: source/php/Module/views/file-browser.blade.php:28
-#: source/php/Module/views/file-browser.blade.php:54
+msgid "Search files by name"
+msgstr ""
+
+#: source/php/Module/views/file-browser.blade.php:56
+#: source/php/Module/views/file-browser.blade.php:153
 msgid "%d folder"
 msgid_plural "%d folders"
 msgstr[0] ""
 msgstr[1] ""
 
-#: source/php/Module/views/file-browser.blade.php:29
-#: source/php/Module/views/file-browser.blade.php:55
+#: source/php/Module/views/file-browser.blade.php:57
+#: source/php/Module/views/file-browser.blade.php:154
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: source/php/Module/views/file-browser.blade.php:76
+#: source/php/Module/views/file-browser.blade.php:79
+#: source/php/Module/views/file-browser.blade.php:175
 msgid "Contains documents"
 msgstr ""
 
-#: source/php/Module/views/file-browser.blade.php:95
+#: source/php/Module/views/file-browser.blade.php:99
+#: source/php/Module/views/file-browser.blade.php:195
 msgid "Updated %s"
 msgstr ""

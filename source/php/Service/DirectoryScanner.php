@@ -203,7 +203,7 @@ class DirectoryScanner
             ],
         ];
 
-        set_transient($cacheKey, $result, (int) apply_filters('modularity_file_browser_cache_ttl', 10 * MINUTE_IN_SECONDS, $moduleId));
+        set_transient($cacheKey, $result, (int) apply_filters('Modularity/Module/FolderBrowser/CacheTTL', 10 * MINUTE_IN_SECONDS, $moduleId));
 
         return $result;
     }

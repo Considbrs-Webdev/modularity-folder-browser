@@ -1,15 +1,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Modularity Folder Browser 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/modularity-folder-browser\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/modularity-folder-"
+"browser\n"
+"POT-Creation-Date: 2026-06-07T17:30:13+00:00\n"
+"PO-Revision-Date: 2026-06-07 19:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-27T01:56:07+00:00\n"
-"PO-Revision-Date: 2026-05-27 03:45+0200\n"
-"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.9\n"
 "X-Domain: modularity-folder-browser\n"
@@ -39,16 +40,135 @@ msgstr "Consid Borås AB"
 msgid "https://github.com/considbrs-webdev"
 msgstr "https://github.com/considbrs-webdev"
 
+#: source/php/AcfFields/php/instance-settings.php:8
+msgid "Folder Browser Settings"
+msgstr "Inställningar för mappbläddrare"
+
+#: source/php/AcfFields/php/instance-settings.php:12
+msgid "Top folder name"
+msgstr "Namn på toppmapp"
+
+#: source/php/AcfFields/php/instance-settings.php:16
+msgid "Optional folder label that wraps the selected folders on the frontend."
+msgstr "Valfri mappetikett som omsluter de valda mapparna på webbplatsen."
+
+#: source/php/AcfFields/php/instance-settings.php:25
+msgid "Leave empty to show selected folders directly"
+msgstr "Lämna tomt för att visa valda mappar direkt"
+
+#: source/php/AcfFields/php/instance-settings.php:32
+msgid "Start folders"
+msgstr "Startmappar"
+
+#: source/php/AcfFields/php/instance-settings.php:36
+msgid ""
+"Select one or more folders inside configured filesystem sources. Absolute "
+"paths are never stored."
+msgstr ""
+"Välj en eller flera mappar i konfigurerade filsystemskällor. Absoluta "
+"sökvägar sparas aldrig."
+
+#: source/php/AcfFields/php/instance-settings.php:45
+msgid "Add folder"
+msgstr "Lägg till mapp"
+
+#: source/php/AcfFields/php/instance-settings.php:54
+msgid "Root folder"
+msgstr "Rotmapp"
+
+#: source/php/AcfFields/php/instance-settings.php:84
+msgid "Selected folders"
+msgstr "Valda mappar"
+
+#: source/php/AcfFields/php/instance-settings.php:88
+msgid "Choose one or more folders from the selected root folder."
+msgstr "Välj en eller flera mappar från den valda rotmappen."
+
+#: source/php/AcfFields/php/instance-settings.php:107
+msgid "Initially expanded"
+msgstr "Utfälld från början"
+
+#: source/php/AcfFields/php/instance-settings.php:131
+msgid "Show file type"
+msgstr "Visa filtyp"
+
+#: source/php/AcfFields/php/instance-settings.php:151
+msgid "Show file description"
+msgstr "Visa filbeskrivning"
+
+#: source/php/AcfFields/php/instance-settings.php:171
+msgid "Show file size"
+msgstr "Visa filstorlek"
+
+#: source/php/AcfFields/php/instance-settings.php:191
+msgid "Show modified date"
+msgstr "Visa ändringsdatum"
+
+#: source/php/AcfFields/php/instance-settings.php:211
+msgid "Download display"
+msgstr "Nedladdningsvisning"
+
+#: source/php/AcfFields/php/instance-settings.php:224
+msgid "Text"
+msgstr "Text"
+
+#: source/php/AcfFields/php/instance-settings.php:225
+msgid "Icon"
+msgstr "Ikon"
+
+#: source/php/AcfFields/php/instance-settings.php:227
+msgid "text"
+msgstr "text"
+
+#: source/php/AcfFields/php/instance-settings.php:235
+msgid "Sort order"
+msgstr "Sorteringsordning"
+
+#: source/php/AcfFields/php/instance-settings.php:248
+msgid "Name A-Z"
+msgstr "Namn A-Ö"
+
+#: source/php/AcfFields/php/instance-settings.php:249
+msgid "Name Z-A"
+msgstr "Namn Ö-A"
+
+#: source/php/AcfFields/php/instance-settings.php:250
+msgid "Newest first"
+msgstr "Nyast först"
+
+#: source/php/AcfFields/php/instance-settings.php:251
+msgid "Oldest first"
+msgstr "Äldst först"
+
+#: source/php/AcfFields/php/instance-settings.php:252
+msgid "File type"
+msgstr "Filtyp"
+
 #: source/php/AcfFields/php/instance-settings.php:254
 msgid "name_asc"
 msgstr "name_asc"
+
+#: source/php/AcfFields/php/instance-settings.php:268
+msgid "Enable search"
+msgstr "Aktivera sök"
+
+#: source/php/AcfFields/php/instance-settings.php:289
+msgid "Allowed file types override"
+msgstr "Åsidosätt tillåtna filtyper"
+
+#: source/php/AcfFields/php/instance-settings.php:293
+msgid ""
+"Optional per-module restriction. Leaving this empty allows all globally "
+"configured file types."
+msgstr ""
+"Valfri begränsning per modul. Om fältet lämnas tomt tillåts alla globalt "
+"konfigurerade filtyper."
 
 #: source/php/App.php:65
 msgid "Loading folder contents."
 msgstr "Laddar mappinnehåll."
 
-#: source/php/App.php:66
-#: source/php/Service/DirectoryScanner.php:192
+#: source/php/App.php:66 source/php/Service/DirectoryScanner.php:192
 msgid "This folder could not be loaded."
 msgstr "Den här mappen kunde inte laddas."
 
@@ -60,60 +180,83 @@ msgstr "Inga dokument hittades."
 msgid "Folder"
 msgstr "Mapp"
 
-#: source/php/App.php:69
-#: source/php/Module/views/file-browser.blade.php:124
+#: source/php/App.php:69 source/php/Module/views/file-browser.blade.php:129
+#: source/php/Module/views/file-browser.blade.php:225
 msgid "Download"
 msgstr "Ladda ner"
 
-#: source/php/App.php:110
+#: source/php/App.php:70
+msgid "Searching documents."
+msgstr "Söker dokument."
+
+#: source/php/App.php:71
+msgid "The search could not be completed."
+msgstr "Sökningen kunde inte slutföras."
+
+#: source/php/App.php:72
+msgid "No matching files or folders found."
+msgstr "Inga matchande filer eller mappar hittades."
+
+#. translators: %d: result count.
+#: source/php/App.php:74
+msgid "%d matching files or folders found."
+msgstr "%d matchande filer eller mappar hittades."
+
+#. translators: %s: file name.
+#: source/php/App.php:76 source/php/Module/views/file-browser.blade.php:103
+#: source/php/Module/views/file-browser.blade.php:199
+msgid "Download %s"
+msgstr "Ladda ner %s"
+
+#: source/php/App.php:115
 msgid "Select folders"
 msgstr "Välj mappar"
 
-#: source/php/App.php:111
+#: source/php/App.php:116
 msgid "Select folders to expose"
 msgstr "Välj mappar att visa"
 
-#: source/php/App.php:112
+#: source/php/App.php:117
 msgid "Source"
 msgstr "Källa"
 
-#: source/php/App.php:113
+#: source/php/App.php:118
 msgid "selected"
 msgstr "valda"
 
-#: source/php/App.php:114
+#: source/php/App.php:119
 msgid "OK"
 msgstr "OK"
 
-#: source/php/App.php:115
+#: source/php/App.php:120
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: source/php/App.php:116
+#: source/php/App.php:121
 msgid "Expand folder"
 msgstr "Fäll ut mapp"
 
-#: source/php/App.php:117
+#: source/php/App.php:122
 msgid "Collapse folder"
 msgstr "Fäll in mapp"
 
-#: source/php/App.php:118
+#: source/php/App.php:123
 msgid "Source root"
 msgstr "Källrot"
 
-#: source/php/App.php:119
+#: source/php/App.php:124
 msgid "Selected folder"
 msgstr "Vald mapp"
 
-#: source/php/App.php:120
+#: source/php/App.php:125
 msgid "Loading folders."
 msgstr "Laddar mappar."
 
-#: source/php/App.php:121
+#: source/php/App.php:126
 msgid "No folders found."
 msgstr "Inga mappar hittades."
 
-#: source/php/App.php:122
+#: source/php/App.php:127
 msgid "Folders could not be loaded."
 msgstr "Mappar kunde inte laddas."
 
@@ -126,48 +269,54 @@ msgid "Folder Browsers"
 msgstr "Mappbläddrare"
 
 #: source/php/Module/FileBrowser.php:25
-msgid "Expose selected server folders as an accessible downloadable document browser."
-msgstr "Visa valda servermappar som en tillgänglig dokumentbläddrare med nedladdning."
+msgid ""
+"Expose selected server folders as an accessible downloadable document "
+"browser."
+msgstr ""
+"Visa valda servermappar som en tillgänglig dokumentbläddrare med nedladdning."
 
-#: source/php/Module/FileBrowser.php:96
-#: source/php/Rest/RestController.php:271
+#: source/php/Module/FileBrowser.php:105 source/php/Rest/RestController.php:338
 msgid "Documents"
 msgstr "Dokument"
 
-#: source/php/Rest/RestController.php:92
+#: source/php/Rest/RestController.php:107
 #: source/php/Service/PathResolver.php:21
 msgid "Selected source is not available."
 msgstr "Den valda källan är inte tillgänglig."
 
-#: source/php/Rest/RestController.php:98
+#: source/php/Rest/RestController.php:113
 #: source/php/Service/PathResolver.php:27
 msgid "Invalid folder path."
 msgstr "Ogiltig mappsökväg."
 
-#: source/php/Rest/RestController.php:130
-#: source/php/Rest/RestController.php:175
+#: source/php/Rest/RestController.php:145
+#: source/php/Rest/RestController.php:242
 msgid "Selected folder is not available."
 msgstr "Den valda mappen är inte tillgänglig."
 
-#: source/php/Rest/RestController.php:143
-#: source/php/Rest/RestController.php:188
+#: source/php/Rest/RestController.php:158
+#: source/php/Rest/RestController.php:255
 #: source/php/Service/PathResolver.php:41
 #: source/php/Service/PathResolver.php:57
 msgid "Invalid path."
 msgstr "Ogiltig sökväg."
 
-#: source/php/Rest/RestController.php:200
+#: source/php/Rest/RestController.php:267
 msgid "This file type is not available for download."
 msgstr "Den här filtypen är inte tillgänglig för nedladdning."
 
-#: source/php/Rest/RestController.php:225
+#: source/php/Rest/RestController.php:292
 msgid "Selected document browser is not available."
 msgstr "Den valda dokumentbläddraren är inte tillgänglig."
 
-#: source/php/Rest/RestController.php:232
+#: source/php/Rest/RestController.php:299
 #: source/php/Module/views/file-browser.blade.php:10
 msgid "No folders have been selected for this document browser."
 msgstr "Inga mappar har valts för den här dokumentbläddraren."
+
+#: source/php/Service/DirectoryScanner.php:249
+msgid "This folder could not be searched."
+msgstr "Den här mappen kunde inte sökas igenom."
 
 #: source/php/Service/FileMetadataFormatter.php:38
 msgid "PDF document"
@@ -277,134 +426,34 @@ msgstr "Den valda mappen är inte längre tillgänglig."
 msgid "The selected item is not readable."
 msgstr "Det valda objektet är inte läsbart."
 
+#: source/php/Module/views/file-browser.blade.php:23
+msgid "Search files"
+msgstr "Sök filer"
+
 #: source/php/Module/views/file-browser.blade.php:28
-#: source/php/Module/views/file-browser.blade.php:54
+msgid "Search files by name"
+msgstr "Sök filer efter namn"
+
+#: source/php/Module/views/file-browser.blade.php:56
+#: source/php/Module/views/file-browser.blade.php:153
 msgid "%d folder"
 msgid_plural "%d folders"
 msgstr[0] "%d mapp"
 msgstr[1] "%d mappar"
 
-#: source/php/Module/views/file-browser.blade.php:29
-#: source/php/Module/views/file-browser.blade.php:55
+#: source/php/Module/views/file-browser.blade.php:57
+#: source/php/Module/views/file-browser.blade.php:154
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d fil"
 msgstr[1] "%d filer"
 
-#: source/php/Module/views/file-browser.blade.php:76
+#: source/php/Module/views/file-browser.blade.php:79
+#: source/php/Module/views/file-browser.blade.php:175
 msgid "Contains documents"
 msgstr "Innehåller dokument"
 
-#: source/php/Module/views/file-browser.blade.php:95
+#: source/php/Module/views/file-browser.blade.php:99
+#: source/php/Module/views/file-browser.blade.php:195
 msgid "Updated %s"
 msgstr "Uppdaterad %s"
-
-#: source/php/AcfFields/php/instance-settings.php:224
-msgid "Text"
-msgstr "Text"
-
-#. translators: %s: file name.
-#: source/php/App.php:71
-#: source/php/Module/views/file-browser.blade.php:99
-msgid "Download %s"
-msgstr "Ladda ner %s"
-
-#: source/php/AcfFields/php/instance-settings.php:8
-msgid "Folder Browser Settings"
-msgstr "Inställningar för mappbläddrare"
-
-#: source/php/AcfFields/php/instance-settings.php:12
-msgid "Top folder name"
-msgstr "Namn på toppmapp"
-
-#: source/php/AcfFields/php/instance-settings.php:16
-msgid "Optional folder label that wraps the selected folders on the frontend."
-msgstr "Valfri mappetikett som omsluter de valda mapparna på webbplatsen."
-
-#: source/php/AcfFields/php/instance-settings.php:25
-msgid "Leave empty to show selected folders directly"
-msgstr "Lämna tomt för att visa valda mappar direkt"
-
-#: source/php/AcfFields/php/instance-settings.php:32
-msgid "Start folders"
-msgstr "Startmappar"
-
-#: source/php/AcfFields/php/instance-settings.php:36
-msgid "Select one or more folders inside configured filesystem sources. Absolute paths are never stored."
-msgstr "Välj en eller flera mappar i konfigurerade filsystemskällor. Absoluta sökvägar sparas aldrig."
-
-#: source/php/AcfFields/php/instance-settings.php:45
-msgid "Add folder"
-msgstr "Lägg till mapp"
-
-#: source/php/AcfFields/php/instance-settings.php:54
-msgid "Root folder"
-msgstr "Rotmapp"
-
-#: source/php/AcfFields/php/instance-settings.php:84
-msgid "Selected folders"
-msgstr "Valda mappar"
-
-#: source/php/AcfFields/php/instance-settings.php:88
-msgid "Choose one or more folders from the selected root folder."
-msgstr "Välj en eller flera mappar från den valda rotmappen."
-
-#: source/php/AcfFields/php/instance-settings.php:107
-msgid "Initially expanded"
-msgstr "Utfälld från början"
-
-#: source/php/AcfFields/php/instance-settings.php:131
-msgid "Show file type"
-msgstr "Visa filtyp"
-
-#: source/php/AcfFields/php/instance-settings.php:151
-msgid "Show file description"
-msgstr "Visa filbeskrivning"
-
-#: source/php/AcfFields/php/instance-settings.php:171
-msgid "Show file size"
-msgstr "Visa filstorlek"
-
-#: source/php/AcfFields/php/instance-settings.php:191
-msgid "Show modified date"
-msgstr "Visa ändringsdatum"
-
-#: source/php/AcfFields/php/instance-settings.php:211
-msgid "Download display"
-msgstr "Nedladdningsvisning"
-
-#: source/php/AcfFields/php/instance-settings.php:225
-msgid "Icon"
-msgstr "Ikon"
-
-#: source/php/AcfFields/php/instance-settings.php:235
-msgid "Sort order"
-msgstr "Sorteringsordning"
-
-#: source/php/AcfFields/php/instance-settings.php:248
-msgid "Name A-Z"
-msgstr "Namn A-Ö"
-
-#: source/php/AcfFields/php/instance-settings.php:249
-msgid "Name Z-A"
-msgstr "Namn Ö-A"
-
-#: source/php/AcfFields/php/instance-settings.php:250
-msgid "Newest first"
-msgstr "Nyast först"
-
-#: source/php/AcfFields/php/instance-settings.php:251
-msgid "Oldest first"
-msgstr "Äldst först"
-
-#: source/php/AcfFields/php/instance-settings.php:252
-msgid "File type"
-msgstr "Filtyp"
-
-#: source/php/AcfFields/php/instance-settings.php:268
-msgid "Allowed file types override"
-msgstr "Åsidosätt tillåtna filtyper"
-
-#: source/php/AcfFields/php/instance-settings.php:272
-msgid "Optional per-module restriction. Leaving this empty allows all globally configured file types."
-msgstr "Valfri begränsning per modul. Om fältet lämnas tomt tillåts alla globalt konfigurerade filtyper."

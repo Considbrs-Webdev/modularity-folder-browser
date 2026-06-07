@@ -137,12 +137,12 @@ add_filter('modularity_file_browser_folder_icon', function (string $url): string
 });
 ```
 
-### `modularity_file_browser_cache_ttl`
+### `Modularity/Module/FolderBrowser/CacheTTL`
 
 Change directory listing cache duration.
 
 ```php
-add_filter('modularity_file_browser_cache_ttl', function (): int {
+add_filter('Modularity/Module/FolderBrowser/CacheTTL', function (): int {
     return 5 * MINUTE_IN_SECONDS;
 });
 ```

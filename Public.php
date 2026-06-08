@@ -45,7 +45,7 @@ if (!function_exists('modularity_file_browser_get_sources')) {
      *
      * Sources must be provided by code, for example with the
      * MODULARITY_FILE_BROWSER_SOURCES constant or the
-     * modularity_file_browser_sources filter.
+     * Modularity/Module/FolderBrowser/Sources filter.
      */
     function modularity_file_browser_get_sources(): array
     {
@@ -53,7 +53,7 @@ if (!function_exists('modularity_file_browser_get_sources')) {
             ? MODULARITY_FILE_BROWSER_SOURCES
             : [];
 
-        $sources = apply_filters('modularity_file_browser_sources', $sources);
+        $sources = apply_filters('Modularity/Module/FolderBrowser/Sources', $sources);
 
         return is_array($sources) ? $sources : [];
     }

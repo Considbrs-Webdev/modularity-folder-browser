@@ -6,14 +6,14 @@ namespace ModularityFolderBrowser\Helper;
  * Maps file extensions to icon URLs and exposes a WordPress filter
  * so themes and other plugins can swap any icon.
  *
- * Filter: modularity_file_browser_file_icon
+ * Filter: Modularity/Module/FolderBrowser/FileIcon
  *   @param string $url       Absolute URL to the default SVG icon.
  *   @param string $extension Lowercase file extension (e.g. 'pdf').
  *   @param string $category  Internal icon category (e.g. 'pdf', 'spreadsheet').
  *   @return string           URL to the icon to use.
  *
  * Example:
- *   add_filter('modularity_file_browser_file_icon', function($url, $ext, $category) {
+ *   add_filter('Modularity/Module/FolderBrowser/FileIcon', function($url, $ext, $category) {
  *       if ($category === 'pdf') {
  *           return get_template_directory_uri() . '/icons/my-pdf.svg';
  *       }
@@ -88,9 +88,9 @@ class IconResolver
     /**
      * Returns the absolute URL for the folder icon.
      *
-     * Override via the `modularity_file_browser_folder_icon` filter:
+     * Override via the `Modularity/Module/FolderBrowser/FolderIcon` filter:
      *
-     *   add_filter('modularity_file_browser_folder_icon', function($url) {
+     *   add_filter('Modularity/Module/FolderBrowser/FolderIcon', function($url) {
      *       return get_template_directory_uri() . '/icons/folder.svg';
      *   });
      *
@@ -100,7 +100,7 @@ class IconResolver
     {
         $url = MODULARITY_FOLDER_BROWSER_URL . '/source/icons/folder.svg';
 
-        return (string) apply_filters('modularity_file_browser_folder_icon', $url);
+        return (string) apply_filters('Modularity/Module/FolderBrowser/FolderIcon', $url);
     }
 
     /**
@@ -112,7 +112,7 @@ class IconResolver
     {
         $url = MODULARITY_FOLDER_BROWSER_URL . '/source/icons/download.svg';
 
-        return (string) apply_filters('modularity_file_browser_download_icon', $url);
+        return (string) apply_filters('Modularity/Module/FolderBrowser/DownloadIcon', $url);
     }
 
     /**
@@ -139,7 +139,7 @@ class IconResolver
         $url       = MODULARITY_FOLDER_BROWSER_URL . '/source/icons/' . $category . '.svg';
 
         return (string) apply_filters(
-            'modularity_file_browser_file_icon',
+            'Modularity/Module/FolderBrowser/FileIcon',
             $url,
             $extension,
             $category
@@ -162,7 +162,7 @@ class IconResolver
 
         // Fallback for unknown / missing extensions.
         $fallback   = MODULARITY_FOLDER_BROWSER_URL . '/source/icons/file.svg';
-        $map['']    = (string) apply_filters('modularity_file_browser_file_icon', $fallback, '', 'file');
+        $map['']    = (string) apply_filters('Modularity/Module/FolderBrowser/FileIcon', $fallback, '', 'file');
 
         return $map;
     }

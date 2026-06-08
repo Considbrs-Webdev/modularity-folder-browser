@@ -28,7 +28,7 @@ class CacheBust
     public static function getRevManifest()
     {
         $jsonPath = MODULARITY_FOLDER_BROWSER_PATH . apply_filters(
-            'ModularityFolderBrowser/Helper/CacheBust/RevManifestPath',
+            'Modularity/Module/FolderBrowser/Assets/RevManifestPath',
             'assets/dist/manifest.json'
         );
 

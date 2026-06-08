@@ -18,7 +18,7 @@ An accessible Modularity module for exposing selected server folders as a public
 
 ## Configuration
 
-Sources must be configured by code. Use either the `MODULARITY_FILE_BROWSER_SOURCES` constant or the `modularity_file_browser_sources` filter.
+Sources must be configured by code. Use either the `MODULARITY_FILE_BROWSER_SOURCES` constant or the `Modularity/Module/FolderBrowser/Sources` filter.
 
 ```php
 define('MODULARITY_FILE_BROWSER_SOURCES', [
@@ -62,12 +62,12 @@ Inline Gutenberg module instances do not have a persisted module ID. Those rende
 
 ## Filters
 
-### `modularity_file_browser_sources`
+### `Modularity/Module/FolderBrowser/Sources`
 
 Add or change available filesystem sources.
 
 ```php
-add_filter('modularity_file_browser_sources', function (array $sources): array {
+add_filter('Modularity/Module/FolderBrowser/Sources', function (array $sources): array {
     $sources['meeting-documents'] = [
         'label' => 'Meeting documents',
         'path'  => '/srv/shared/meeting-documents',
@@ -115,12 +115,12 @@ mp4, m4v, mov, avi, webm, mkv, wmv, mpeg, mpg, 3gp, ogv,
 mp3, wav, ogg, oga, m4a, aac, flac, wma, aiff, aif, opus
 ```
 
-### `modularity_file_browser_file_icon`
+### `Modularity/Module/FolderBrowser/FileIcon`
 
 Override the icon URL for a file extension or icon category.
 
 ```php
-add_filter('modularity_file_browser_file_icon', function (string $url, string $extension, string $category): string {
+add_filter('Modularity/Module/FolderBrowser/FileIcon', function (string $url, string $extension, string $category): string {
     if ($category === 'archive') {
         return get_stylesheet_directory_uri() . '/assets/icons/archive.svg';
     }
@@ -129,13 +129,23 @@ add_filter('modularity_file_browser_file_icon', function (string $url, string $e
 }, 10, 3);
 ```
 
-### `modularity_file_browser_folder_icon`
+### `Modularity/Module/FolderBrowser/FolderIcon`
 
 Override the folder icon URL.
 
 ```php
-add_filter('modularity_file_browser_folder_icon', function (string $url): string {
+add_filter('Modularity/Module/FolderBrowser/FolderIcon', function (string $url): string {
     return get_stylesheet_directory_uri() . '/assets/icons/folder.svg';
+});
+```
+
+### `Modularity/Module/FolderBrowser/DownloadIcon`
+
+Override the download icon URL.
+
+```php
+add_filter('Modularity/Module/FolderBrowser/DownloadIcon', function (string $url): string {
+    return get_stylesheet_directory_uri() . '/assets/icons/download.svg';
 });
 ```
 

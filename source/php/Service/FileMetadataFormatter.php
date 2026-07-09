@@ -25,7 +25,6 @@ class FileMetadataFormatter
     public function fileLabel(string $filename): string
     {
         $label = pathinfo($filename, PATHINFO_FILENAME);
-        $label = str_replace(['-', '_'], ' ', $label);
 
         return trim($label) !== '' ? ucfirst($label) : $filename;
     }

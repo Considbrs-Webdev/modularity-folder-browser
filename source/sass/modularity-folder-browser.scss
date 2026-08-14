@@ -156,6 +156,14 @@
   border-top: 1px solid var(--file-browser-border);
 }
 
+/* An expanded folder's button has no following sibling item to draw the
+ * usual divider — its children live inside the same <li>. Add the line
+ * under the button itself so expanded folders stay visually consistent
+ * with collapsed ones. */
+.mod-file-browser__folder-button[aria-expanded="true"] {
+  border-bottom: 1px solid var(--file-browser-border);
+}
+
 /* File items propagate column widths inward via subgrid. */
 .mod-file-browser__item--file {
   display: grid;

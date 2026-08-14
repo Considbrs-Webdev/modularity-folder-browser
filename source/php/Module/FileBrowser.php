@@ -82,7 +82,7 @@ class FileBrowser extends \Modularity\Module
     {
         $prepared = [];
 
-        foreach ($roots as $root) {
+        foreach ($roots as $rootIndex => $root) {
             if (!is_array($root)) {
                 continue;
             }
@@ -111,7 +111,6 @@ class FileBrowser extends \Modularity\Module
                     ? basename($path)
                     : ($this->sources->getSource($source)['label'] ?? __('Documents', 'modularity-folder-browser')));
 
-            $rootIndex = count($prepared);
             $listing = $this->scanner->listDirectory($base, '', $moduleId, $rootIndex, $sortOrder, $allowedExtensions, $instanceToken);
 
             $prepared[] = [

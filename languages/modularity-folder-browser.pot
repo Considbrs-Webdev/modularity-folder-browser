@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-07T17:49:09+00:00\n"
+"POT-Creation-Date: 2026-10-21T21:55:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: modularity-folder-browser\n"
@@ -44,114 +44,139 @@ msgid "Folder Browser Settings"
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:12
-msgid "Top folder name"
+msgid "Display mode"
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:16
-msgid "Optional folder label that wraps the selected folders on the frontend."
+msgid "Show a browsable folder tree or a single selected file."
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:25
-msgid "Leave empty to show selected folders directly"
+msgid "Folders"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:32
-msgid "Start folders"
+#: source/php/AcfFields/php/instance-settings.php:26
+msgid "Single file"
 msgstr ""
 
 #: source/php/AcfFields/php/instance-settings.php:36
+msgid "Top folder name"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:40
+msgid "Optional folder label that wraps the selected folders on the frontend."
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:57
+msgid "Leave empty to show selected folders directly"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:64
+msgid "Start folders"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:68
 msgid "Select one or more folders inside configured filesystem sources. Absolute paths are never stored."
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:45
+#: source/php/AcfFields/php/instance-settings.php:85
 msgid "Add folder"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:54
+#: source/php/AcfFields/php/instance-settings.php:94
+#: source/php/AcfFields/php/instance-settings.php:171
 msgid "Root folder"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:84
+#: source/php/AcfFields/php/instance-settings.php:124
 msgid "Selected folders"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:88
+#: source/php/AcfFields/php/instance-settings.php:128
 msgid "Choose one or more folders from the selected root folder."
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:107
+#: source/php/AcfFields/php/instance-settings.php:147
 msgid "Initially expanded"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:131
+#: source/php/AcfFields/php/instance-settings.php:208
+msgid "Selected file"
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:212
+msgid "Choose the file to show from the selected root folder."
+msgstr ""
+
+#: source/php/AcfFields/php/instance-settings.php:237
 msgid "Show file type"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:151
+#: source/php/AcfFields/php/instance-settings.php:257
 msgid "Show file description"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:171
+#: source/php/AcfFields/php/instance-settings.php:277
 msgid "Show file size"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:191
+#: source/php/AcfFields/php/instance-settings.php:297
 msgid "Show modified date"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:211
+#: source/php/AcfFields/php/instance-settings.php:317
 msgid "Download display"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:224
+#: source/php/AcfFields/php/instance-settings.php:330
 msgid "Text"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:225
+#: source/php/AcfFields/php/instance-settings.php:331
 msgid "Icon"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:227
+#: source/php/AcfFields/php/instance-settings.php:333
 msgid "text"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:235
+#: source/php/AcfFields/php/instance-settings.php:341
 msgid "Sort order"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:248
+#: source/php/AcfFields/php/instance-settings.php:362
 msgid "Name A-Z"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:249
+#: source/php/AcfFields/php/instance-settings.php:363
 msgid "Name Z-A"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:250
+#: source/php/AcfFields/php/instance-settings.php:364
 msgid "Newest first"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:251
+#: source/php/AcfFields/php/instance-settings.php:365
 msgid "Oldest first"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:252
+#: source/php/AcfFields/php/instance-settings.php:366
 msgid "File type"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:254
+#: source/php/AcfFields/php/instance-settings.php:368
 msgid "name_asc"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:268
+#: source/php/AcfFields/php/instance-settings.php:382
 msgid "Enable search"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:289
+#: source/php/AcfFields/php/instance-settings.php:411
 msgid "Allowed file types override"
 msgstr ""
 
-#: source/php/AcfFields/php/instance-settings.php:293
+#: source/php/AcfFields/php/instance-settings.php:415
 msgid "Optional per-module restriction. Leaving this empty allows all globally configured file types."
 msgstr ""
 
@@ -175,6 +200,7 @@ msgstr ""
 #: source/php/App.php:69
 #: source/php/Module/views/file-browser.blade.php:130
 #: source/php/Module/views/file-browser.blade.php:226
+#: source/php/Module/views/file-single.blade.php:49
 msgid "Download"
 msgstr ""
 
@@ -199,6 +225,7 @@ msgstr ""
 #: source/php/App.php:76
 #: source/php/Module/views/file-browser.blade.php:104
 #: source/php/Module/views/file-browser.blade.php:200
+#: source/php/Module/views/file-single.blade.php:22
 msgid "Download %s"
 msgstr ""
 
@@ -254,56 +281,86 @@ msgstr ""
 msgid "Folders could not be loaded."
 msgstr ""
 
-#: source/php/Module/FileBrowser.php:25
-msgid "Folder Browser"
+#: source/php/App.php:128
+msgid "Select file"
 msgstr ""
 
-#: source/php/Module/FileBrowser.php:26
-msgid "Folder Browsers"
+#: source/php/App.php:129
+msgid "Select a file to show"
+msgstr ""
+
+#: source/php/App.php:130
+msgid "No file selected"
+msgstr ""
+
+#: source/php/App.php:131
+msgid "Loading files."
+msgstr ""
+
+#: source/php/App.php:132
+msgid "No files found."
+msgstr ""
+
+#: source/php/App.php:133
+msgid "Files could not be loaded."
 msgstr ""
 
 #: source/php/Module/FileBrowser.php:27
+msgid "Folder Browser"
+msgstr ""
+
+#: source/php/Module/FileBrowser.php:28
+msgid "Folder Browsers"
+msgstr ""
+
+#: source/php/Module/FileBrowser.php:29
 msgid "Expose selected server folders as an accessible downloadable document browser."
 msgstr ""
 
-#: source/php/Module/FileBrowser.php:112
-#: source/php/Module/FileBrowser.php:166
-#: source/php/Rest/RestController.php:367
+#: source/php/Module/FileBrowser.php:163
+#: source/php/Module/FileBrowser.php:216
+#: source/php/Rest/RestController.php:398
 msgid "Documents"
 msgstr ""
 
-#: source/php/Rest/RestController.php:122
+#: source/php/Rest/RestController.php:129
 #: source/php/Service/PathResolver.php:21
 msgid "Selected source is not available."
 msgstr ""
 
-#: source/php/Rest/RestController.php:128
+#: source/php/Rest/RestController.php:135
 #: source/php/Service/PathResolver.php:27
 msgid "Invalid folder path."
 msgstr ""
 
-#: source/php/Rest/RestController.php:161
-#: source/php/Rest/RestController.php:260
+#: source/php/Rest/RestController.php:172
+#: source/php/Rest/RestController.php:275
 msgid "Selected folder is not available."
 msgstr ""
 
-#: source/php/Rest/RestController.php:174
-#: source/php/Rest/RestController.php:273
+#: source/php/Rest/RestController.php:185
+#: source/php/Rest/RestController.php:288
+#: source/php/Rest/RestController.php:293
 #: source/php/Service/PathResolver.php:41
 #: source/php/Service/PathResolver.php:57
 msgid "Invalid path."
 msgstr ""
 
-#: source/php/Rest/RestController.php:285
+#: source/php/Rest/RestController.php:217
+msgid "Search is not available for this document."
+msgstr ""
+
+#: source/php/Rest/RestController.php:305
+#: source/php/Service/DirectoryScanner.php:305
 msgid "This file type is not available for download."
 msgstr ""
 
-#: source/php/Rest/RestController.php:313
-#: source/php/Rest/RestController.php:320
+#: source/php/Rest/RestController.php:333
+#: source/php/Rest/RestController.php:342
 msgid "Selected document browser is not available."
 msgstr ""
 
-#: source/php/Rest/RestController.php:327
+#: source/php/Rest/RestController.php:357
 #: source/php/Module/views/file-browser.blade.php:11
 msgid "No folders have been selected for this document browser."
 msgstr ""
@@ -312,69 +369,70 @@ msgstr ""
 msgid "This folder could not be searched."
 msgstr ""
 
-#: source/php/Service/FileMetadataFormatter.php:38
+#: source/php/Service/FileMetadataFormatter.php:37
 msgid "PDF document"
 msgstr ""
 
+#: source/php/Service/FileMetadataFormatter.php:38
 #: source/php/Service/FileMetadataFormatter.php:39
-#: source/php/Service/FileMetadataFormatter.php:40
 msgid "Word document"
 msgstr ""
 
-#: source/php/Service/FileMetadataFormatter.php:41
+#: source/php/Service/FileMetadataFormatter.php:40
 msgid "OpenDocument text document"
 msgstr ""
 
-#: source/php/Service/FileMetadataFormatter.php:42
+#: source/php/Service/FileMetadataFormatter.php:41
 msgid "Rich text document"
 msgstr ""
 
+#: source/php/Service/FileMetadataFormatter.php:42
 #: source/php/Service/FileMetadataFormatter.php:43
-#: source/php/Service/FileMetadataFormatter.php:44
 msgid "Excel spreadsheet"
 msgstr ""
 
-#: source/php/Service/FileMetadataFormatter.php:45
+#: source/php/Service/FileMetadataFormatter.php:44
 msgid "OpenDocument spreadsheet"
 msgstr ""
 
+#: source/php/Service/FileMetadataFormatter.php:45
 #: source/php/Service/FileMetadataFormatter.php:46
-#: source/php/Service/FileMetadataFormatter.php:47
 msgid "PowerPoint presentation"
 msgstr ""
 
-#: source/php/Service/FileMetadataFormatter.php:48
+#: source/php/Service/FileMetadataFormatter.php:47
 msgid "OpenDocument presentation"
 msgstr ""
 
-#: source/php/Service/FileMetadataFormatter.php:49
+#: source/php/Service/FileMetadataFormatter.php:48
 msgid "CSV file"
 msgstr ""
 
-#: source/php/Service/FileMetadataFormatter.php:50
+#: source/php/Service/FileMetadataFormatter.php:49
 msgid "Text file"
 msgstr ""
 
-#: source/php/Service/FileMetadataFormatter.php:51
+#: source/php/Service/FileMetadataFormatter.php:50
 msgid "Markdown file"
 msgstr ""
 
+#: source/php/Service/FileMetadataFormatter.php:51
 #: source/php/Service/FileMetadataFormatter.php:52
 #: source/php/Service/FileMetadataFormatter.php:53
 #: source/php/Service/FileMetadataFormatter.php:54
 #: source/php/Service/FileMetadataFormatter.php:55
-#: source/php/Service/FileMetadataFormatter.php:56
 msgid "Image"
 msgstr ""
 
+#: source/php/Service/FileMetadataFormatter.php:56
 #: source/php/Service/FileMetadataFormatter.php:57
 #: source/php/Service/FileMetadataFormatter.php:58
 #: source/php/Service/FileMetadataFormatter.php:59
 #: source/php/Service/FileMetadataFormatter.php:60
-#: source/php/Service/FileMetadataFormatter.php:61
 msgid "Archive file"
 msgstr ""
 
+#: source/php/Service/FileMetadataFormatter.php:61
 #: source/php/Service/FileMetadataFormatter.php:62
 #: source/php/Service/FileMetadataFormatter.php:63
 #: source/php/Service/FileMetadataFormatter.php:64
@@ -385,10 +443,10 @@ msgstr ""
 #: source/php/Service/FileMetadataFormatter.php:69
 #: source/php/Service/FileMetadataFormatter.php:70
 #: source/php/Service/FileMetadataFormatter.php:71
-#: source/php/Service/FileMetadataFormatter.php:72
 msgid "Video file"
 msgstr ""
 
+#: source/php/Service/FileMetadataFormatter.php:72
 #: source/php/Service/FileMetadataFormatter.php:73
 #: source/php/Service/FileMetadataFormatter.php:74
 #: source/php/Service/FileMetadataFormatter.php:75
@@ -399,11 +457,10 @@ msgstr ""
 #: source/php/Service/FileMetadataFormatter.php:80
 #: source/php/Service/FileMetadataFormatter.php:81
 #: source/php/Service/FileMetadataFormatter.php:82
-#: source/php/Service/FileMetadataFormatter.php:83
 msgid "Audio file"
 msgstr ""
 
-#: source/php/Service/FileMetadataFormatter.php:86
+#: source/php/Service/FileMetadataFormatter.php:85
 msgid "%s file"
 msgstr ""
 
@@ -449,5 +506,10 @@ msgstr ""
 
 #: source/php/Module/views/file-browser.blade.php:100
 #: source/php/Module/views/file-browser.blade.php:196
+#: source/php/Module/views/file-single.blade.php:18
 msgid "Updated %s"
+msgstr ""
+
+#: source/php/Module/views/file-single.blade.php:6
+msgid "The selected file is no longer available."
 msgstr ""

@@ -45,6 +45,10 @@ Persisted Modularity modules have a real `module_id` (a post ID) and REST reques
 
 Inline Gutenberg block instances have no persisted post, so `module_id=0` is used along with an opaque `instance_token`. `Service/InstanceTokenStore` snapshots the resolved config (roots, sort order, allowed extensions) into a WP transient at render time (`Module/FileBrowser::createInstanceToken()`), and REST requests pass the token back to look up that frozen config (`Rest/RestController::getModuleConfig()`). This is why REST endpoints for `tree`, `search`, and `download` all accept both `module_id` and `instance_token` — check both code paths when changing config resolution.
 
+### Single file mode
+
+`display_mode = file` (ACF) makes a module show one file instead of a folder tree. `Service/SingleFileSelection` turns `file_source` + `selected_file` into one root (the file's parent directory) plus the file name; the config (live ACF fields or `InstanceTokenStore` snapshot) carries it as `single_file`. In this mode `RestController::download()` only serves exactly that file (siblings in the same root are refused), `tree`/`search` are rejected, and an unusable `single_file` in a token empties the roots rather than falling back to browsing the folder. Rendering uses `Module/views/file-single.blade.php`; the admin picker reuses the modal with `/admin/folders?include_files=1`.
+
 ### Request flow
 
 1. `App.php` wires WP hooks: registers the module (`init`), enqueues public/admin scripts+styles, and boots `AcfFields\AcfFieldLoader` and `Rest\RestController`.

@@ -1,11 +1,37 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_modularity_folder_browser_instance',
     'title' => __('Folder Browser Settings', 'modularity-folder-browser'),
     'fields' => array(
         0 => array(
+            'key' => 'field_modularity_folder_browser_display_mode',
+            'label' => __('Display mode', 'modularity-folder-browser'),
+            'name' => 'display_mode',
+            'aria-label' => '',
+            'type' => 'button_group',
+            'instructions' => __('Show a browsable folder tree or a single selected file.', 'modularity-folder-browser'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array(
+                'folders' => __('Folders', 'modularity-folder-browser'),
+                'file' => __('Single file', 'modularity-folder-browser'),
+            ),
+            'default_value' => 'folders',
+            'return_format' => 'value',
+            'allow_null' => 0,
+            'allow_in_bindings' => 0,
+            'layout' => 'horizontal',
+        ),
+        1 => array(
             'key' => 'field_modularity_folder_browser_top_folder_name',
             'label' => __('Top folder name', 'modularity-folder-browser'),
             'name' => 'top_folder_name',
@@ -13,7 +39,15 @@
             'type' => 'text',
             'instructions' => __('Optional folder label that wraps the selected folders on the frontend.', 'modularity-folder-browser'),
             'required' => 0,
-            'conditional_logic' => false,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_modularity_folder_browser_display_mode',
+                        'operator' => '==',
+                        'value' => 'folders',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -25,7 +59,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        1 => array(
+        2 => array(
             'key' => 'field_modularity_folder_browser_start_folders',
             'label' => __('Start folders', 'modularity-folder-browser'),
             'name' => 'start_folders',
@@ -33,7 +67,15 @@
             'type' => 'repeater',
             'instructions' => __('Select one or more folders inside configured filesystem sources. Absolute paths are never stored.', 'modularity-folder-browser'),
             'required' => 1,
-            'conditional_logic' => false,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_modularity_folder_browser_display_mode',
+                        'operator' => '==',
+                        'value' => 'folders',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => 'mod-file-browser-start-folders-field',
@@ -124,7 +166,73 @@
                 ),
             ),
         ),
-        2 => array(
+        3 => array(
+            'key' => 'field_modularity_folder_browser_file_source',
+            'label' => __('Root folder', 'modularity-folder-browser'),
+            'name' => 'file_source',
+            'aria-label' => '',
+            'type' => 'select',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_modularity_folder_browser_display_mode',
+                        'operator' => '==',
+                        'value' => 'file',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => 'mod-file-browser-file-source-field',
+                'id' => '',
+            ),
+            'choices' => array(
+            ),
+            'default_value' => false,
+            'return_format' => 'value',
+            'multiple' => 0,
+            'allow_custom' => 0,
+            'search_placeholder' => '',
+            'allow_null' => 0,
+            'allow_in_bindings' => 0,
+            'ui' => 1,
+            'ajax' => 0,
+            'placeholder' => '',
+            'create_options' => 0,
+            'save_options' => 0,
+        ),
+        4 => array(
+            'key' => 'field_modularity_folder_browser_selected_file',
+            'label' => __('Selected file', 'modularity-folder-browser'),
+            'name' => 'selected_file',
+            'aria-label' => '',
+            'type' => 'text',
+            'instructions' => __('Choose the file to show from the selected root folder.', 'modularity-folder-browser'),
+            'required' => 1,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_modularity_folder_browser_display_mode',
+                        'operator' => '==',
+                        'value' => 'file',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => 'mod-file-browser-selected-file-field',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'maxlength' => '',
+            'allow_in_bindings' => 0,
+            'prepend' => '',
+            'append' => '',
+        ),
+        5 => array(
             'key' => 'field_modularity_folder_browser_show_file_type',
             'label' => __('Show file type', 'modularity-folder-browser'),
             'name' => 'show_file_type',
@@ -144,7 +252,7 @@
             'ui_on_text' => '',
             'ui_off_text' => '',
         ),
-        3 => array(
+        6 => array(
             'key' => 'field_modularity_folder_browser_show_file_description',
             'label' => __('Show file description', 'modularity-folder-browser'),
             'name' => 'show_file_description',
@@ -164,7 +272,7 @@
             'ui_on_text' => '',
             'ui_off_text' => '',
         ),
-        4 => array(
+        7 => array(
             'key' => 'field_modularity_folder_browser_show_file_size',
             'label' => __('Show file size', 'modularity-folder-browser'),
             'name' => 'show_file_size',
@@ -184,7 +292,7 @@
             'ui_on_text' => '',
             'ui_off_text' => '',
         ),
-        5 => array(
+        8 => array(
             'key' => 'field_modularity_folder_browser_show_modified_date',
             'label' => __('Show modified date', 'modularity-folder-browser'),
             'name' => 'show_modified_date',
@@ -204,7 +312,7 @@
             'ui_on_text' => '',
             'ui_off_text' => '',
         ),
-        6 => array(
+        9 => array(
             'key' => 'field_modularity_folder_browser_download_display',
             'label' => __('Download display', 'modularity-folder-browser'),
             'name' => 'download_display',
@@ -228,7 +336,7 @@
             'allow_in_bindings' => 0,
             'layout' => 'horizontal',
         ),
-        7 => array(
+        10 => array(
             'key' => 'field_modularity_folder_browser_sort_order',
             'label' => __('Sort order', 'modularity-folder-browser'),
             'name' => 'sort_order',
@@ -236,7 +344,15 @@
             'type' => 'select',
             'instructions' => '',
             'required' => 0,
-            'conditional_logic' => false,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_modularity_folder_browser_display_mode',
+                        'operator' => '==',
+                        'value' => 'folders',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -261,7 +377,7 @@
             'allow_custom' => 0,
             'search_placeholder' => '',
         ),
-        8 => array(
+        11 => array(
             'key' => 'field_6a2597fa6a072',
             'label' => __('Enable search', 'modularity-folder-browser'),
             'name' => 'enable_search',
@@ -269,7 +385,15 @@
             'type' => 'true_false',
             'instructions' => '',
             'required' => 0,
-            'conditional_logic' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_modularity_folder_browser_display_mode',
+                        'operator' => '==',
+                        'value' => 'folders',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -282,7 +406,7 @@
             'ui_off_text' => '',
             'ui' => 1,
         ),
-        9 => array(
+        12 => array(
             'key' => 'field_modularity_folder_browser_allowed_file_types',
             'label' => __('Allowed file types override', 'modularity-folder-browser'),
             'name' => 'allowed_file_types_override',
@@ -341,4 +465,5 @@
     'acfe_meta' => '',
     'acfe_note' => '',
 ));
-}
+
+}

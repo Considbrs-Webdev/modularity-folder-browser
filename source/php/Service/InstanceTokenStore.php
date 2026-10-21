@@ -86,9 +86,24 @@ class InstanceTokenStore
             ];
         }
 
+        $singleFile = '';
+        $rawSingleFile = (string) ($config['single_file'] ?? '');
+
+        if ($rawSingleFile !== '') {
+            $normalizedFile = $this->normalizeRelativePath($rawSingleFile);
+
+            // An unusable single file must not degrade into a browsable folder, so drop the roots.
+            if ($normalizedFile === null || $normalizedFile === '' || str_contains($normalizedFile, '/')) {
+                $roots = [];
+            } else {
+                $singleFile = $normalizedFile;
+            }
+        }
+
         return [
             'module_id' => max(0, (int) ($config['module_id'] ?? 0)),
             'roots' => $roots,
+            'single_file' => $singleFile,
             'sort_order' => $this->normalizeSortOrder((string) ($config['sort_order'] ?? 'name_asc')),
             'allowed_extensions' => $this->extensions->sanitizeExtensions((array) ($config['allowed_extensions'] ?? [])),
         ];

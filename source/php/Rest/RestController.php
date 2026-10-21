@@ -6,6 +6,7 @@ use ModularityFolderBrowser\Service\DirectoryScanner;
 use ModularityFolderBrowser\Service\FileMetadataFormatter;
 use ModularityFolderBrowser\Service\InstanceTokenStore;
 use ModularityFolderBrowser\Service\PathResolver;
+use ModularityFolderBrowser\Service\SingleFileSelection;
 use ModularityFolderBrowser\Service\SourceRepository;
 use WP_Error;
 use WP_REST_Request;
@@ -17,6 +18,7 @@ class RestController
     private PathResolver $paths;
     private DirectoryScanner $scanner;
     private InstanceTokenStore $instanceTokens;
+    private SingleFileSelection $singleFile;
 
     public function __construct()
     {
@@ -24,6 +26,7 @@ class RestController
         $this->paths = new PathResolver($this->sources);
         $this->scanner = new DirectoryScanner($this->paths, new FileMetadataFormatter());
         $this->instanceTokens = new InstanceTokenStore();
+        $this->singleFile = new SingleFileSelection($this->paths);
 
         add_action('rest_api_init', [$this, 'registerRoutes']);
     }
@@ -42,6 +45,10 @@ class RestController
                 'path' => [
                     'required' => false,
                     'sanitize_callback' => 'sanitize_text_field',
+                ],
+                'include_files' => [
+                    'required' => false,
+                    'sanitize_callback' => 'rest_sanitize_boolean',
                 ],
             ],
         ]);
@@ -128,7 +135,10 @@ class RestController
             return new WP_Error('invalid_path', __('Invalid folder path.', 'modularity-folder-browser'), ['status' => 403]);
         }
 
-        $folders = $this->scanner->listFoldersOnly($source['path'], $path);
+        $includeFiles = (bool) $request->get_param('include_files');
+        $listing = $includeFiles
+            ? $this->scanner->listFoldersAndFiles($source['path'], $path, $this->scanner->getAllowedExtensions(null))
+            : ['folders' => $this->scanner->listFoldersOnly($source['path'], $path), 'files' => []];
         $parent = '';
 
         if ($path !== '') {
@@ -141,7 +151,8 @@ class RestController
             'source' => $sourceKey,
             'path' => $path,
             'parent' => $parent,
-            'folders' => $folders,
+            'folders' => $listing['folders'],
+            'files' => $listing['files'],
         ]);
     }
 
@@ -157,7 +168,7 @@ class RestController
             return $config;
         }
 
-        if (!isset($config['roots'][$rootIndex])) {
+        if (!isset($config['roots'][$rootIndex]) || $config['single_file'] !== '') {
             return new WP_Error('invalid_root', __('Selected folder is not available.', 'modularity-folder-browser'), ['status' => 404]);
         }
 
@@ -200,6 +211,10 @@ class RestController
 
         if (is_wp_error($config)) {
             return $config;
+        }
+
+        if ($config['single_file'] !== '') {
+            return new WP_Error('search_unavailable', __('Search is not available for this document.', 'modularity-folder-browser'), ['status' => 404]);
         }
 
         if ($query === '') {
@@ -273,6 +288,11 @@ class RestController
             return new WP_Error('invalid_path', __('Invalid path.', 'modularity-folder-browser'), ['status' => 403]);
         }
 
+        // In single file mode only the selected file may be downloaded, not its siblings.
+        if ($config['single_file'] !== '' && $requestedPath !== $config['single_file']) {
+            return new WP_Error('forbidden', __('Invalid path.', 'modularity-folder-browser'), ['status' => 403]);
+        }
+
         $file = $this->paths->resolveInside($base, $requestedPath, false);
 
         if (is_wp_error($file)) {
@@ -313,6 +333,8 @@ class RestController
                 return new WP_Error('invalid_instance', __('Selected document browser is not available.', 'modularity-folder-browser'), ['status' => 404]);
             }
 
+            $config['single_file'] = (string) ($config['single_file'] ?? '');
+
             return $config;
         }
 
@@ -321,7 +343,15 @@ class RestController
         }
 
         $fields = function_exists('get_fields') ? (array) get_fields($moduleId) : [];
-        $roots = $this->normalizeRoots($fields['start_folders'] ?? []);
+        $singleFile = '';
+
+        if ($this->singleFile->isFileMode($fields)) {
+            $selection = $this->singleFile->fromFields($fields);
+            $roots = $selection ? [$selection['root']] : [];
+            $singleFile = $selection['file'] ?? '';
+        } else {
+            $roots = $this->normalizeRoots($fields['start_folders'] ?? []);
+        }
 
         if ($roots === []) {
             return new WP_Error('empty_roots', __('No folders have been selected for this document browser.', 'modularity-folder-browser'), ['status' => 404]);
@@ -335,6 +365,7 @@ class RestController
         return [
             'module_id' => $moduleId,
             'roots' => $roots,
+            'single_file' => $singleFile,
             'sort_order' => $sortOrder,
             'allowed_extensions' => $this->scanner->getAllowedExtensions($moduleId, $override),
         ];

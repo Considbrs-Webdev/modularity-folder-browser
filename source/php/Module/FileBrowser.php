@@ -6,6 +6,7 @@ use ModularityFolderBrowser\Service\DirectoryScanner;
 use ModularityFolderBrowser\Service\FileMetadataFormatter;
 use ModularityFolderBrowser\Service\InstanceTokenStore;
 use ModularityFolderBrowser\Service\PathResolver;
+use ModularityFolderBrowser\Service\SingleFileSelection;
 use ModularityFolderBrowser\Service\SourceRepository;
 
 class FileBrowser extends \Modularity\Module
@@ -19,6 +20,7 @@ class FileBrowser extends \Modularity\Module
     private PathResolver $paths;
     private DirectoryScanner $scanner;
     private InstanceTokenStore $instanceTokens;
+    private SingleFileSelection $singleFile;
 
     public function init(): void
     {
@@ -30,11 +32,17 @@ class FileBrowser extends \Modularity\Module
         $this->paths = new PathResolver($this->sources);
         $this->scanner = new DirectoryScanner($this->paths, new FileMetadataFormatter());
         $this->instanceTokens = new InstanceTokenStore();
+        $this->singleFile = new SingleFileSelection($this->paths);
     }
 
     public function data(): array
     {
         $fields = $this->getFields();
+
+        if ($this->singleFile->isFileMode($fields)) {
+            return $this->singleFileData($fields);
+        }
+
         $startFolders = (array) ($fields['start_folders'] ?? []);
         $moduleId = $this->getPersistedModuleId((int) $this->ID);
         $sortOrder = $this->normalizeSortOrder((string) ($fields['sort_order'] ?? 'name_asc'));
@@ -75,7 +83,50 @@ class FileBrowser extends \Modularity\Module
 
     public function template(): string
     {
-        return 'file-browser.blade.php';
+        return $this->singleFile->isFileMode($this->getFields())
+            ? 'file-single.blade.php'
+            : 'file-browser.blade.php';
+    }
+
+    private function singleFileData(array $fields): array
+    {
+        $moduleId = $this->getPersistedModuleId((int) $this->ID);
+        $override = isset($fields['allowed_file_types_override']) && is_array($fields['allowed_file_types_override'])
+            ? $fields['allowed_file_types_override']
+            : [];
+        $allowedExtensions = $this->scanner->getAllowedExtensions($moduleId, $override);
+        $selection = $this->singleFile->fromFields($fields);
+        $file = null;
+        $instanceToken = '';
+
+        if ($selection !== null) {
+            $base = $this->paths->resolveSelectedBase($selection['root']['source'], $selection['root']['path']);
+
+            if (!is_wp_error($base)) {
+                $instanceToken = $moduleId > 0
+                    ? ''
+                    : $this->instanceTokens->create([
+                        'module_id' => 0,
+                        'roots' => [$selection['root']],
+                        'single_file' => $selection['file'],
+                        'allowed_extensions' => $allowedExtensions,
+                    ], 0);
+
+                $described = $this->scanner->describeFile($base, $selection['file'], $moduleId, 0, $allowedExtensions, $instanceToken);
+                $file = is_wp_error($described) ? null : $described;
+            }
+        }
+
+        return [
+            'id' => 'mod-file-browser-' . $moduleId . '-' . wp_unique_id(),
+            'file' => $file,
+            'showFileSize' => !empty($fields['show_file_size']),
+            'showModifiedDate' => !empty($fields['show_modified_date']),
+            'showFileType' => !empty($fields['show_file_type']),
+            'showFileDescription' => !array_key_exists('show_file_description', $fields) || !empty($fields['show_file_description']),
+            'downloadDisplay' => $this->normalizeDownloadDisplay((string) ($fields['download_display'] ?? 'text')),
+            'downloadIconUrl' => \ModularityFolderBrowser\Helper\IconResolver::getDownloadUrl(),
+        ];
     }
 
     private function prepareRoots(array $roots, int $moduleId, string $sortOrder, array $allowedExtensions, string $instanceToken): array

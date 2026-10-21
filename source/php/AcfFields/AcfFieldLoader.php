@@ -14,6 +14,7 @@ class AcfFieldLoader
      */
     private array $fieldChoiceLoaders = [
         'field_modularity_folder_browser_source' => 'getSourceChoices',
+        'field_modularity_folder_browser_file_source' => 'getSourceChoices',
         'field_modularity_folder_browser_allowed_file_types' => 'getAllowedExtensionChoices',
     ];
 

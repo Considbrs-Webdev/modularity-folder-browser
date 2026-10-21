@@ -374,12 +374,14 @@
   white-space: nowrap;
 }
 
-.mod-file-browser-selected-folders-field .mod-file-browser-select-folders {
+.mod-file-browser-selected-folders-field .mod-file-browser-select-folders,
+.mod-file-browser-selected-file-field .mod-file-browser-select-folders {
   margin: 0 0 12px;
 }
 
 .mod-file-browser-selected-folders-field textarea,
-.mod-file-browser-selected-folders-field .acf-input-wrap {
+.mod-file-browser-selected-folders-field .acf-input-wrap,
+.mod-file-browser-selected-file-field .acf-input-wrap {
   display: none !important;
 }
 

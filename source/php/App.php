@@ -125,6 +125,12 @@ class App
                     'loading' => __('Loading folders.', 'modularity-folder-browser'),
                     'empty' => __('No folders found.', 'modularity-folder-browser'),
                     'error' => __('Folders could not be loaded.', 'modularity-folder-browser'),
+                    'selectFile' => __('Select file', 'modularity-folder-browser'),
+                    'fileDialogTitle' => __('Select a file to show', 'modularity-folder-browser'),
+                    'emptyFileSelection' => __('No file selected', 'modularity-folder-browser'),
+                    'loadingFiles' => __('Loading files.', 'modularity-folder-browser'),
+                    'noFiles' => __('No files found.', 'modularity-folder-browser'),
+                    'errorFiles' => __('Files could not be loaded.', 'modularity-folder-browser'),
                 ),
             ));
         }

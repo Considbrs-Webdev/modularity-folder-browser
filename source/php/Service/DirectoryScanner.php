@@ -228,6 +228,101 @@ class DirectoryScanner
         return $folders;
     }
 
+    /**
+     * Lists folders and allowed files in a directory for the admin file picker.
+     *
+     * @return array{folders: array<int, array>, files: array<int, array>}
+     */
+    public function listFoldersAndFiles(string $basePath, string $relativePath, array $allowedExtensions): array
+    {
+        $directory = $this->paths->resolveInside($basePath, $relativePath, true);
+
+        if (is_wp_error($directory)) {
+            return ['folders' => [], 'files' => []];
+        }
+
+        $files = [];
+        $allowedExtensions = $this->extensions->sanitizeExtensions($allowedExtensions);
+
+        try {
+            foreach (new DirectoryIterator($directory) as $item) {
+                if ($item->isDot() || !$item->isFile() || $this->isHidden($item->getFilename())) {
+                    continue;
+                }
+
+                $name = $item->getFilename();
+
+                if (!$this->isAllowedExtension(strtolower(pathinfo($name, PATHINFO_EXTENSION)), $allowedExtensions)) {
+                    continue;
+                }
+
+                $childRelativePath = trim($relativePath . '/' . $name, '/');
+
+                if (is_wp_error($this->paths->resolveInside($basePath, $childRelativePath, false))) {
+                    continue;
+                }
+
+                $files[] = [
+                    'name' => $name,
+                    'path' => $childRelativePath,
+                ];
+            }
+        } catch (\Throwable $e) {
+            $files = [];
+        }
+
+        usort($files, static fn($a, $b) => strnatcasecmp($a['name'], $b['name']));
+
+        return [
+            'folders' => $this->listFoldersOnly($basePath, $relativePath),
+            'files' => $files,
+        ];
+    }
+
+    /**
+     * Describes a single file directly inside the base path.
+     *
+     * @return array<string, mixed>|WP_Error
+     */
+    public function describeFile(
+        string $basePath,
+        string $fileName,
+        int $moduleId,
+        int $rootIndex,
+        array $allowedExtensions = [],
+        string $instanceToken = ''
+    ) {
+        $file = $this->paths->resolveInside($basePath, $fileName, false);
+
+        if (is_wp_error($file)) {
+            return $file;
+        }
+
+        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        $allowedExtensions = $this->extensions->sanitizeExtensions($allowedExtensions ?: $this->getAllowedExtensions($moduleId));
+
+        if (!$this->isAllowedExtension($extension, $allowedExtensions)) {
+            return new WP_Error('forbidden_file_type', __('This file type is not available for download.', 'modularity-folder-browser'), ['status' => 403]);
+        }
+
+        $name = basename($file);
+        $size = (int) filesize($file);
+        $modified = (int) filemtime($file);
+
+        return [
+            'name' => $name,
+            'label' => $this->metadata->fileLabel($name),
+            'extension' => $extension,
+            'mime_type' => wp_check_filetype($name)['type'] ?: 'application/octet-stream',
+            'type_label' => $this->metadata->fileTypeLabel($extension),
+            'size' => $size,
+            'size_human' => $this->metadata->formatBytes($size),
+            'modified' => wp_date(DATE_W3C, $modified),
+            'modified_human' => $this->metadata->formatDate($modified),
+            'download_url' => $this->downloadUrl($moduleId, $rootIndex, $fileName, $instanceToken),
+        ];
+    }
+
     private function isAllowedExtension(string $extension, array $allowedExtensions): bool
     {
         return $this->extensions->isAllowedExtension($extension, $allowedExtensions);

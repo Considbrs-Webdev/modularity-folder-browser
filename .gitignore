@@ -45,6 +45,7 @@ Thumbs.db
 !.gitignore
 !.editorconfig
 !.github
+!.claude
 !.vscode
 
 # ignore dist folder

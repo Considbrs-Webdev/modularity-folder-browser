@@ -89,6 +89,13 @@ git push origin X.Y.Z
 git checkout dev
 ```
 
+Tags must always be **annotated** (`git tag -a … -m …`), never lightweight, and are pushed on
+their own (`git push origin X.Y.Z`) — pushing a branch does not push tags. Never force-push
+(`--force`, `-f`, `+refspec`) as part of a release; if a push is rejected, stop and ask.
+
+Run each step as its own command rather than chaining them with `&&`, so a failure stops the
+release at the right place and each command can be approved on its own.
+
 ## 7. Publish the GitHub release
 
 Title `vX.Y.Z`, body is the changelog entry verbatim (starting with `## [X.Y.Z] - date`).
